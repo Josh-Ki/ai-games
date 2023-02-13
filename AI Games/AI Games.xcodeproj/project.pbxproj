@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		80CADD892999BCA000AB7C7E /* SudokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CADD882999BCA000AB7C7E /* SudokuViewController.swift */; };
+		80CADD8B2999C89600AB7C7E /* TicTacToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CADD8A2999C89600AB7C7E /* TicTacToeViewController.swift */; };
 		E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B529906C39003E2B05 /* AppDelegate.swift */; };
 		E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B729906C39003E2B05 /* SceneDelegate.swift */; };
 		E56184BA29906C39003E2B05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B929906C39003E2B05 /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		80CADD882999BCA000AB7C7E /* SudokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewController.swift; sourceTree = "<group>"; };
+		80CADD8A2999C89600AB7C7E /* TicTacToeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeViewController.swift; sourceTree = "<group>"; };
 		E56184B229906C39003E2B05 /* AI Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AI Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184B529906C39003E2B05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E56184B729906C39003E2B05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				E56184B729906C39003E2B05 /* SceneDelegate.swift */,
 				E56184B929906C39003E2B05 /* ViewController.swift */,
 				80CADD882999BCA000AB7C7E /* SudokuViewController.swift */,
+				80CADD8A2999C89600AB7C7E /* TicTacToeViewController.swift */,
 				E56184BB29906C39003E2B05 /* Main.storyboard */,
 				E56184BE29906C3B003E2B05 /* Assets.xcassets */,
 				E56184C029906C3B003E2B05 /* LaunchScreen.storyboard */,
@@ -263,6 +266,7 @@
 			files = (
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
+				80CADD8B2999C89600AB7C7E /* TicTacToeViewController.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80CADD892999BCA000AB7C7E /* SudokuViewController.swift in Sources */,
 			);
