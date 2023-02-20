@@ -51,8 +51,14 @@ class TicTacToeViewController: UIViewController {
     @objc func squareTapped(_ sender: UITapGestureRecognizer) {
         let square = sender.view as! UILabel
         print("tapped")
-        if square.text == "" {
-            square.text = currentPlayer
+        
+        if square.text == nil {
+            
+    
+            UIView.transition(with: square, duration: 0.3, options: .transitionFlipFromLeft, animations: {
+                square.text = self.currentPlayer
+            }, completion: nil)
+            
             switchTurns()
         }
     }
