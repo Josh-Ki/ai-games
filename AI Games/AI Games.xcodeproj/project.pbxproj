@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8058296129A302D3000C76BE /* SudokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058296029A302D3000C76BE /* SudokuViewController.swift */; };
+		8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058296229A302E1000C76BE /* TicTacToeViewController.swift */; };
 		E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F10E299A021200D2F267 /* TicTacToe3x3.swift */; };
 		E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */; };
 		E520F117299A178700D2F267 /* TicTacToe4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F116299A178700D2F267 /* TicTacToe4x4.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8058296029A302D3000C76BE /* SudokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewController.swift; sourceTree = "<group>"; };
+		8058296229A302E1000C76BE /* TicTacToeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeViewController.swift; sourceTree = "<group>"; };
 		E520F10E299A021200D2F267 /* TicTacToe3x3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe3x3.swift; sourceTree = "<group>"; };
 		E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericBoardGame.swift; sourceTree = "<group>"; };
 		E520F116299A178700D2F267 /* TicTacToe4x4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe4x4.swift; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 				E520F116299A178700D2F267 /* TicTacToe4x4.swift */,
 				E520F118299A1BEA00D2F267 /* FourInARow.swift */,
 				E520F11A299A1C0200D2F267 /* FiveInARow.swift */,
+				8058296029A302D3000C76BE /* SudokuViewController.swift */,
+				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
 			);
 			path = Games;
 			sourceTree = "<group>";
@@ -285,8 +291,10 @@
 				E520F119299A1BEA00D2F267 /* FourInARow.swift in Sources */,
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */,
+				8058296129A302D3000C76BE /* SudokuViewController.swift in Sources */,
 				E520F117299A178700D2F267 /* TicTacToe4x4.swift in Sources */,
 				E520F11B299A1C0200D2F267 /* FiveInARow.swift in Sources */,
+				8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */,
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 			);
