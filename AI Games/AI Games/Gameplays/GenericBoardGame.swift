@@ -21,11 +21,7 @@ class GenericBoardGame {
         self.turn = turn
     }
     
-    func update(gameboard: [UILabel]) {
-        if (self.turn == "X") {
-            self.gameboard = gameboard
-        }
-            
+    func update() {
         self.moves += 1
         self.done()
         
@@ -38,12 +34,18 @@ class GenericBoardGame {
             return
         }
         
-        // switch turn
-        if (self.turn == "X") {
-            self.turn = "O"
-        } else {
-            self.turn = "X"
-        }
+//        // switch turn
+//        if (self.turn == "X") {
+//            self.turn = "O"
+//        } else {
+//            self.turn = "X"
+//        }
+    }
+    
+    func manPlays(gameboard: [UILabel]) {
+        self.gameboard = gameboard
+        self.turn = "O"
+        self.update()
     }
     
     func done() {} // abstract function to be overriden
@@ -59,9 +61,14 @@ class GenericBoardGame {
         }
     }
     
-    func AIPlay() -> [UILabel] {
-        let pos = randomAI(legalPositions: self.legalPositions())
+    func AIPlays(level: Int) -> [UILabel] {
+        var pos = 0
+        if (level == 0) { // easiest AI
+            pos = randomAI(legalPositions: self.legalPositions())
+        }
+        
         self.gameboard[pos].text = "O"
+        self.turn = "X"
         return self.gameboard
     }
     

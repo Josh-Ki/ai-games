@@ -22,6 +22,7 @@ class TicTacToeViewController: UIViewController {
         let gridHeight = squareSize * gridSize
         let gridX = (view.bounds.width - gridWidth) / 2
         let gridY = (view.bounds.height - gridHeight) / 2
+        let AILevel: Int = 0
 
         squares = Array(repeating: UILabel(), count: Int(gridSize * gridSize))
         
@@ -48,6 +49,10 @@ class TicTacToeViewController: UIViewController {
         }
         
         gameplay = TicTacToe3x3(gameboard: squares, turn: "X")
+        if (gameplay.turn == "O") {
+            squares = gameplay.AIPlays(level: AILevel) // AI plays O
+            gameplay.update()
+        }
     }
 
     @objc func squareTapped(_ sender: UITapGestureRecognizer) {
@@ -60,8 +65,13 @@ class TicTacToeViewController: UIViewController {
                     square.text = self.gameplay.turn
                 }, completion: nil)
                 
-                gameplay.update(gameboard: squares)
-                squares = gameplay.AIPlay()
+                gameplay.manPlays(gameboard: squares)
+                
+                // if man doesn't win or draw, let AI play
+                if ((gameplay.winner == "") && (!gameplay.draw())) {
+                    squares = gameplay.AIPlays(level: 0)
+                    gameplay.update()
+                }
                 
                 if (gameplay.winner != "") {
                     let dialogMessage = UIAlertController(title: "Game over", message: "Winner: " + gameplay.winner, preferredStyle: .alert)
