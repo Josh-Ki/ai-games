@@ -9,67 +9,59 @@ import Foundation
 
 class TicTacToe4x4 : GenericBoardGame {
     
-    init(whoStarts: Int) {
-        super.init(gameboardSize: 4, whoStarts: whoStarts)
-    }
-    
-    
     // game finishes with a winner
-    override func done() -> Bool {
-        // if man wins
+    override func done() {
+        // if player X wins
         for i1 in 0...3 { // check for horizontal
-            if ((self.gameboard[i1][0] == 1) && (self.gameboard[i1][1] == 1) && (self.gameboard[i1][2] == 1) && (self.gameboard[i1][3] == 1)) {
-                self.winner = 1
-                return true
+            if ((self.gameboard[i1*4].text == "X") && (self.gameboard[i1*4+1].text == "X") && (self.gameboard[i1*4+2].text == "X") && (self.gameboard[i1*4+3].text == "X")) {
+                self.winner = "X"
+                return
             }
         }
         for j1 in 0...3 { // check for vertical
-            if ((self.gameboard[0][j1] == 1) && (self.gameboard[1][j1] == 1) && (self.gameboard[2][j1] == 1) && (self.gameboard[j1][3] == 1)) {
-                self.winner = 1
-                return true
+            if ((self.gameboard[j1].text == "X") && (self.gameboard[j1+4].text == "X") && (self.gameboard[j1+8].text == "X") && (self.gameboard[j1+12].text == "X")) {
+                self.winner = "X"
+                return
             }
         }
-        if ((self.gameboard[0][0] == 1) && (self.gameboard[1][1] == 1) && (self.gameboard[2][2] == 1) && (self.gameboard[3][3] == 1)) { // check for diagonal
-            self.winner = 1
-            return true
+        if ((self.gameboard[3].text == "X") && (self.gameboard[6].text == "X") && (self.gameboard[9].text == "X") && (self.gameboard[12].text == "X")) { // check for diagonal
+            self.winner = "X"
+            return
         }
-        if ((self.gameboard[0][3] == 1) && (self.gameboard[1][2] == 1) && (self.gameboard[2][1] == 1) && (self.gameboard[3][0] == 1)) { // check for another diagonal
-            self.winner = 1
-            return true
+        if ((self.gameboard[0].text == "X") && (self.gameboard[5].text == "X") && (self.gameboard[10].text == "X") && (self.gameboard[15].text == "X")) { // check for another diagonal
+            self.winner = "X"
+            return
         }
         
-        // if AI wins
-        for i2 in 0...3 { // check for horizontal
-            if ((self.gameboard[i2][0] == 2) && (self.gameboard[i2][1] == 2) && (self.gameboard[i2][2] == 2) && (self.gameboard[i2][3] == 2)) {
-                self.winner = 2
-                return true
+        // if player O wins
+        for i2 in 0...2 { // check for horizontal
+            if ((self.gameboard[i2*4].text == "O") && (self.gameboard[i2*4+1].text == "O") && (self.gameboard[i2*4+2].text == "O") && (self.gameboard[i2*4+3].text == "O")) {
+                self.winner = "O"
+                return
             }
         }
-        for j2 in 0...3 { // check for vertical
-            if ((self.gameboard[0][j2] == 2) && (self.gameboard[1][j2] == 2) && (self.gameboard[2][j2] == 2) && (self.gameboard[3][j2] == 2)) {
-                self.winner = 2
-                return true
+        for j2 in 0...2 { // check for vertical
+            if ((self.gameboard[j2].text == "O") && (self.gameboard[j2+4].text == "O") && (self.gameboard[j2+8].text == "O") && (self.gameboard[j2+12].text == "O")) {
+                self.winner = "O"
+                return
             }
         }
-        if ((self.gameboard[0][0] == 2) && (self.gameboard[1][1] == 2) && (self.gameboard[2][2] == 2) && (self.gameboard[3][3] == 2)) { // check for diagonal
-            self.winner = 2
-            return true
+        if ((self.gameboard[3].text == "O") && (self.gameboard[6].text == "O") && (self.gameboard[9].text == "O") && (self.gameboard[12].text == "O")) { // check for diagonal
+            self.winner = "O"
+            return
         }
-        if ((self.gameboard[0][3] == 2) && (self.gameboard[1][2] == 2) && (self.gameboard[2][1] == 2) && (self.gameboard[3][0] == 2)) { // check for another diagonal
-            self.winner = 2
-            return true
+        if ((self.gameboard[0].text == "O") && (self.gameboard[5].text == "O") && (self.gameboard[10].text == "O") && (self.gameboard[15].text == "O")) { // check for another diagonal
+            self.winner = "O"
+            return
         }
-        
-        return false
     }
-    
     
     override func draw() -> Bool {
         if (self.moves < 16) {
             return false
         }
         
-        if (self.done()) {
+        if (self.winner != "") {
             return false
         }
         

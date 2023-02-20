@@ -10,7 +10,8 @@ import UIKit
 class TicTacToeViewController: UIViewController {
 
     var squares: [UILabel] = []
-    var currentPlayer = "X"
+//    var currentPlayer = "X"
+    var gameplay: TicTacToe3x3 = TicTacToe3x3()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,25 +46,39 @@ class TicTacToeViewController: UIViewController {
                 view.addSubview(square)
             }
         }
+        
+        gameplay = TicTacToe3x3(gameboard: squares, turn: "X")
     }
 
     @objc func squareTapped(_ sender: UITapGestureRecognizer) {
         let square = sender.view as! UILabel
         print("tapped")
         
-        if square.text == nil {
-            
-    
-            UIView.transition(with: square, duration: 0.3, options: .transitionFlipFromLeft, animations: {
-                square.text = self.currentPlayer
-            }, completion: nil)
-            
-            switchTurns()
+        if (gameplay.winner == "") {
+            if square.text == nil {
+                UIView.transition(with: square, duration: 0.3, options: .transitionFlipFromLeft, animations: {
+                    square.text = self.gameplay.turn
+                }, completion: nil)
+                
+                gameplay.update(gameboard: squares)
+                
+                if (gameplay.winner != "") {
+                    let dialogMessage = UIAlertController(title: "Game over", message: "Winner: " + gameplay.winner, preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    dialogMessage.addAction(ok)
+                    self.present(dialogMessage, animated: true, completion: nil)
+                } else if (gameplay.draw()) {
+                    let dialogMessage = UIAlertController(title: "Game over", message: "The game ends in a draw.", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    dialogMessage.addAction(ok)
+                    self.present(dialogMessage, animated: true, completion: nil)
+                }
+            }
         }
     }
     
-    func switchTurns() {
-        currentPlayer = currentPlayer == "X" ? "O" : "X"
-    }
+//    func switchTurns() {
+//        currentPlayer = currentPlayer == "X" ? "O" : "X"
+//    }
     
 }

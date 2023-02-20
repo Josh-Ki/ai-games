@@ -6,46 +6,47 @@
 //
 
 import Foundation
+import UIKit
 
+// https://freecontent.manning.com/classic-computer-science-problems-in-swift-tic-tac-toe/
 class GenericBoardGame {
     
-    var size: Int = 0
-    var gameboard: [[Int]] = []
-    var plays: Int = 1
-    var winner: Int = 0
+    var gameboard: [UILabel]
+    var turn: String
     var moves: Int = 0
+    var winner: String = ""
     
+    init(gameboard: [UILabel] = [], turn: String = "") {
+        self.gameboard = gameboard
+        self.turn = turn
+    }
     
-    init(gameboardSize: Int, whoStarts: Int) {
-        self.size = gameboardSize
+    func update(gameboard: [UILabel]) {
+        self.gameboard = gameboard
+        self.moves += 1
+        self.done()
         
-        for _ in 0...(size-1) {
-            self.gameboard.append(Array(repeating: 0, count: size))
+        if (self.winner != "") {
+            print("Winner: \(self.winner)")
+            return
+        }
+        if (self.draw()) {
+            print("The game is a draw")
+            return
         }
         
-        self.plays = whoStarts
+        // switch turn
+        if (self.turn == "X") {
+            self.turn = "O"
+        } else {
+            self.turn = "X"
+        }
     }
     
-    
-    func done() -> Bool { // abstract function to be overriden
-        return false
-    }
-    
+    func done() {} // abstract function to be overriden
     
     func draw() -> Bool { // abstract function to be overriden
         return false
-    }
-    
-    
-    func turn() {
-        // switch turns
-        if (self.plays == 1) {
-            self.plays = 2
-        } else {
-            self.plays = 1
-        }
-        
-        self.moves += 1
     }
     
 }
