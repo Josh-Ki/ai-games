@@ -61,6 +61,7 @@ class TicTacToeViewController: UIViewController {
                 }, completion: nil)
                 
                 gameplay.update(gameboard: squares)
+                squares = gameplay.AIPlay()
                 
                 if (gameplay.winner != "") {
                     let dialogMessage = UIAlertController(title: "Game over", message: "Winner: " + gameplay.winner, preferredStyle: .alert)

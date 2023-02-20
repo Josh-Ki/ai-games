@@ -23,6 +23,7 @@
 		E56184CD29906C3C003E2B05 /* AI_GamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */; };
 		E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */; };
 		E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */; };
+		E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BBEAF29A3F967009BF380 /* BoardGameAIs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		E56184D229906C3C003E2B05 /* AI GamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI GamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITests.swift; sourceTree = "<group>"; };
 		E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E59BBEAF29A3F967009BF380 /* BoardGameAIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGameAIs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				E56184B529906C39003E2B05 /* AppDelegate.swift */,
 				E56184B729906C39003E2B05 /* SceneDelegate.swift */,
 				E56184B929906C39003E2B05 /* ViewController.swift */,
+				E59BBEAF29A3F967009BF380 /* BoardGameAIs.swift */,
 				E56184BB29906C39003E2B05 /* Main.storyboard */,
 				E56184BE29906C3B003E2B05 /* Assets.xcassets */,
 				E56184C029906C3B003E2B05 /* LaunchScreen.storyboard */,
@@ -296,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */,
+				E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */,
 				E520F119299A1BEA00D2F267 /* FourInARow.swift in Sources */,
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */,

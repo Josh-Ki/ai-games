@@ -22,7 +22,10 @@ class GenericBoardGame {
     }
     
     func update(gameboard: [UILabel]) {
-        self.gameboard = gameboard
+        if (self.turn == "X") {
+            self.gameboard = gameboard
+        }
+            
         self.moves += 1
         self.done()
         
@@ -47,6 +50,19 @@ class GenericBoardGame {
     
     func draw() -> Bool { // abstract function to be overriden
         return false
+    }
+    
+    // get a list of legal moves (for AI)
+    func legalPositions() -> [Int] {
+        return self.gameboard.indices.filter {
+            self.gameboard[$0].text == nil
+        }
+    }
+    
+    func AIPlay() -> [UILabel] {
+        let pos = randomAI(legalPositions: self.legalPositions())
+        self.gameboard[pos].text = "O"
+        return self.gameboard
     }
     
 }
