@@ -4,14 +4,17 @@
 //
 //  Created by Joshua Ki on 2/12/23.
 //
+
 import UIKit
 
 class SudokuViewController: UIViewController, UITextFieldDelegate {
+    
     let gridSize: CGFloat = 9.0 // use a constant for the grid size
     var textFields: [UITextField] = [] // use a single array for the text fields
     var timerLabel: UILabel! // add a label for the timer
     var timer: Timer! // add a timer
     var seconds: Int = 0 // add a variable for the seconds
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.lightGray // change the background color
@@ -51,26 +54,27 @@ class SudokuViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-        @objc func updateTimer() { // add a function to update the timer
-            seconds += 1 // increment the seconds
-            let minutes = seconds / 60 // get the minutes
-            let seconds = seconds % 60 // get the remaining seconds
-            timerLabel.text = String(format: "%02d:%02d", minutes, seconds) // update the timer text
-        }
-        
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            let enteredValue = textField.text ?? "" // get the value entered by the user
-            print("The value entered at row \(textField.tag / 9) and column \(textField.tag % 9) is \(enteredValue)") // use the tag property to get the row and column
-            switch enteredValue { // use a switch statement to validate the input
-            case "1", "2", "3", "4", "5", "6", "7", "8", "9":
-                // store the value in a variable or data structure
-                textField.textColor = UIColor.blue // change the text color to blue
-                break
-            default:
-                // show an error message or clear the text field
-                textField.text = "" // clear the text field
-                textField.textColor = UIColor.red // change the text color to red
-                break
-            }
+    @objc func updateTimer() { // add a function to update the timer
+        seconds += 1 // increment the seconds
+        let minutes = seconds / 60 // get the minutes
+        let seconds = seconds % 60 // get the remaining seconds
+        timerLabel.text = String(format: "%02d:%02d", minutes, seconds) // update the timer text
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let enteredValue = textField.text ?? "" // get the value entered by the user
+        print("The value entered at row \(textField.tag / 9) and column \(textField.tag % 9) is \(enteredValue)") // use the tag property to get the row and column
+        switch enteredValue { // use a switch statement to validate the input
+        case "1", "2", "3", "4", "5", "6", "7", "8", "9":
+            // store the value in a variable or data structure
+            textField.textColor = UIColor.blue // change the text color to blue
+            break
+        default:
+            // show an error message or clear the text field
+            textField.text = "" // clear the text field
+            textField.textColor = UIColor.red // change the text color to red
+            break
         }
     }
+    
+}

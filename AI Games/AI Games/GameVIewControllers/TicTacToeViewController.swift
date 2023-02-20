@@ -5,7 +5,6 @@
 //  Created by Joshua Ki on 2/12/23.
 //
 
-
 import UIKit
 
 class TicTacToeViewController: UIViewController {
@@ -66,7 +65,5 @@ class TicTacToeViewController: UIViewController {
     func switchTurns() {
         currentPlayer = currentPlayer == "X" ? "O" : "X"
     }
+    
 }
-
-
-

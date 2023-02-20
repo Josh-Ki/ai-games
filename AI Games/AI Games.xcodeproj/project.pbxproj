@@ -90,7 +90,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E520F10D299A01E300D2F267 /* Games */ = {
+		E520F10D299A01E300D2F267 /* Gameplays */ = {
 			isa = PBXGroup;
 			children = (
 				E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */,
@@ -98,10 +98,8 @@
 				E520F116299A178700D2F267 /* TicTacToe4x4.swift */,
 				E520F118299A1BEA00D2F267 /* FourInARow.swift */,
 				E520F11A299A1C0200D2F267 /* FiveInARow.swift */,
-				8058296029A302D3000C76BE /* SudokuViewController.swift */,
-				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
 			);
-			path = Games;
+			path = Gameplays;
 			sourceTree = "<group>";
 		};
 		E56184A929906C39003E2B05 = {
@@ -127,7 +125,8 @@
 		E56184B429906C39003E2B05 /* AI Games */ = {
 			isa = PBXGroup;
 			children = (
-				E520F10D299A01E300D2F267 /* Games */,
+				E5C23ACE29A37018005E0847 /* GameVIewControllers */,
+				E520F10D299A01E300D2F267 /* Gameplays */,
 				E56184B529906C39003E2B05 /* AppDelegate.swift */,
 				E56184B729906C39003E2B05 /* SceneDelegate.swift */,
 				E56184B929906C39003E2B05 /* ViewController.swift */,
@@ -154,6 +153,15 @@
 				E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */,
 			);
 			path = "AI GamesUITests";
+			sourceTree = "<group>";
+		};
+		E5C23ACE29A37018005E0847 /* GameVIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8058296029A302D3000C76BE /* SudokuViewController.swift */,
+				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
+			);
+			path = GameVIewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
