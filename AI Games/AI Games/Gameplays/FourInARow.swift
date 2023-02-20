@@ -7,157 +7,161 @@
 
 import Foundation
 
-//class FourInARow : GenericBoardGame {
-//    
-//    init(whoStarts: Int) {
-//        super.init(gameboardSize: 15, whoStarts: whoStarts)
-//    }
-//    
-//    
-//    // game finishes with a winner
-//    override func done() -> Bool {
-//        // if man wins
-//        for y1 in 0...14 { // check for horizontal
-//            for x1 in 0...11 {
-//                if ((self.gameboard[y1][x1] == 1) && (self.gameboard[y1][x1+1] == 1) && (self.gameboard[y1][x1+1] == 1) && (self.gameboard[y1][x1+3] == 1)) {
-//                    self.winner = 1
-//                    return true
-//                }
-//            }
-//        }
-//        for y1 in 0...11 { // check for vertical
-//            for x1 in 0...14 {
-//                if ((self.gameboard[y1][x1] == 1) && (self.gameboard[y1+1][x1] == 1) && (self.gameboard[y1+2][x1] == 1) && (self.gameboard[y1+3][x1] == 1)) {
-//                    self.winner = 1
-//                    return true
-//                }
-//            }
-//        }
-//        for y1 in 0...11 { // check for diagonal
-//            for x1 in 0...11 {
-//                if ((self.gameboard[y1][x1] == 1) && (self.gameboard[y1+1][x1+1] == 1) && (self.gameboard[y1+2][x1+2] == 1) && (self.gameboard[y1+3][x1+3] == 1)) {
-//                    self.winner = 1
-//                    return true
-//                }
-//            }
-//        }
-//        for y1 in 3...14 { // check for another diagonal
-//            for x1 in 0...11 {
-//                if ((self.gameboard[y1][x1] == 1) && (self.gameboard[y1-1][x1+1] == 1) && (self.gameboard[y1-2][x1+2] == 1) && (self.gameboard[y1-3][x1+3] == 1)) {
-//                    self.winner = 1
-//                    return true
-//                }
-//            }
-//        }
-//        
-//        // if AI wins
-//        for y2 in 0...14 { // check for horizontal
-//            for x2 in 0...11 {
-//                if ((self.gameboard[y2][x2] == 2) && (self.gameboard[y2][x2+1] == 2) && (self.gameboard[y2][x2+1] == 2) && (self.gameboard[y2][x2+3] == 2)) {
-//                    self.winner = 2
-//                    return true
-//                }
-//            }
-//        }
-//        for y2 in 0...11 { // check for vertical
-//            for x2 in 0...14 {
-//                if ((self.gameboard[y2][x2] == 2) && (self.gameboard[y2+1][x2] == 2) && (self.gameboard[y2+2][x2] == 2) && (self.gameboard[y2+3][x2] == 2)) {
-//                    self.winner = 2
-//                    return true
-//                }
-//            }
-//        }
-//        for y2 in 0...11 { // check for diagonal
-//            for x2 in 0...11 {
-//                if ((self.gameboard[y2][x2] == 2) && (self.gameboard[y2+1][x2+1] == 2) && (self.gameboard[y2+2][x2+2] == 2) && (self.gameboard[y2+3][x2+3] == 2)) {
-//                    self.winner = 2
-//                    return true
-//                }
-//            }
-//        }
-//        for y2 in 3...14 { // check for another diagonal
-//            for x2 in 0...11 {
-//                if ((self.gameboard[y2][y2] == 2) && (self.gameboard[y2-1][x2+1] == 2) && (self.gameboard[y2-2][x2+2] == 2) && (self.gameboard[x2-3][x2+3] == 2)) {
-//                    self.winner = 2
-//                    return true
-//                }
-//            }
-//        }
-//        
-//        return false
-//    }
-//    
-//    
-//    override func draw() -> Bool {
-//        if (self.moves < 4) {
-//            return false
-//        }
-//        
-//        // check for horizontal
-//        for y in 0...14 {
-//            for x in 0...11 {
-//                if (self.gameboard[y][x] == 1) { // check for man's pieces
-//                    if ((self.gameboard[y][x+1] != 2) && (self.gameboard[y][x+2] != 2) && (self.gameboard[y][x+3] != 2)) {
-//                        return false
-//                    }
-//                }
-//                if (self.gameboard[y][x] == 2) { // check for AI's pieces
-//                    if ((self.gameboard[y][x+1] != 1) && (self.gameboard[y][x+2] != 1) && (self.gameboard[y][x+3] != 1)) {
-//                        return false
-//                    }
-//                }
-//            }
-//        }
-//        
-//        // check for vertical
-//        for y in 0...11 {
-//            for x in 0...14 {
-//                if (self.gameboard[y][x] == 1) { // check for man's pieces
-//                    if ((self.gameboard[y+1][x] != 2) && (self.gameboard[y+2][x] != 2) && (self.gameboard[y+3][x] != 2)) {
-//                        return false
-//                    }
-//                }
-//                if (self.gameboard[y][x] == 2) { // check for AI's pieces
-//                    if ((self.gameboard[y+1][x] != 1) && (self.gameboard[y+2][x] != 1) && (self.gameboard[y+3][x] != 1)) {
-//                        return false
-//                    }
-//                }
-//            }
-//        }
-//        
-//        // check for diagonal
-//        for y in 0...11 {
-//            for x in 0...11 {
-//                if (self.gameboard[y][x] == 1) { // check for man's pieces
-//                    if ((self.gameboard[y+1][x+1] != 2) && (self.gameboard[y+2][x+2] != 2) && (self.gameboard[y+3][x+3] != 2)) {
-//                        return false
-//                    }
-//                }
-//                if (self.gameboard[y][x] == 2) { // check for AI's pieces
-//                    if ((self.gameboard[y+1][x+1] != 1) && (self.gameboard[y+2][x+2] != 1) && (self.gameboard[y+3][x+3] != 1)) {
-//                        return false
-//                    }
-//                }
-//            }
-//        }
-//        
-//        // check for another diagonal
-//        for y in 3...14 {
-//            for x in 0...11 {
-//                if (self.gameboard[y][x] == 1) { // check for man's pieces
-//                    if ((self.gameboard[y-1][x+1] != 2) && (self.gameboard[y-2][x+2] != 2) && (self.gameboard[y-3][x+3] != 2)) {
-//                        return false
-//                    }
-//                }
-//                if (self.gameboard[y][x] == 2) { // check for AI's pieces
-//                    if ((self.gameboard[y-1][x+1] != 1) && (self.gameboard[y-2][x+2] != 1) && (self.gameboard[y-3][x+3] != 1)) {
-//                        return false
-//                    }
-//                }
-//            }
-//        }
-//        
-//        return true
-//    }
-//    
-//}
+class FourInARow : GenericBoardGame {
+
+    // game finishes with a winner
+    override func done() {
+        // if player X wins
+        for y1 in 0...14 { // check for horizontal
+            for x1 in 0...11 {
+                let yx = y1 * 15 + x1
+                if ((self.gameboard[yx].text == "X") && (self.gameboard[yx+1].text == "X") && (self.gameboard[yx+2].text == "X") && (self.gameboard[yx+3].text == "X")) {
+                    self.winner = "X"
+                    return
+                }
+            }
+        }
+        for y1 in 0...11 { // check for vertical
+            for x1 in 0...14 {
+                let yx = y1 * 15 + x1
+                if ((self.gameboard[yx].text == "X") && (self.gameboard[yx+15].text == "X") && (self.gameboard[yx+30].text == "X") && (self.gameboard[yx+45].text == "X")) {
+                    self.winner = "X"
+                    return
+                }
+            }
+        }
+        for y1 in 0...11 { // check for diagonal
+            for x1 in 0...11 {
+                let yx = y1 * 15 + x1
+                if ((self.gameboard[yx].text == "X") && (self.gameboard[yx+16].text == "X") && (self.gameboard[yx+32].text == "X") && (self.gameboard[yx+48].text == "X")) {
+                    self.winner = "X"
+                    return
+                }
+            }
+        }
+        for y1 in 3...14 { // check for another diagonal
+            for x1 in 0...11 {
+                let yx = y1 * 15 + x1
+                if ((self.gameboard[yx].text == "X") && (self.gameboard[yx-14].text == "X") && (self.gameboard[yx-28].text == "X") && (self.gameboard[yx-42].text == "X")) {
+                    self.winner = "X"
+                    return
+                }
+            }
+        }
+        
+        // if player O wins
+        for y2 in 0...14 { // check for horizontal
+            for x2 in 0...11 {
+                let yx = y2 * 15 + x2
+                if ((self.gameboard[yx].text == "O") && (self.gameboard[yx+1].text == "O") && (self.gameboard[yx+2].text == "O") && (self.gameboard[yx+3].text == "O")) {
+                    self.winner = "O"
+                    return
+                }
+            }
+        }
+        for y2 in 0...11 { // check for vertical
+            for x2 in 0...14 {
+                let yx = y2 * 15 + x2
+                if ((self.gameboard[yx].text == "O") && (self.gameboard[yx+15].text == "O") && (self.gameboard[yx+30].text == "O") && (self.gameboard[yx+45].text == "O")) {
+                    self.winner = "O"
+                    return
+                }
+            }
+        }
+        for y2 in 0...11 { // check for diagonal
+            for x2 in 0...11 {
+                let yx = y2 * 15 + x2
+                if ((self.gameboard[yx].text == "O") && (self.gameboard[yx+16].text == "O") && (self.gameboard[yx+32].text == "O") && (self.gameboard[yx+48].text == "O")) {
+                    self.winner = "O"
+                    return
+                }
+            }
+        }
+        for y2 in 3...14 { // check for another diagonal
+            for x2 in 0...11 {
+                let yx = y2 * 15 + x2
+                if ((self.gameboard[yx].text == "O") && (self.gameboard[yx-14].text == "O") && (self.gameboard[yx-28].text == "O") && (self.gameboard[yx-42].text == "O")) {
+                    self.winner = "O"
+                    return
+                }
+            }
+        }
+    }
+    
+    override func draw() -> Bool {
+        if (self.moves < 4) {
+            return false
+        }
+        
+        // check for horizontal
+        for y in 0...14 {
+            for x in 0...11 {
+                let yx = y * 15 + x
+                if (self.gameboard[yx].text == "X") { // check for player X's pieces
+                    if ((self.gameboard[yx+1].text != "O") && (self.gameboard[yx+2].text != "O") && (self.gameboard[yx+3].text != "O")) {
+                        return false
+                    }
+                }
+                if (self.gameboard[yx].text == "O") { // check for player O's pieces
+                    if ((self.gameboard[yx+1].text != "X") && (self.gameboard[yx+2].text != "X") && (self.gameboard[yx+3].text != "X")) {
+                        return false
+                    }
+                }
+            }
+        }
+        
+        // check for vertical
+        for y in 0...11 {
+            for x in 0...14 {
+                let yx = y * 15 + x
+                if (self.gameboard[yx].text == "X") { // check for player X's pieces
+                    if ((self.gameboard[yx+15].text != "O") && (self.gameboard[yx+30].text != "O") && (self.gameboard[yx+45].text != "O")) {
+                        return false
+                    }
+                }
+                if (self.gameboard[yx].text == "O") { // check for player O's pieces
+                    if ((self.gameboard[yx+15].text != "X") && (self.gameboard[yx+30].text != "X") && (self.gameboard[yx+45].text != "X")) {
+                        return false
+                    }
+                }
+            }
+        }
+        
+        // check for diagonal
+        for y in 0...11 {
+            for x in 0...11 {
+                let yx = y * 15 + x
+                if (self.gameboard[yx].text == "X") { // check for player X's pieces
+                    if ((self.gameboard[yx+16].text != "O") && (self.gameboard[yx+32].text != "O") && (self.gameboard[yx+48].text != "O")) {
+                        return false
+                    }
+                }
+                if (self.gameboard[yx].text == "O") { // check for player O's pieces
+                    if ((self.gameboard[yx+16].text != "X") && (self.gameboard[yx+32].text != "X") && (self.gameboard[yx+48].text != "X")) {
+                        return false
+                    }
+                }
+            }
+        }
+        
+        // check for another diagonal
+        for y in 3...14 {
+            for x in 0...11 {
+                let yx = y * 15 + x
+                if (self.gameboard[yx].text == "X") { // check for player X's pieces
+                    if ((self.gameboard[yx-14].text != "O") && (self.gameboard[yx-28].text != "O") && (self.gameboard[yx-42].text != "O")) {
+                        return false
+                    }
+                }
+                if (self.gameboard[yx].text == "O") { // check for player O's pieces
+                    if ((self.gameboard[yx-14].text != "X") && (self.gameboard[yx-28].text != "X") && (self.gameboard[yx-42].text != "X")) {
+                        return false
+                    }
+                }
+            }
+        }
+        
+        return true
+    }
+    
+}
