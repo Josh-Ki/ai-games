@@ -11,205 +11,123 @@ import UIKit
 
 var board = [[BoardItem]]()
 
-func resetBoard()
-{
-    board.removeAll()
-    
-    for row in 0...5
-    {
-        var rowArray = [BoardItem]()
-        for column in 0...6
-        {
-            let indexPath = IndexPath.init(item: column, section: row)
-            let boardItem = BoardItem(indexPath: indexPath, tile: Tile.Empty)
-            rowArray.append(boardItem)
+func resetBoard() {
+    board = (0...5).map { row in
+        (0...6).map { column in
+            let indexPath = IndexPath(item: column, section: row)
+            return BoardItem(indexPath: indexPath, tile: Tile.Empty)
         }
-        board.append(rowArray)
     }
 }
+
 
 func getBoardItem(_ indexPath: IndexPath) -> BoardItem
 {
     return board[indexPath.section][indexPath.item]
 }
 
-func getLowestEmptyBoardItem(_ column: Int) -> BoardItem?
-{
-    for row in (0...5).reversed()
-    {
-        let boardItem = board[row][column]
-        if boardItem.emptyTile()
-        {
-            return boardItem
-        }
-    }
-    
-    return nil
+func getLowestEmpty(_ column: Int) -> BoardItem? {
+    return (0...5).reversed()
+        .compactMap { board[$0][column].emptyTile() ? board[$0][column] : nil }
+        .first
 }
 
 
-func updateBoardWithBoardItem(_ boardItem: BoardItem)
+
+
+func updateBoard(_ boardItem: BoardItem)
 {
     if let indexPath = boardItem.indexPath
     {
         board[indexPath.section][indexPath.item] = boardItem
-        print(board[indexPath.section][indexPath.item])
     }
 }
 
-func boardIsFull() -> Bool
-{
-    for row in board
-    {
-        for column in row
-        {
-            if column.emptyTile()
-            {
-                return false
-            }
+func boardIsFull() -> Bool {
+    for row in board {
+        if row.contains(where: { $0.emptyTile() }) {
+            return false
         }
     }
-    
     return true
 }
 
-func victoryAchieved()  -> Bool
+
+func victory()  -> Bool
 {
-    return horizontalVictory() || verticalVictory() || diagonalVicotry()
+    return horizontalVictory() || verticalVictory() || diagonalVictory()
 }
 
-func diagonalVicotry()  -> Bool
-{
-    for column in 0...board.count
-    {
-        if checkDiagonalColumn(column, true, true)
-        {
-            return true
-        }
-        if checkDiagonalColumn(column, true, false)
-        {
-            return true
-        }
-        if checkDiagonalColumn(column, false, true)
-        {
-            return true
-        }
-        if checkDiagonalColumn(column, false, false)
-        {
-            return true
+func diagonalVictory() -> Bool {
+    for column in 0..<board.count {
+        for moveUp in [true, false] {
+            for reverseRows in [true, false] {
+                if checkDiagonalColumn(column, moveUp, reverseRows) {
+                    return true
+                }
+            }
         }
     }
-    
     return false
 }
 
-func checkDiagonalColumn(_ columnToCheck: Int,_ moveUp: Bool,_ reverseRows: Bool) -> Bool
-{
+
+func checkDiagonalColumn(_ columnToCheck: Int, _ moveUp: Bool, _ reverseRows: Bool) -> Bool {
+    let boardRows = reverseRows ? board.reversed() : board
     var movingColumn = columnToCheck
     var consecutive = 0
-    if reverseRows
-    {
-        for row in board.reversed()
-        {
-            if movingColumn < row.count && movingColumn >= 0
-            {
-                if row[movingColumn].tile == currentTurnTile()
-                {
-                    consecutive += 1
-                    if consecutive >= 4
-                    {
-                        return true
-                    }
-                }
-                else
-                {
-                    consecutive = 0
-                }
-                movingColumn = moveUp ? movingColumn + 1 : movingColumn - 1
-            }
-        }
-    }
-    else
-    {
-        for row in board
-        {
-            if movingColumn < row.count && movingColumn >= 0
-            {
-                if row[movingColumn].tile == currentTurnTile()
-                {
-                    consecutive += 1
-                    if consecutive >= 4
-                    {
-                        return true
-                    }
-                }
-                else
-                {
-                    consecutive = 0
-                }
-                movingColumn = moveUp ? movingColumn + 1 : movingColumn - 1
-            }
-        }
-    }
     
-    return false
-}
-
-func verticalVictory() -> Bool
-{
-    for column in 0...board.count
-    {
-        if checkVerticalColumn(column)
-        {
-            return true
-        }
-    }
-    
-    return false
-}
-
-func checkVerticalColumn(_ columnToCheck: Int) -> Bool
-{
-    var consecutive = 0
-    for row in board
-    {
-        if row[columnToCheck].tile == currentTurnTile()
-        {
+    for row in boardRows {
+        guard movingColumn >= 0, movingColumn < row.count else { continue }
+        if row[movingColumn].tile == currentTurnTile() {
             consecutive += 1
-            if consecutive >= 4
-            {
+            if consecutive >= 4 { return true }
+        } else {
+            consecutive = 0
+        }
+        movingColumn += moveUp ? 1 : -1
+    }
+    
+    return false
+}
+
+
+func verticalVictory() -> Bool {
+    return (0..<board.count).contains {
+        checkVerticalColumn($0)
+    }
+}
+
+
+func checkVerticalColumn(_ columnToCheck: Int) -> Bool {
+    var consecutive = 0
+    for row in board where (0..<row.count).contains(columnToCheck) {
+        if row[columnToCheck].tile == currentTurnTile() {
+            consecutive += 1
+            if consecutive >= 4 {
                 return true
             }
-        }
-        else
-        {
+        } else {
             consecutive = 0
         }
     }
     return false
 }
 
-func horizontalVictory()  -> Bool
-{
-    for row in board
-    {
+func horizontalVictory() -> Bool {
+    return board.contains { row in
         var consecutive = 0
-        for column in row
-        {
-            if column.tile == currentTurnTile()
-            {
+        return row.contains {
+            if $0.tile == currentTurnTile() {
                 consecutive += 1
-                if consecutive >= 4
-                {
+                if consecutive >= 4 {
                     return true
                 }
-            }
-            else
-            {
+            } else {
                 consecutive = 0
             }
+            return false
         }
     }
-    
-    return false
 }
+

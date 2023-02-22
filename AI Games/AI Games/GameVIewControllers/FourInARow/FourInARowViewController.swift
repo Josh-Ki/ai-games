@@ -49,58 +49,59 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         
         return board[section].count
     }
-    func collectionView(_ cv: UICollectionView, didSelectItemAt indexPath: IndexPath)
-        {
-            let column = indexPath.item
-            if var boardItem = getLowestEmptyBoardItem(column)
-            {
-                if let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell
-                {
-                    cell.image.tintColor = currentTurnColor()
-                    boardItem.tile = currentTurnTile()
-                    updateBoardWithBoardItem(boardItem)
-                    
-                    if victoryAchieved()
-                    {
-                        if yellowTurn
-                        {
-                            yellowScore += 1
-                        }
-                        
-                        else
-                        {
-                            redScore += 1
-                        }
-                        resultAlert(currentTurnVictoryMessage())
-                    }
-                    
-                    if boardIsFull()
-                    {
-                        resultAlert("Draw")
-                    }
-                    
-                    toggleTurn(turnImage)
-                }
-            }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let column = indexPath.item
+        guard var boardItem = getLowestEmpty(column), let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else {
+            return
         }
         
-        func resultAlert(_ title: String)
-        {
-            let message = "\nRed: " + String(redScore) + "\n\nYellow: " + String(yellowScore)
-            let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-            ac.addAction(UIAlertAction(title: "Reset", style: .default, handler: {
-                [self] (_) in
-                resetBoard()
-                self.resetCells()
-            }))
-            self.present(ac, animated: true)
-        }
+        cell.image.tintColor = currentTurnColor()
+        boardItem.tile = currentTurnTile()
+        updateBoard(boardItem)
         
-        func resetCells()
-        {
-            for cell in collectionView.visibleCells as! [BoardCell]
-            {
-                cell.image.tintColor = .white
+        if victory() {
+            if yellowTurn {
+                yellowScore += 1
+            } else {
+                redScore += 1
             }
+            resultAlert(currentTurnVictoryMessage())
+        } else if boardIsFull() {
+            resultAlert("Draw")
+        } else {
+            toggleTurn(turnImage)
+            
+            // Animate piece's movement
+            let row = boardItem.indexPath.section
+            let newIndexPath = IndexPath(item: column, section: row)
+            let cellAttributes = collectionView.layoutAttributesForItem(at: newIndexPath)
+            let finalCenter = cellAttributes?.center ?? .zero
+            let startCenter = CGPoint(x: finalCenter.x, y: finalCenter.y - collectionView.bounds.height)
+            cell.center = startCenter
+            UIView.animate(withDuration: 0.5, animations: {
+                cell.center = finalCenter
+            })
         }
+    }
+
+
+        
+    func resultAlert(_ title: String) {
+        let message = "\nRed: \(redScore)\n\nYellow: \(yellowScore)"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { [weak self] _ in
+            resetBoard()
+            self?.resetCells()
+        }))
+        present(alert, animated: true)
+    }
+
+        
+    func resetCells() {
+        collectionView.visibleCells.compactMap { $0 as? BoardCell }
+            .forEach { $0.image.tintColor = .white }
+    }
+
 }
