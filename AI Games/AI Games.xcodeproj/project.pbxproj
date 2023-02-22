@@ -14,6 +14,8 @@
 		80814CAD29A55691001D53E6 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CAC29A55691001D53E6 /* Board.swift */; };
 		80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CAE29A556B6001D53E6 /* BoardItem.swift */; };
 		80814CB129A55811001D53E6 /* Turn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB029A55811001D53E6 /* Turn.swift */; };
+		80814CB429A6AA30001D53E6 /* CamerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB329A6AA30001D53E6 /* CamerViewController.swift */; };
+		80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BB29A6BA360098541A /* ScanViewController.swift */; };
 		E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F10E299A021200D2F267 /* TicTacToe3x3.swift */; };
 		E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */; };
 		E520F117299A178700D2F267 /* TicTacToe4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F116299A178700D2F267 /* TicTacToe4x4.swift */; };
@@ -56,6 +58,8 @@
 		80814CAC29A55691001D53E6 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		80814CAE29A556B6001D53E6 /* BoardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardItem.swift; sourceTree = "<group>"; };
 		80814CB029A55811001D53E6 /* Turn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turn.swift; sourceTree = "<group>"; };
+		80814CB329A6AA30001D53E6 /* CamerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerViewController.swift; sourceTree = "<group>"; };
+		80D6E7BB29A6BA360098541A /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		E520F10E299A021200D2F267 /* TicTacToe3x3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe3x3.swift; sourceTree = "<group>"; };
 		E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericBoardGame.swift; sourceTree = "<group>"; };
 		E520F116299A178700D2F267 /* TicTacToe4x4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe4x4.swift; sourceTree = "<group>"; };
@@ -114,6 +118,15 @@
 			path = FourInARow;
 			sourceTree = "<group>";
 		};
+		80814CB229A6A981001D53E6 /* Image Capture */ = {
+			isa = PBXGroup;
+			children = (
+				80814CB329A6AA30001D53E6 /* CamerViewController.swift */,
+				80D6E7BB29A6BA360098541A /* ScanViewController.swift */,
+			);
+			path = "Image Capture";
+			sourceTree = "<group>";
+		};
 		E520F10D299A01E300D2F267 /* Gameplays */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +162,7 @@
 		E56184B429906C39003E2B05 /* AI Games */ = {
 			isa = PBXGroup;
 			children = (
+				80814CB229A6A981001D53E6 /* Image Capture */,
 				E5C23ACE29A37018005E0847 /* GameVIewControllers */,
 				E520F10D299A01E300D2F267 /* Gameplays */,
 				E56184B529906C39003E2B05 /* AppDelegate.swift */,
@@ -326,6 +340,7 @@
 				E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */,
 				E520F119299A1BEA00D2F267 /* FourInARow.swift in Sources */,
 				80814CAD29A55691001D53E6 /* Board.swift in Sources */,
+				80814CB429A6AA30001D53E6 /* CamerViewController.swift in Sources */,
 				80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */,
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */,
@@ -337,6 +352,7 @@
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
+				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +529,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5H45M94LR2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI Games/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -540,6 +557,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5H45M94LR2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "AI Games/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
