@@ -19,8 +19,6 @@ class CameraViewController: UIViewController {
         
         super.viewDidLoad()
         imageView.backgroundColor = .secondarySystemBackground
-        picButton.backgroundColor = .systemBlue
-        picButton.setTitle("Take Picture", for: .normal)
         
     }
     

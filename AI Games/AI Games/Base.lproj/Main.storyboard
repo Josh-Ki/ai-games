@@ -7,20 +7,21 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Game Selection View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AI_Games" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GameSelectionViewController" customModule="AI_Games" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Games" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tib-XL-lpX">
-                                <rect key="frame" x="175" y="139" width="54" height="21"/>
+                                <rect key="frame" x="178" y="134" width="54" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -58,10 +59,16 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="fVS-4u-ijk"/>
+                    <connections>
+                        <outlet property="fourinarowButton" destination="IF7-3J-fJH" id="dlE-4W-N1j"/>
+                        <outlet property="gamesLabel" destination="tib-XL-lpX" id="UsA-yj-iYF"/>
+                        <outlet property="sudokuButton" destination="hH1-hp-Sbq" id="jGE-AJ-R4a"/>
+                        <outlet property="tictactoeButton" destination="H74-Vv-hkg" id="IYq-AQ-jDT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="665" y="-696"/>
+            <point key="canvasLocation" x="664.8854961832061" y="-696.47887323943667"/>
         </scene>
         <!--Sudoku View Controller-->
         <scene sceneID="TSW-5g-L0b">
@@ -79,39 +86,43 @@
             </objects>
             <point key="canvasLocation" x="1500" y="-1108"/>
         </scene>
-        <!--Image Capture-->
-        <scene sceneID="gU7-AT-6Wk">
+        <!--View Controller-->
+        <scene sceneID="Jqk-8t-t7Z">
             <objects>
-                <viewController id="FHg-ZQ-OgE" userLabel="Image Capture" customClass="ScanViewController" customModule="AI_Games" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aJF-kB-Stj">
+                <viewController id="9Ux-0a-AGX" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Oml-hD-cXP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scan Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fg6-m1-CaD">
-                                <rect key="frame" x="128" y="130" width="137" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="phZ-H3-Ndh">
-                                <rect key="frame" x="166" y="576" width="62" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hE2-2l-ztS">
+                                <rect key="frame" x="135" y="658" width="122" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Scan"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Take Picture"/>
                                 <connections>
-                                    <action selector="showCamera:" destination="FHg-ZQ-OgE" eventType="touchUpInside" id="nLY-ky-gb3"/>
+                                    <segue destination="fUX-o0-vvk" kind="show" id="f74-C9-GBR"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YX0-8d-VbJ">
+                                <rect key="frame" x="151" y="226" width="90" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <menu key="menu" id="fjU-DD-vb2">
+                                    <children>
+                                        <command title="Sudoku" id="2pP-A8-P19"/>
+                                        <command title="Another game" id="qsf-IJ-Cra"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Item"/>
+                            </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="o7Z-v1-UKd"/>
+                        <viewLayoutGuide key="safeArea" id="nf9-BA-2PS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="m7h-yR-sP7"/>
+                    <navigationItem key="navigationItem" id="yo8-k2-kOS"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HKo-6J-cv6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uSt-tS-kjy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-411" y="1160"/>
+            <point key="canvasLocation" x="-101.5267175572519" y="674.64788732394368"/>
         </scene>
         <!--Item-->
         <scene sceneID="wum-hc-l9k">
@@ -133,7 +144,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ke5-mS-MNm">
-                                <rect key="frame" x="20" y="79" width="353" height="600"/>
+                                <rect key="frame" x="20" y="123" width="353" height="556"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hgb-jQ-GCD"/>
@@ -157,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rHL-6i-PgV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="344" y="701"/>
+            <point key="canvasLocation" x="1269.4656488549617" y="700.70422535211276"/>
         </scene>
         <!--Four InA Row View Controller-->
         <scene sceneID="gnH-1n-pHs">
@@ -239,7 +250,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mt0-0p-3xT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2426.7175572519081" y="237.32394366197184"/>
+            <point key="canvasLocation" x="3353.4351145038167" y="237.32394366197184"/>
         </scene>
         <!--Tic Tac Toe View Controller-->
         <scene sceneID="QCO-wc-i2w">
@@ -268,7 +279,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="ra3-ha-fgC" kind="relationship" relationship="viewControllers" id="XZ9-en-HBM"/>
-                        <segue destination="fUX-o0-vvk" kind="relationship" relationship="viewControllers" id="mU6-Fb-IUk"/>
+                        <segue destination="i8w-2j-9tT" kind="relationship" relationship="viewControllers" id="vhS-op-Q3K"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VgE-sI-037" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -293,6 +304,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sfk-Se-Q6y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-187" y="-696"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="llj-s1-Gew">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="i8w-2j-9tT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="dXK-Rx-ODa"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UWP-Qi-BqG">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Ux-0a-AGX" kind="relationship" relationship="rootViewController" id="zQo-C4-3Wf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sHF-DI-G1i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1028.2442748091603" y="674.64788732394368"/>
         </scene>
     </scenes>
     <resources>

@@ -14,8 +14,9 @@
 		80814CAD29A55691001D53E6 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CAC29A55691001D53E6 /* Board.swift */; };
 		80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CAE29A556B6001D53E6 /* BoardItem.swift */; };
 		80814CB129A55811001D53E6 /* Turn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB029A55811001D53E6 /* Turn.swift */; };
-		80814CB429A6AA30001D53E6 /* CamerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB329A6AA30001D53E6 /* CamerViewController.swift */; };
+		80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB329A6AA30001D53E6 /* CameraViewController.swift */; };
 		80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BB29A6BA360098541A /* ScanViewController.swift */; };
+		80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */; };
 		E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F10E299A021200D2F267 /* TicTacToe3x3.swift */; };
 		E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */; };
 		E520F117299A178700D2F267 /* TicTacToe4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F116299A178700D2F267 /* TicTacToe4x4.swift */; };
@@ -58,8 +59,9 @@
 		80814CAC29A55691001D53E6 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		80814CAE29A556B6001D53E6 /* BoardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardItem.swift; sourceTree = "<group>"; };
 		80814CB029A55811001D53E6 /* Turn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turn.swift; sourceTree = "<group>"; };
-		80814CB329A6AA30001D53E6 /* CamerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerViewController.swift; sourceTree = "<group>"; };
+		80814CB329A6AA30001D53E6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		80D6E7BB29A6BA360098541A /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionViewController.swift; sourceTree = "<group>"; };
 		E520F10E299A021200D2F267 /* TicTacToe3x3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe3x3.swift; sourceTree = "<group>"; };
 		E520F114299A0E7D00D2F267 /* GenericBoardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericBoardGame.swift; sourceTree = "<group>"; };
 		E520F116299A178700D2F267 /* TicTacToe4x4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToe4x4.swift; sourceTree = "<group>"; };
@@ -121,7 +123,7 @@
 		80814CB229A6A981001D53E6 /* Image Capture */ = {
 			isa = PBXGroup;
 			children = (
-				80814CB329A6AA30001D53E6 /* CamerViewController.swift */,
+				80814CB329A6AA30001D53E6 /* CameraViewController.swift */,
 				80D6E7BB29A6BA360098541A /* ScanViewController.swift */,
 			);
 			path = "Image Capture";
@@ -200,6 +202,7 @@
 				80814CA729A552E9001D53E6 /* FourInARow */,
 				8058296029A302D3000C76BE /* SudokuViewController.swift */,
 				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
+				80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */,
 			);
 			path = GameVIewControllers;
 			sourceTree = "<group>";
@@ -336,11 +339,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				80814CA929A55315001D53E6 /* FourInARowViewController.swift in Sources */,
+				80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */,
 				E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */,
 				E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */,
 				E520F119299A1BEA00D2F267 /* FourInARow.swift in Sources */,
 				80814CAD29A55691001D53E6 /* Board.swift in Sources */,
-				80814CB429A6AA30001D53E6 /* CamerViewController.swift in Sources */,
+				80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */,
 				80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */,
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				E520F115299A0E7D00D2F267 /* GenericBoardGame.swift in Sources */,
