@@ -4,12 +4,12 @@
 //
 //  Created by Joshua Ki on 2/12/23.
 //
-
+//MARK: This View Controller instantiates a board and allows a user to input numbers into the squares. There is also a timer and label instantiated when this view loads.
 import UIKit
 
 class SudokuViewController: UIViewController, UITextFieldDelegate {
     
-    let gridSize: CGFloat = 9.0 // use a constant for the grid size
+    let GRID_SIZE: CGFloat = 9.0 // use a constant for the grid size
     var textFields: [UITextField] = [] // use a single array for the text fields
     var timerLabel: UILabel! // add a label for the timer
     var timer: Timer! // add a timer
@@ -18,9 +18,9 @@ class SudokuViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.lightGray // change the background color
-        let squareSize: CGFloat = min(view.bounds.width, view.bounds.height) / gridSize
-        let gridWidth = squareSize * gridSize
-        let gridHeight = squareSize * gridSize
+        let squareSize: CGFloat = min(view.bounds.width, view.bounds.height) / GRID_SIZE
+        let gridWidth = squareSize * GRID_SIZE
+        let gridHeight = squareSize * GRID_SIZE
         let gridX = (view.bounds.width - gridWidth) / 2
         let gridY = (view.bounds.height - gridHeight) / 2
         let titleLabel = UILabel(frame: CGRect(x: gridX, y: gridY - 50, width: gridWidth, height: 40)) // add a label for the title

@@ -4,7 +4,7 @@
 //
 //  Created by Joshua Ki on 2/22/23.
 //
-
+//MARK: This creates the view controller that shows the camera. Asks for access for camera and allows user to take a picture
 import Foundation
 import UIKit
 
@@ -31,6 +31,8 @@ class CameraViewController: UIViewController {
     }
     
 }
+
+
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     

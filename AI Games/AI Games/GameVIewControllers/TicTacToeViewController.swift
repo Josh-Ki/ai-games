@@ -4,6 +4,7 @@
 //
 //  Created by Joshua Ki on 2/12/23.
 //
+//MARK: This View controller creates the tic tac toe board and allows for users to switch between x and o in order to play.
 
 import UIKit
 

@@ -4,7 +4,7 @@
 //
 //  Created by Joshua Ki on 2/21/23.
 //
-
+//MARK: Creates the collectionview and cell and includes functionality for the game of four in a row.
 import Foundation
 import UIKit
 

@@ -5,7 +5,7 @@
 //  Created by Joshua Ki on 2/21/23.
 //
 
-
+//MARK: Declared functions
 import Foundation
 import UIKit
 
