@@ -1,0 +1,6 @@
+framework module Pods_AI_Games_AI_GamesUITests {
+  umbrella header "Pods-AI Games-AI GamesUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
