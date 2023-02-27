@@ -18,6 +18,7 @@
 		80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CAE29A556B6001D53E6 /* BoardItem.swift */; };
 		80814CB129A55811001D53E6 /* Turn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB029A55811001D53E6 /* Turn.swift */; };
 		80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB329A6AA30001D53E6 /* CameraViewController.swift */; };
+		80AB957E29AC969B0015FCAA /* TicTacToeTurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB957D29AC969B0015FCAA /* TicTacToeTurn.swift */; };
 		80B4595B29AC09A200CD0EBE /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */; };
 		80B4595F29AC148700CD0EBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */; };
 		80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4596129AC304400CD0EBE /* AnalysisViewController.swift */; };
@@ -70,6 +71,7 @@
 		80814CAE29A556B6001D53E6 /* BoardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardItem.swift; sourceTree = "<group>"; };
 		80814CB029A55811001D53E6 /* Turn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turn.swift; sourceTree = "<group>"; };
 		80814CB329A6AA30001D53E6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		80AB957D29AC969B0015FCAA /* TicTacToeTurn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeTurn.swift; sourceTree = "<group>"; };
 		80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80B4596129AC304400CD0EBE /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,15 @@
 			path = "Image Capture";
 			sourceTree = "<group>";
 		};
+		80AB957C29AC944F0015FCAA /* TicTacToe */ = {
+			isa = PBXGroup;
+			children = (
+				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
+				80AB957D29AC969B0015FCAA /* TicTacToeTurn.swift */,
+			);
+			path = TicTacToe;
+			sourceTree = "<group>";
+		};
 		80B4595929AC098800CD0EBE /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,7 +241,7 @@
 				80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */,
 				80B4595929AC098800CD0EBE /* Authentication */,
 				80814CB229A6A981001D53E6 /* Image Capture */,
-				E5C23ACE29A37018005E0847 /* GameVIewControllers */,
+				E5C23ACE29A37018005E0847 /* Games */,
 				E520F10D299A01E300D2F267 /* Gameplays */,
 				E56184B529906C39003E2B05 /* AppDelegate.swift */,
 				E56184B729906C39003E2B05 /* SceneDelegate.swift */,
@@ -261,15 +272,15 @@
 			path = "AI GamesUITests";
 			sourceTree = "<group>";
 		};
-		E5C23ACE29A37018005E0847 /* GameVIewControllers */ = {
+		E5C23ACE29A37018005E0847 /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				80AB957C29AC944F0015FCAA /* TicTacToe */,
 				80814CA729A552E9001D53E6 /* FourInARow */,
 				8058296029A302D3000C76BE /* SudokuViewController.swift */,
-				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
 				80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */,
 			);
-			path = GameVIewControllers;
+			path = Games;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,6 +528,7 @@
 				E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */,
 				E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */,
 				E520F119299A1BEA00D2F267 /* FourInARow.swift in Sources */,
+				80AB957E29AC969B0015FCAA /* TicTacToeTurn.swift in Sources */,
 				80814CAD29A55691001D53E6 /* Board.swift in Sources */,
 				80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */,
 				80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */,
