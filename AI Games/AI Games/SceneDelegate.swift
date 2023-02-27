@@ -8,11 +8,13 @@
 import UIKit
 import FirebaseCore
 import FirebaseAuth
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
+    let userID = Auth.auth().currentUser!.uid
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -31,6 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("USER IS SIGNED IN")
               // User is signed in
               let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+                
               window?.rootViewController = tabBarController
             } else {
                 print("USER IS NOT SIGNED IN")

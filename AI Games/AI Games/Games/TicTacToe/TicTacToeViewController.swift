@@ -7,7 +7,14 @@
 //MARK: This View controller creates the tic tac toe board and allows for users to switch between x and o in order to play.
 
 import UIKit
+import FirebaseFirestore
+import FirebaseCore
+import FirebaseAuth
 
+import Firebase
+
+
+var ticTacToeWins = 0
 class TicTacToeViewController: UIViewController {
     @IBOutlet weak var turnLabel: UILabel!
     @IBOutlet weak var r1c1: UIButton!
@@ -19,11 +26,22 @@ class TicTacToeViewController: UIViewController {
     @IBOutlet weak var r3c1: UIButton!
     @IBOutlet weak var r3c2: UIButton!
     @IBOutlet weak var r3c3: UIButton!
+    let userID = Auth.auth().currentUser!.uid
+    let database = Firestore.firestore()
+    
+    
+    func writeUserData(wins: Int, userID: String) {
+        let docRef = database.document("/users/\(userID)/tictactoe/wins")
+        
+        docRef.setData(["wins" : wins])
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
+        print(userID)
     }
-    
+    var board = [UIButton]()
     var firstTurn = TicTacToeTurn.x
     var currentTurn = TicTacToeTurn.x
     
@@ -31,13 +49,15 @@ class TicTacToeViewController: UIViewController {
     var x = "X"
     var oScore = 0
     var xScore = 0
-    var board = [UIButton]()
+    
     @IBAction func buttonTapped(_ sender: UIButton) {
         
         addToBoard(sender)
         if victory(x){
             xScore += 1
             resultAlert(title: "X WINS")
+            ticTacToeWins += 1
+            writeUserData(wins: ticTacToeWins, userID: userID)
         }
         if victory(o){
             oScore += 1
@@ -60,6 +80,16 @@ class TicTacToeViewController: UIViewController {
         board.append(r3c2)
         board.append(r3c3)
     }
+    
+    func boardIsFull() -> Bool {
+        for button in board {
+            if button.title(for: .normal) == nil {
+                return false
+            }
+        }
+        return true
+    }
+
     func resultAlert(title:String){
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Reset", style: .default, handler: { (_) in
@@ -82,14 +112,7 @@ class TicTacToeViewController: UIViewController {
         }
         currentTurn = firstTurn
     }
-    func boardIsFull() -> Bool {
-        for button in board {
-            if button.title(for: .normal) == nil {
-                return false
-            }
-        }
-        return true
-    }
+
     func addToBoard(_ sender: UIButton){
         if(sender.title(for: .normal) == nil){
             if(currentTurn == TicTacToeTurn.o){

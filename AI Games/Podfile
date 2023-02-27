@@ -17,5 +17,5 @@ target 'AI Games' do
   end
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
-
+pod 'FirebaseFirestoreSwift'
 end
