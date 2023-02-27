@@ -20,6 +20,7 @@
 		80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CB329A6AA30001D53E6 /* CameraViewController.swift */; };
 		80B4595B29AC09A200CD0EBE /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */; };
 		80B4595F29AC148700CD0EBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */; };
+		80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4596129AC304400CD0EBE /* AnalysisViewController.swift */; };
 		80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BB29A6BA360098541A /* ScanViewController.swift */; };
 		80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */; };
 		E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520F10E299A021200D2F267 /* TicTacToe3x3.swift */; };
@@ -71,6 +72,7 @@
 		80814CB329A6AA30001D53E6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		80B4596129AC304400CD0EBE /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		80D6E7BB29A6BA360098541A /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionViewController.swift; sourceTree = "<group>"; };
 		9C1B139A7D9E30E8B86C5F4E /* Pods_AI_GamesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AI_GamesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +181,14 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		80B4596029AC303100CD0EBE /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				80B4596129AC304400CD0EBE /* AnalysisViewController.swift */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
 		E520F10D299A01E300D2F267 /* Gameplays */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +226,7 @@
 		E56184B429906C39003E2B05 /* AI Games */ = {
 			isa = PBXGroup;
 			children = (
+				80B4596029AC303100CD0EBE /* Analysis */,
 				80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */,
 				80B4595929AC098800CD0EBE /* Authentication */,
 				80814CB229A6A981001D53E6 /* Image Capture */,
@@ -518,6 +529,7 @@
 				E520F11B299A1C0200D2F267 /* FiveInARow.swift in Sources */,
 				8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */,
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
+				80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
