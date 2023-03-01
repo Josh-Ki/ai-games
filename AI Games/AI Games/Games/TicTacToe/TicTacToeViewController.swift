@@ -65,7 +65,7 @@ class TicTacToeViewController: UIViewController {
     }
     
     func AIPlays() {
-        let best = minimaxBestMove(gameState: toGameState(), playsFirst: false)
+        let best = minimaxBestMove(gameState: toGameState())
         switch best {
         case 0:
             r1c1.setTitle(o, for: .normal)
