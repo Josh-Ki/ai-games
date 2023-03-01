@@ -61,15 +61,15 @@ class GenericBoardGame {
         }
     }
     
-    func AIPlays(level: Int) -> [UILabel] {
-        var pos = 0
-        if (level == 0) { // easiest AI
-            pos = randomAI(legalPositions: self.legalPositions())
-        }
-        
-        self.gameboard[pos].text = "O"
-        self.turn = "X"
-        return self.gameboard
-    }
+//    func AIPlays(level: Int) -> [UILabel] {
+//        var pos = 0
+//        if (level == 0) { // easiest AI
+//            pos = randomAI(legalPositions: self.legalPositions())
+//        }
+//        
+//        self.gameboard[pos].text = "O"
+//        self.turn = "X"
+//        return self.gameboard
+//    }
     
 }

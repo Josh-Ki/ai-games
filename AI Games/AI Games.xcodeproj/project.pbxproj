@@ -38,7 +38,8 @@
 		E56184CD29906C3C003E2B05 /* AI_GamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */; };
 		E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */; };
 		E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */; };
-		E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BBEAF29A3F967009BF380 /* BoardGameAIs.swift */; };
+		E5BE501829AFBA47005849BF /* TicTacToeMinimax.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE501729AFBA47005849BF /* TicTacToeMinimax.swift */; };
+		E5BE501A29AFC019005849BF /* TicTacToeGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE501929AFC019005849BF /* TicTacToeGameState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,7 +101,8 @@
 		E56184D229906C3C003E2B05 /* AI GamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI GamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITests.swift; sourceTree = "<group>"; };
 		E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		E59BBEAF29A3F967009BF380 /* BoardGameAIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGameAIs.swift; sourceTree = "<group>"; };
+		E5BE501729AFBA47005849BF /* TicTacToeMinimax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeMinimax.swift; sourceTree = "<group>"; };
+		E5BE501929AFC019005849BF /* TicTacToeGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeGameState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,8 @@
 			children = (
 				8058296229A302E1000C76BE /* TicTacToeViewController.swift */,
 				80AB957D29AC969B0015FCAA /* TicTacToeTurn.swift */,
+				E5BE501929AFC019005849BF /* TicTacToeGameState.swift */,
+				E5BE501729AFBA47005849BF /* TicTacToeMinimax.swift */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -254,7 +258,6 @@
 				E56184B529906C39003E2B05 /* AppDelegate.swift */,
 				E56184B729906C39003E2B05 /* SceneDelegate.swift */,
 				E56184B929906C39003E2B05 /* ViewController.swift */,
-				E59BBEAF29A3F967009BF380 /* BoardGameAIs.swift */,
 				E56184BB29906C39003E2B05 /* Main.storyboard */,
 				E56184BE29906C3B003E2B05 /* Assets.xcassets */,
 				E56184C029906C3B003E2B05 /* LaunchScreen.storyboard */,
@@ -534,9 +537,9 @@
 				80814CA929A55315001D53E6 /* FourInARowViewController.swift in Sources */,
 				80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */,
 				E520F10F299A021200D2F267 /* TicTacToe3x3.swift in Sources */,
-				E59BBEB029A3F967009BF380 /* BoardGameAIs.swift in Sources */,
 				E520F119299A1BEA00D2F267 /* FourInARow.swift in Sources */,
 				80AB957E29AC969B0015FCAA /* TicTacToeTurn.swift in Sources */,
+				E5BE501A29AFC019005849BF /* TicTacToeGameState.swift in Sources */,
 				80814CAD29A55691001D53E6 /* Board.swift in Sources */,
 				80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */,
 				80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */,
@@ -550,6 +553,7 @@
 				8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */,
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
 				80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */,
+				E5BE501829AFBA47005849BF /* TicTacToeMinimax.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,

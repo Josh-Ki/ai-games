@@ -10,12 +10,12 @@ import UIKit
 import FirebaseFirestore
 import FirebaseCore
 import FirebaseAuth
-
 import Firebase
 
-
 var ticTacToeWins = 0
+
 class TicTacToeViewController: UIViewController {
+    
     @IBOutlet weak var turnLabel: UILabel!
     @IBOutlet weak var r1c1: UIButton!
     @IBOutlet weak var r1c2: UIButton!
@@ -29,10 +29,8 @@ class TicTacToeViewController: UIViewController {
     let userID = Auth.auth().currentUser!.uid
     let database = Firestore.firestore()
     
-    
     func writeUserData(wins: Int, userID: String) {
         let docRef = database.document("/users/\(userID)/tictactoe/wins")
-        
         docRef.setData(["wins" : wins])
     }
 
@@ -41,6 +39,7 @@ class TicTacToeViewController: UIViewController {
         initBoard()
         print(userID)
     }
+    
     var board = [UIButton]()
     var firstTurn = TicTacToeTurn.x
     var currentTurn = TicTacToeTurn.x
@@ -51,24 +50,65 @@ class TicTacToeViewController: UIViewController {
     var xScore = 0
     
     @IBAction func buttonTapped(_ sender: UIButton) {
-        
         addToBoard(sender)
-        if victory(x){
+        
+        if victory(x) {
             xScore += 1
             resultAlert(title: "X WINS")
             ticTacToeWins += 1
             writeUserData(wins: ticTacToeWins, userID: userID)
-        }
-        if victory(o){
-            oScore += 1
-            resultAlert(title: "O Wins")
-        }
-        if(boardIsFull()){
+        } else if (boardIsFull()) {
             resultAlert(title: "Draw")
-            
+        } else {
+            AIPlays()
+        }
+    }
+    
+    func AIPlays() {
+        let best = minimaxBestMove(gameState: toGameState(), playsFirst: false)
+        switch best {
+        case 0:
+            r1c1.setTitle(o, for: .normal)
+            break
+        case 1:
+            r1c2.setTitle(o, for: .normal)
+            break
+        case 2:
+            r1c3.setTitle(o, for: .normal)
+            break
+        case 3:
+            r2c1.setTitle(o, for: .normal)
+            break
+        case 4:
+            r2c2.setTitle(o, for: .normal)
+            break
+        case 5:
+            r2c3.setTitle(o, for: .normal)
+            break
+        case 6:
+            r3c1.setTitle(o, for: .normal)
+            break
+        case 7:
+            r3c2.setTitle(o, for: .normal)
+            break
+        case 8:
+            r3c3.setTitle(o, for: .normal)
+            break
+        default:
+            break
         }
         
+        if victory(o) {
+            oScore += 1
+            resultAlert(title: "O Wins")
+        } else if (boardIsFull()) {
+            resultAlert(title: "Draw")
+        }
+        
+        currentTurn = TicTacToeTurn.x
+        turnLabel.text = x
     }
+    
     func initBoard() {
         board.append(r1c1)
         board.append(r1c2)
@@ -90,13 +130,14 @@ class TicTacToeViewController: UIViewController {
         return true
     }
 
-    func resultAlert(title:String){
+    func resultAlert(title:String) {
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Reset", style: .default, handler: { (_) in
             self.resetBoard()
         }))
         self.present(ac, animated: true)
     }
+    
     func resetBoard() {
         for button in board {
             button.setTitle(nil, for: .normal)
@@ -111,74 +152,80 @@ class TicTacToeViewController: UIViewController {
             turnLabel.text = o
         }
         currentTurn = firstTurn
+        if (firstTurn == TicTacToeTurn.o) {
+            AIPlays()
+        }
     }
 
     func addToBoard(_ sender: UIButton){
         if(sender.title(for: .normal) == nil){
-            if(currentTurn == TicTacToeTurn.o){
-                
-                sender.setTitle(o, for: .normal)
-
-                
-                
-                currentTurn = TicTacToeTurn.x
-                turnLabel.text = x
-            }
-            else if(currentTurn == TicTacToeTurn.x){
+            sender.isEnabled = false
+            if(currentTurn == TicTacToeTurn.x){
                 sender.setTitle(x, for: .normal)
                 currentTurn = TicTacToeTurn.o
                 turnLabel.text = o
             }
-            sender.isEnabled = false
         }
     }
-    func victory(_ s :String) -> Bool
+    
+    func victory(_ s :String) -> Bool {
+        // Horizontal Victory
+        if thisSymbol(r1c1, s) && thisSymbol(r1c2, s) && thisSymbol(r1c3, s)
         {
-            // Horizontal Victory
-            if thisSymbol(r1c1, s) && thisSymbol(r1c2, s) && thisSymbol(r1c3, s)
-            {
-                return true
-            }
-            if thisSymbol(r2c1, s) && thisSymbol(r2c2, s) && thisSymbol(r2c3, s)
-            {
-                return true
-            }
-            if thisSymbol(r3c1, s) && thisSymbol(r3c2, s) && thisSymbol(r3c3, s)
-            {
-                return true
-            }
-            
-            // Vertical Victory
-            if thisSymbol(r1c1, s) && thisSymbol(r2c1, s) && thisSymbol(r3c1, s)
-            {
-                return true
-            }
-            if thisSymbol(r1c2, s) && thisSymbol(r2c2, s) && thisSymbol(r3c2, s)
-            {
-                return true
-            }
-            if thisSymbol(r1c3, s) && thisSymbol(r2c3, s) && thisSymbol(r3c3, s)
-            {
-                return true
-            }
-            
-            // Diagonal Victory
-            if thisSymbol(r1c1, s) && thisSymbol(r2c2, s) && thisSymbol(r3c3, s)
-            {
-                return true
-            }
-            if thisSymbol(r1c3, s) && thisSymbol(r2c2, s) && thisSymbol(r3c1, s)
-            {
-                return true
-            }
-            
-            return false
+            return true
         }
+        if thisSymbol(r2c1, s) && thisSymbol(r2c2, s) && thisSymbol(r2c3, s)
+        {
+            return true
+        }
+        if thisSymbol(r3c1, s) && thisSymbol(r3c2, s) && thisSymbol(r3c3, s)
+        {
+            return true
+        }
+        
+        // Vertical Victory
+        if thisSymbol(r1c1, s) && thisSymbol(r2c1, s) && thisSymbol(r3c1, s)
+        {
+            return true
+        }
+        if thisSymbol(r1c2, s) && thisSymbol(r2c2, s) && thisSymbol(r3c2, s)
+        {
+            return true
+        }
+        if thisSymbol(r1c3, s) && thisSymbol(r2c3, s) && thisSymbol(r3c3, s)
+        {
+            return true
+        }
+        
+        // Diagonal Victory
+        if thisSymbol(r1c1, s) && thisSymbol(r2c2, s) && thisSymbol(r3c3, s)
+        {
+            return true
+        }
+        if thisSymbol(r1c3, s) && thisSymbol(r2c2, s) && thisSymbol(r3c1, s)
+        {
+            return true
+        }
+        
+        return false
+    }
     
     func thisSymbol(_ button: UIButton, _ symbol: String) -> Bool {
         return button.title(for: .normal) == symbol
     }
     
-    
+    func toGameState() -> TicTocToeGameState {
+        var gameboard = [r1c1.title(for: .normal) ?? ""]
+        gameboard.append(r1c2.title(for: .normal) ?? "")
+        gameboard.append(r1c3.title(for: .normal) ?? "")
+        gameboard.append(r2c1.title(for: .normal) ?? "")
+        gameboard.append(r2c2.title(for: .normal) ?? "")
+        gameboard.append(r2c3.title(for: .normal) ?? "")
+        gameboard.append(r3c1.title(for: .normal) ?? "")
+        gameboard.append(r3c2.title(for: .normal) ?? "")
+        gameboard.append(r3c3.title(for: .normal) ?? "")
+        
+        return TicTocToeGameState(gameboard: gameboard, turn: currentTurn == TicTacToeTurn.x ? "X" : "O")
+    }
     
 }
