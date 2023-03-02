@@ -32,17 +32,25 @@ func minimax(gameState: TicTocToeGameState, maxAgent: Bool) -> Int {
 // https://freecontent.manning.com/classic-computer-science-problems-in-swift-tic-tac-toe/
 func minimaxBestMove(gameState: TicTocToeGameState) -> Int {
     var v = Int.min
-    var best = -1
+    var bests: [Int] = []
     
     for i in gameState.legalMoves {
         // AI minimises man's utility score
         let eval = minimax(gameState: gameState.move(pos: i), maxAgent: false)
         
-        if eval > v {
+        if (eval > v) {
             v = eval
-            best = i
+            bests.removeAll()
+            bests.append(i)
+        } else if (eval == v) {
+            bests.append(i)
         }
     }
     
-    return best
+    // https://stackoverflow.com/questions/24003191/pick-a-random-element-from-an-array
+    if let r = bests.randomElement() { // pick one among multiple best moves
+        return r
+    } else {
+        return -1
+    }
 }
