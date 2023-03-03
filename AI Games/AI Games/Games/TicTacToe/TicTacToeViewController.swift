@@ -157,10 +157,10 @@ class TicTacToeViewController: UIViewController {
         }
     }
 
-    func addToBoard(_ sender: UIButton){
-        if(sender.title(for: .normal) == nil){
+    func addToBoard(_ sender: UIButton) {
+        if (sender.title(for: .normal) == nil) {
             sender.isEnabled = false
-            if(currentTurn == TicTacToeTurn.x){
+            if (currentTurn == TicTacToeTurn.x) {
                 sender.setTitle(x, for: .normal)
                 currentTurn = TicTacToeTurn.o
                 turnLabel.text = o
@@ -170,40 +170,32 @@ class TicTacToeViewController: UIViewController {
     
     func victory(_ s :String) -> Bool {
         // Horizontal Victory
-        if thisSymbol(r1c1, s) && thisSymbol(r1c2, s) && thisSymbol(r1c3, s)
-        {
+        if thisSymbol(r1c1, s) && thisSymbol(r1c2, s) && thisSymbol(r1c3, s) {
             return true
         }
-        if thisSymbol(r2c1, s) && thisSymbol(r2c2, s) && thisSymbol(r2c3, s)
-        {
+        if thisSymbol(r2c1, s) && thisSymbol(r2c2, s) && thisSymbol(r2c3, s) {
             return true
         }
-        if thisSymbol(r3c1, s) && thisSymbol(r3c2, s) && thisSymbol(r3c3, s)
-        {
+        if thisSymbol(r3c1, s) && thisSymbol(r3c2, s) && thisSymbol(r3c3, s) {
             return true
         }
         
         // Vertical Victory
-        if thisSymbol(r1c1, s) && thisSymbol(r2c1, s) && thisSymbol(r3c1, s)
-        {
+        if thisSymbol(r1c1, s) && thisSymbol(r2c1, s) && thisSymbol(r3c1, s) {
             return true
         }
-        if thisSymbol(r1c2, s) && thisSymbol(r2c2, s) && thisSymbol(r3c2, s)
-        {
+        if thisSymbol(r1c2, s) && thisSymbol(r2c2, s) && thisSymbol(r3c2, s) {
             return true
         }
-        if thisSymbol(r1c3, s) && thisSymbol(r2c3, s) && thisSymbol(r3c3, s)
-        {
+        if thisSymbol(r1c3, s) && thisSymbol(r2c3, s) && thisSymbol(r3c3, s) {
             return true
         }
         
         // Diagonal Victory
-        if thisSymbol(r1c1, s) && thisSymbol(r2c2, s) && thisSymbol(r3c3, s)
-        {
+        if thisSymbol(r1c1, s) && thisSymbol(r2c2, s) && thisSymbol(r3c3, s) {
             return true
         }
-        if thisSymbol(r1c3, s) && thisSymbol(r2c2, s) && thisSymbol(r3c1, s)
-        {
+        if thisSymbol(r1c3, s) && thisSymbol(r2c2, s) && thisSymbol(r3c1, s) {
             return true
         }
         
