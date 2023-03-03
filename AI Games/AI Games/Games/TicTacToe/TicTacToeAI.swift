@@ -7,7 +7,14 @@
 
 import Foundation
 
-func minimax(gameState: TicTocToeGameState, maxAgent: Bool) -> Int {
+func randomMove(gameState: TicTocToeGameState) -> Int {
+    if let r = gameState.legalMoves.randomElement() {
+        return r
+    }
+    return -1
+}
+
+private func minimax(gameState: TicTocToeGameState, maxAgent: Bool) -> Int {
     if (gameState.state > -2) {
         return gameState.state
     }
@@ -50,7 +57,6 @@ func minimaxBestMove(gameState: TicTocToeGameState) -> Int {
     // https://stackoverflow.com/questions/24003191/pick-a-random-element-from-an-array
     if let r = bests.randomElement() { // pick one among multiple best moves
         return r
-    } else {
-        return -1
     }
+    return -1
 }

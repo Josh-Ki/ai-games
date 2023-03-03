@@ -48,6 +48,7 @@ class TicTacToeViewController: UIViewController {
     var x = "X"
     var oScore = 0
     var xScore = 0
+    var userMoves = 0
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         addToBoard(sender)
@@ -65,8 +66,15 @@ class TicTacToeViewController: UIViewController {
     }
     
     func AIPlays() {
-        let best = minimaxBestMove(gameState: toGameState())
-        switch best {
+        var move = -1
+        if (userMoves < 2) {
+            print("AI random move")
+            move = randomMove(gameState: toGameState()) // AI random move around man's first move
+        } else {
+            print("AI best move")
+            move = minimaxBestMove(gameState: toGameState())
+        }
+        switch move {
         case 0:
             r1c1.setTitle(o, for: .normal)
             break
@@ -139,6 +147,7 @@ class TicTacToeViewController: UIViewController {
     }
     
     func resetBoard() {
+        userMoves = 0
         for button in board {
             button.setTitle(nil, for: .normal)
             button.isEnabled = true
@@ -159,12 +168,14 @@ class TicTacToeViewController: UIViewController {
 
     func addToBoard(_ sender: UIButton) {
         if (sender.title(for: .normal) == nil) {
-            sender.isEnabled = false
             if (currentTurn == TicTacToeTurn.x) {
                 sender.setTitle(x, for: .normal)
+                userMoves += 1
+                print("man move \(userMoves)")
                 currentTurn = TicTacToeTurn.o
                 turnLabel.text = o
             }
+            sender.isEnabled = false
         }
     }
     
