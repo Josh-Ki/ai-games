@@ -51,13 +51,18 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        
+        // Human player's turn
+        
         let column = indexPath.item
-        guard var boardItem = getLowestEmpty(column), let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else {
-            return
-        }
+        
+        guard var boardItem = getLowestEmpty(column),
+              let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else { return }
         
         cell.image.tintColor = currentTurnColor()
+        
         boardItem.tile = currentTurnTile()
         updateBoard(boardItem)
         
@@ -74,15 +79,76 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
             toggleTurn(turnImage)
             
             // Animate piece's movement
+            
             let row = boardItem.indexPath.section
             let newIndexPath = IndexPath(item: column, section: row)
+            
             let cellAttributes = collectionView.layoutAttributesForItem(at: newIndexPath)
+            
             let finalCenter = cellAttributes?.center ?? .zero
-            let startCenter = CGPoint(x: finalCenter.x, y: finalCenter.y - collectionView.bounds.height)
+            
+            let startCenter = CGPoint(x: finalCenter.x,
+                                      y: finalCenter.y - collectionView.bounds.height)
+            
             cell.center = startCenter
-            UIView.animate(withDuration: 0.5, animations: {
+            
+            UIView.animate(withDuration: 0.5) {
                 cell.center = finalCenter
-            })
+            }
+            
+            // AI player's turn
+            
+            var bestMove: Move?
+            
+            _  = minimax(depth: 0,
+                                maxdepth: 4,
+                         bestmove: &bestMove,
+                                alpha: Int.min + 1,
+                                beta: Int.max - 1)
+            
+            if let bestMove = bestMove {
+                let column = bestMove.column
+                
+                guard var boardItem = getLowestEmpty(column),
+                      let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else { return }
+                
+                cell.image.tintColor = currentTurnColor()
+                
+                boardItem.tile = currentTurnTile()
+                
+                updateBoard(boardItem)
+                
+                if victory() {
+                    if yellowTurn {
+                        yellowScore += 1
+                    } else {
+                        redScore += 1
+                    }
+                    resultAlert(currentTurnVictoryMessage())
+                } else if boardIsFull() {
+                    resultAlert("Draw")
+                } else {
+                    toggleTurn(turnImage)
+                    
+                    // Animate piece's movement
+                    
+                    let row = boardItem.indexPath.section
+                    let newIndexPath = IndexPath(item: column, section: row)
+                    
+                    let cellAttributes = collectionView.layoutAttributesForItem(at: newIndexPath)
+                    
+                    let finalCenter = cellAttributes?.center ?? .zero
+                    
+                    let startCenter = CGPoint(x: finalCenter.x,
+                                              y: finalCenter.y - collectionView.bounds.height)
+                    
+                    cell.center = startCenter
+                    
+                    UIView.animate(withDuration: 0.5) {
+                        cell.center = finalCenter
+                    }
+                }
+            }
         }
     }
 

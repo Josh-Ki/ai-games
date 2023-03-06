@@ -48,3 +48,6 @@ struct BoardItem
         return .white
     }
 }
+struct Move {
+    let column: Int
+}
