@@ -19,6 +19,7 @@
 		80B4595B29AC09A200CD0EBE /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */; };
 		80B4595F29AC148700CD0EBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */; };
 		80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4596129AC304400CD0EBE /* AnalysisViewController.swift */; };
+		80BC220129C76D7900D7FA18 /* SudokuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BC220029C76D7900D7FA18 /* SudokuCell.swift */; };
 		80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BB29A6BA360098541A /* ScanViewController.swift */; };
 		80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */; };
 		8308E07FA01289526C111417 /* Pods_AI_Games.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD3E833671C1C672012E807 /* Pods_AI_Games.framework */; };
@@ -77,6 +78,7 @@
 		80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80B4596129AC304400CD0EBE /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
+		80BC220029C76D7900D7FA18 /* SudokuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SudokuCell.swift; path = ../../../../../SudokuCell.swift; sourceTree = "<group>"; };
 		80D6E7BB29A6BA360098541A /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionViewController.swift; sourceTree = "<group>"; };
 		9CD3E833671C1C672012E807 /* Pods_AI_Games.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AI_Games.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				8058296029A302D3000C76BE /* SudokuViewController.swift */,
+				80BC220029C76D7900D7FA18 /* SudokuCell.swift */,
 			);
 			path = Sudoku;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				E5BE501829AFBA47005849BF /* TicTacToeAI.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
+				80BC220129C76D7900D7FA18 /* SudokuCell.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

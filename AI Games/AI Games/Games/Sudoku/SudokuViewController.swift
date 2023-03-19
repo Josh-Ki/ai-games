@@ -7,74 +7,189 @@
 //MARK: This View Controller instantiates a board and allows a user to input numbers into the squares. There is also a timer and label instantiated when this view loads.
 import UIKit
 
-class SudokuViewController: UIViewController, UITextFieldDelegate {
+class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let GRID_SIZE: CGFloat = 9.0 // use a constant for the grid size
-    var textFields: [UITextField] = [] // use a single array for the text fields
-    var timerLabel: UILabel! // add a label for the timer
-    var timer: Timer! // add a timer
-    var seconds: Int = 0 // add a variable for the seconds
+    
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    var sudokuArray: [[Int]] = []
+    var partialArray: [[Int]] = []
+    let maxCellsToFill = 40
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.lightGray // change the background color
-        let squareSize: CGFloat = min(view.bounds.width, view.bounds.height) / GRID_SIZE
-        let gridWidth = squareSize * GRID_SIZE
-        let gridHeight = squareSize * GRID_SIZE
-        let gridX = (view.bounds.width - gridWidth) / 2
-        let gridY = (view.bounds.height - gridHeight) / 2
-        let titleLabel = UILabel(frame: CGRect(x: gridX, y: gridY - 50, width: gridWidth, height: 40)) // add a label for the title
-        titleLabel.text = "Sudoku" // set the title text
-        titleLabel.textAlignment = .center // center the title text
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 40) // set the title font
-        titleLabel.textColor = UIColor.black // set the title color
-        view.addSubview(titleLabel) // add the title label to the view
-        timerLabel = UILabel(frame: CGRect(x: gridX, y: gridY + gridHeight + 10, width: gridWidth, height: 40)) // add a label for the timer
-        timerLabel.text = "00:00" // set the timer text
-        timerLabel.textAlignment = .center // center the timer text
-        timerLabel.font = UIFont.systemFont(ofSize: 30) // set the timer font
-        timerLabel.textColor = UIColor.black // set the timer color
-        view.addSubview(timerLabel) // add the timer label to the view
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true) // start the timer
-        for i in 0..<81 { // use a loop to create the text fields and squares
-            let row = i / 9
-            let col = i % 9
-            let square = UIView(frame: CGRect(x: gridX + CGFloat(col) * squareSize, y: gridY + CGFloat(row) * squareSize, width: squareSize, height: squareSize))
-            square.backgroundColor = UIColor.white
-            square.layer.borderWidth = 2.0
-            square.layer.borderColor = UIColor.black.cgColor
-            let textField = UITextField(frame: square.bounds)
-            textField.textAlignment = .center
-            textField.delegate = self
-            textField.font = UIFont.systemFont(ofSize: squareSize / 2)
-            textField.tag = i // use a tag property to identify the text field
-            square.addSubview(textField)
-            textFields.append(textField) // append the text field to the array
-            view.addSubview(square)
-        }
+        (sudokuArray, partialArray) = generateSudokuBoard()
+
+        
     }
 
-    @objc func updateTimer() { // add a function to update the timer
-        seconds += 1 // increment the seconds
-        let minutes = seconds / 60 // get the minutes
-        let seconds = seconds % 60 // get the remaining seconds
-        timerLabel.text = String(format: "%02d:%02d", minutes, seconds) // update the timer text
+    let itemsPerRow: CGFloat = 9
+    let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
+    @IBAction func checkButtonTapped(_ sender: UIButton) {
+        print("DL:FKJ")
+        for row in 0..<9 {
+            for col in 0..<9 {
+                let indexPath = IndexPath(row: row * 9 + col, section: 0)
+                guard let cell = collectionView.cellForItem(at: indexPath) as? SudokuCell else {
+                    continue
+                }
+                let userValue = partialArray[row][col]
+                let correctValue = sudokuArray[row][col]
+                if userValue != correctValue {
+                    // User input is incorrect
+                    cell.label.backgroundColor = UIColor.red
+                } else {
+                    // User input is correct
+                    cell.label.backgroundColor = UIColor.green
+                }
+            }
+        }
+
+    }
+
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+            let availableWidth = view.frame.width - paddingSpace
+            let widthPerItem = availableWidth / itemsPerRow
+
+            return CGSize(width: widthPerItem, height: widthPerItem)
+        }
+
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return sectionInsets
+        }
+
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+            return sectionInsets.left
+        }
+    
+
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 81
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let enteredValue = textField.text ?? "" // get the value entered by the user
-        print("The value entered at row \(textField.tag / 9) and column \(textField.tag % 9) is \(enteredValue)") // use the tag property to get the row and column
-        switch enteredValue { // use a switch statement to validate the input
-        case "1", "2", "3", "4", "5", "6", "7", "8", "9":
-            // store the value in a variable or data structure
-            textField.textColor = UIColor.blue // change the text color to blue
-            break
-        default:
-            // show an error message or clear the text field
-            textField.text = "" // clear the text field
-            textField.textColor = UIColor.red // change the text color to red
-            break
+    
+ 
+    @IBAction func change(_ textField: UITextField) {
+        let row = textField.tag / 9
+        let col = textField.tag % 9
+        if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
+            partialArray[row][col] = value
+            print(partialArray[row][col])
+        } else {
+            partialArray[row][col] = 0
+            textField.text = ""
         }
     }
     
+
+
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: indexPath) as! SudokuCell
+            let row = indexPath.row / 9
+            let col = indexPath.row % 9
+            print(partialArray)
+            let value = partialArray[row][col]
+            cell.label.text = "\(value == 0 ? "" : "\(value)")"
+            cell.label.textAlignment = .center // center the text
+            cell.label.tag = indexPath.row
+            cell.label.isUserInteractionEnabled = value == 0
+            return cell
+        }
+
+        func textFieldDidChange(_ textField: UITextField) {
+
+        }
+
+
+
+    
+    
+    func generateSudokuBoard() -> ([[Int]], [[Int]]) {
+        // Create an empty 9x9 Sudoku board
+        var board = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+
+        // Define a function to check if a value is valid in a given position
+        func isValid(_ value: Int, _ row: Int, _ col: Int) -> Bool {
+            // Check if the value is already in the same row or column
+            for i in 0..<9 {
+                if board[row][i] == value || board[i][col] == value {
+                    return false
+                }
+            }
+
+            // Check if the value is already in the same 3x3 subgrid
+            let subgridRow = (row / 3) * 3
+            let subgridCol = (col / 3) * 3
+            for i in subgridRow..<(subgridRow + 3) {
+                for j in subgridCol..<(subgridCol + 3) {
+                    if board[i][j] == value {
+                        return false
+                    }
+                }
+            }
+
+            return true
+        }
+
+        // Define a function to fill the board recursively
+        func fillBoard(_ row: Int, _ col: Int) -> Bool {
+            // Check if we have filled all rows of the board
+            if row == 9 {
+                return true
+            }
+
+            // Calculate the next position to fill
+            let nextCol = (col + 1) % 9
+            let nextRow = nextCol == 0 ? row + 1 : row
+
+            // Shuffle the numbers 1-9 to generate a random order
+            var numbers = Array(1...9)
+            numbers.shuffle()
+
+            // Try each number in the shuffled order until we find a valid one
+            for number in numbers {
+                if isValid(number, row, col) {
+                    // Place the valid number in the current position
+                    board[row][col] = number
+
+                    // Recursively fill the rest of the board
+                    if fillBoard(nextRow, nextCol) {
+                        return true
+                    }
+
+                    // If we couldn't fill the rest of the board, backtrack
+                    board[row][col] = 0
+                }
+            }
+
+            // If we couldn't find a valid number for this position, backtrack
+            return false
+        }
+
+        // Fill the board starting from the top-left corner
+        fillBoard(0, 0)
+
+        // Create a copy of the board for partially filled board
+        var partialBoard = board.map { $0.map { $0 } }
+
+
+        // Randomly remove cells from the board to create a partially filled board
+        var cellsToFill = maxCellsToFill
+        while cellsToFill > 0 {
+            let row = Int.random(in: 0..<9)
+            let col = Int.random(in: 0..<9)
+            if partialBoard[row][col] != 0 {
+                partialBoard[row][col] = 0
+                cellsToFill -= 1
+            }
+        }
+
+        return (board, partialBoard)
+    }
+
+
+
 }

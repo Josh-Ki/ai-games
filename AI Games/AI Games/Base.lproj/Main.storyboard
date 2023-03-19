@@ -86,14 +86,84 @@
                     <view key="view" contentMode="scaleToFill" id="Bum-rA-T4Y">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eN1-qd-H2K">
+                                <rect key="frame" x="0.0" y="239.66666666666663" width="393" height="393"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eN1-qd-H2K" secondAttribute="height" multiplier="1:1" id="dV3-H6-hyA"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="jiM-PS-JHg">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SudokuCell" id="Vfd-a3-lAf" customClass="SudokuCell" customModule="AI_Games" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iYG-ev-2XH">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TLA-bW-XZ2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="change:" destination="rfC-5l-DFh" eventType="editingDidEnd" id="Nha-mq-WC7"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="TLA-bW-XZ2" secondAttribute="trailing" id="614-Uf-qTt"/>
+                                                <constraint firstItem="TLA-bW-XZ2" firstAttribute="leading" secondItem="iYG-ev-2XH" secondAttribute="leading" id="Djp-Vy-Ipm"/>
+                                                <constraint firstItem="TLA-bW-XZ2" firstAttribute="top" secondItem="iYG-ev-2XH" secondAttribute="top" id="hwO-Tg-YSf"/>
+                                                <constraint firstItem="TLA-bW-XZ2" firstAttribute="centerX" secondItem="iYG-ev-2XH" secondAttribute="centerX" id="riG-Gp-weq"/>
+                                                <constraint firstItem="TLA-bW-XZ2" firstAttribute="centerY" secondItem="iYG-ev-2XH" secondAttribute="centerY" id="uwC-Rn-Otc"/>
+                                                <constraint firstAttribute="bottom" secondItem="TLA-bW-XZ2" secondAttribute="bottom" id="vdt-hK-tm8"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="label" destination="TLA-bW-XZ2" id="nTl-gM-TPw"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="rfC-5l-DFh" id="3gz-VG-QNn"/>
+                                    <outlet property="delegate" destination="rfC-5l-DFh" id="jg8-Dg-iEn"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jcG-NQ-VRE">
+                                <rect key="frame" x="159" y="694.66666666666663" width="75" height="35.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Check"/>
+                                <connections>
+                                    <action selector="checkButtonTapped:" destination="rfC-5l-DFh" eventType="touchUpInside" id="kpd-Mw-3yc"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="xzU-1c-eop"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eN1-qd-H2K" firstAttribute="centerX" secondItem="xzU-1c-eop" secondAttribute="centerX" id="HTm-O1-17e"/>
+                            <constraint firstItem="xzU-1c-eop" firstAttribute="bottom" secondItem="jcG-NQ-VRE" secondAttribute="bottom" constant="39" id="OmP-Sp-azp"/>
+                            <constraint firstItem="jcG-NQ-VRE" firstAttribute="top" secondItem="eN1-qd-H2K" secondAttribute="bottom" constant="62.329999999999998" id="TF0-ef-fVH"/>
+                            <constraint firstItem="jcG-NQ-VRE" firstAttribute="leading" secondItem="xzU-1c-eop" secondAttribute="leading" constant="159" id="b1S-YZ-9nD"/>
+                            <constraint firstItem="eN1-qd-H2K" firstAttribute="centerY" secondItem="xzU-1c-eop" secondAttribute="centerY" id="dxy-66-bda"/>
+                            <constraint firstItem="xzU-1c-eop" firstAttribute="trailing" secondItem="jcG-NQ-VRE" secondAttribute="trailing" constant="159" id="eoP-eQ-lPZ"/>
+                            <constraint firstItem="eN1-qd-H2K" firstAttribute="width" secondItem="Bum-rA-T4Y" secondAttribute="width" id="tDC-ke-jTZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="i9d-3V-HH4"/>
+                    <connections>
+                        <outlet property="collectionView" destination="eN1-qd-H2K" id="I1M-e6-sbB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WN1-1i-hap" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2389" y="-1343"/>
+            <point key="canvasLocation" x="2388.5496183206105" y="-1343.661971830986"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Jqk-8t-t7Z">
