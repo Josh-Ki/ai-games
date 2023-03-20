@@ -65,14 +65,7 @@ class TicTacToeViewController: UIViewController {
     }
     
     func AIPlays() {
-        var move = -1
-        if (userMoves < 2) {
-            print("AI random move")
-            move = randomMove(gameState: toGameState()) // AI random move around man's first move
-        } else {
-            print("AI best move")
-            move = minimaxBestMove(gameState: toGameState())
-        }
+        let move = minimaxBestMove(gameState: toGameState())
         switch move {
         case 0:
             r1c1.setTitle(o, for: .normal)
