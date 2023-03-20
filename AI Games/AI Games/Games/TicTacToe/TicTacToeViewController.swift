@@ -13,6 +13,7 @@ import UIKit
 //import Firebase
 
 var ticTacToeWins = 0
+var aiLevel = 1 // difficulty of AI (easy, medium, invicible)
 
 class TicTacToeViewController: UIViewController {
     
@@ -65,7 +66,15 @@ class TicTacToeViewController: UIViewController {
     }
     
     func AIPlays() {
-        let move = minimaxBestMove(gameState: toGameState())
+        var move = -1
+        if (aiLevel == 0) {
+            move = randomMove(gameState: toGameState())
+        } else if (aiLevel == 1) {
+            move = medium(gameState: toGameState())
+        } else {
+            move = minimaxBestMove(gameState: toGameState())
+        }
+        
         switch move {
         case 0:
             r1c1.setTitle(o, for: .normal)
