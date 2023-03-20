@@ -7,10 +7,10 @@
 //MARK: This View controller creates the tic tac toe board and allows for users to switch between x and o in order to play.
 
 import UIKit
-import FirebaseFirestore
-import FirebaseCore
-import FirebaseAuth
-import Firebase
+//import FirebaseFirestore
+//import FirebaseCore
+//import FirebaseAuth
+//import Firebase
 
 var ticTacToeWins = 0
 
@@ -26,18 +26,17 @@ class TicTacToeViewController: UIViewController {
     @IBOutlet weak var r3c1: UIButton!
     @IBOutlet weak var r3c2: UIButton!
     @IBOutlet weak var r3c3: UIButton!
-    let userID = Auth.auth().currentUser!.uid
-    let database = Firestore.firestore()
+//    let userID = Auth.auth().currentUser!.uid
+//    let database = Firestore.firestore()
     
-    func writeUserData(wins: Int, userID: String) {
-        let docRef = database.document("/users/\(userID)/tictactoe/wins")
-        docRef.setData(["wins" : wins])
-    }
+//    func writeUserData(wins: Int, userID: String) {
+//        let docRef = database.document("/users/\(userID)/tictactoe/wins")
+//        docRef.setData(["wins" : wins])
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
-        print(userID)
     }
     
     var board = [UIButton]()
@@ -57,7 +56,7 @@ class TicTacToeViewController: UIViewController {
             xScore += 1
             resultAlert(title: "X WINS")
             ticTacToeWins += 1
-            writeUserData(wins: ticTacToeWins, userID: userID)
+//            writeUserData(wins: ticTacToeWins, userID: userID)
         } else if (boardIsFull()) {
             resultAlert(title: "Draw")
         } else {

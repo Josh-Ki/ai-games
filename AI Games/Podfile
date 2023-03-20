@@ -15,7 +15,5 @@ target 'AI Games' do
   target 'AI GamesUITests' do
     # Pods for testing
   end
-pod 'Firebase/Core'
-pod 'Firebase/Auth'
-pod 'FirebaseFirestoreSwift'
+
 end

@@ -126,7 +126,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="label" destination="TLA-bW-XZ2" id="nTl-gM-TPw"/>
+                                            <outlet property="label" destination="TLA-bW-XZ2" id="Py2-Fn-CRU"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
