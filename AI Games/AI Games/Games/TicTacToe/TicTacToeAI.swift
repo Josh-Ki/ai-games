@@ -70,7 +70,7 @@ private func minimax(gameState: TicTocToeGameState, maxAgent: Bool, a: Int, b: I
     var a = a
     var b = b
     
-    if (gameState.state < 200) {
+    if (gameState.state > -2) {
         return gameState.state
     }
     

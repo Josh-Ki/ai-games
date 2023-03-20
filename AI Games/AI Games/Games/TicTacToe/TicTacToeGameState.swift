@@ -63,14 +63,14 @@ struct TicTocToeGameState {
     private func getState() -> Int {
         let wl = winLose()
         if (wl != 0) {
-            return wl*100
+            return wl
         }
         
         if ((wl == 0) && (legalMoves.isEmpty)) {
             return 0
         }
         
-        return 200 // incomplete game state
+        return -2 // incomplete game state
     }
     
     func move(pos: Int) -> TicTocToeGameState {
