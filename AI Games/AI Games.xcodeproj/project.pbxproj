@@ -32,6 +32,8 @@
 		E56184CD29906C3C003E2B05 /* AI_GamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */; };
 		E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */; };
 		E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */; };
+		E5A6400C29C8579100276B68 /* GomokuAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6400B29C8579100276B68 /* GomokuAI.swift */; };
+		E5A6400E29C857A500276B68 /* GomokuGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6400D29C857A500276B68 /* GomokuGameState.swift */; };
 		E5BE501829AFBA47005849BF /* TicTacToeAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE501729AFBA47005849BF /* TicTacToeAI.swift */; };
 		E5BE501A29AFC019005849BF /* TicTacToeGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE501929AFC019005849BF /* TicTacToeGameState.swift */; };
 /* End PBXBuildFile section */
@@ -83,6 +85,8 @@
 		E56184D229906C3C003E2B05 /* AI GamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI GamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITests.swift; sourceTree = "<group>"; };
 		E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E5A6400B29C8579100276B68 /* GomokuAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuAI.swift; sourceTree = "<group>"; };
+		E5A6400D29C857A500276B68 /* GomokuGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuGameState.swift; sourceTree = "<group>"; };
 		E5BE501729AFBA47005849BF /* TicTacToeAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeAI.swift; sourceTree = "<group>"; };
 		E5BE501929AFC019005849BF /* TicTacToeGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeGameState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,12 +238,22 @@
 			path = "AI GamesUITests";
 			sourceTree = "<group>";
 		};
+		E5A6400A29C8572000276B68 /* Gomoku */ = {
+			isa = PBXGroup;
+			children = (
+				E5A6400B29C8579100276B68 /* GomokuAI.swift */,
+				E5A6400D29C857A500276B68 /* GomokuGameState.swift */,
+			);
+			path = Gomoku;
+			sourceTree = "<group>";
+		};
 		E5C23ACE29A37018005E0847 /* Games */ = {
 			isa = PBXGroup;
 			children = (
 				809564A229AD146E00461E6D /* Sudoku */,
 				80AB957C29AC944F0015FCAA /* TicTacToe */,
 				80814CA729A552E9001D53E6 /* FourInARow */,
+				E5A6400A29C8572000276B68 /* Gomoku */,
 				80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */,
 			);
 			path = Games;
@@ -383,6 +397,7 @@
 				E5BE501A29AFC019005849BF /* TicTacToeGameState.swift in Sources */,
 				80814CAD29A55691001D53E6 /* Board.swift in Sources */,
 				80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */,
+				E5A6400C29C8579100276B68 /* GomokuAI.swift in Sources */,
 				80814CAF29A556B6001D53E6 /* BoardItem.swift in Sources */,
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				8058296129A302D3000C76BE /* SudokuViewController.swift in Sources */,
@@ -395,6 +410,7 @@
 				80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */,
 				E5BE501829AFBA47005849BF /* TicTacToeAI.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
+				E5A6400E29C857A500276B68 /* GomokuGameState.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
 			);
