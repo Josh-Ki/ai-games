@@ -50,17 +50,17 @@ class TicTacToeViewController: UIViewController {
     var userMoves = 0
     
     @IBAction func buttonTapped(_ sender: UIButton) {
-        addToBoard(sender)
-        
-        if victory(x) {
-            xScore += 1
-            resultAlert(title: "X WINS")
-            ticTacToeWins += 1
-//            writeUserData(wins: ticTacToeWins, userID: userID)
-        } else if (boardIsFull()) {
-            resultAlert(title: "Draw")
-        } else {
-            AIPlays()
+        if (addToBoard(sender)) {
+            if victory(x) {
+                xScore += 1
+                resultAlert(title: "X WINS")
+                ticTacToeWins += 1
+//                writeUserData(wins: ticTacToeWins, userID: userID)
+            } else if (boardIsFull()) {
+                resultAlert(title: "Draw")
+            } else {
+                AIPlays()
+            }
         }
     }
     
@@ -158,7 +158,7 @@ class TicTacToeViewController: UIViewController {
         }
     }
 
-    func addToBoard(_ sender: UIButton) {
+    func addToBoard(_ sender: UIButton) -> Bool {
         if (sender.title(for: .normal) == nil) {
             if (currentTurn == TicTacToeTurn.x) {
                 sender.setTitle(x, for: .normal)
@@ -168,7 +168,9 @@ class TicTacToeViewController: UIViewController {
                 turnLabel.text = o
             }
             sender.isEnabled = false
+            return true
         }
+        return false
     }
     
     func victory(_ s :String) -> Bool {
