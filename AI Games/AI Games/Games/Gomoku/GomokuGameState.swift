@@ -87,7 +87,7 @@ struct GomokuGameState {
                 if ((gameboard[pos] == me) && (gameboard[pos-9] == me) && (gameboard[pos-18] == me) && (gameboard[pos-27] == me) && (gameboard[pos-36] == me)) {
                     return 10000
                 }
-                if ((gameboard[pos] == you) && (gameboard[po-9] == you) && (gameboard[pos-18] == you) && (gameboard[pos-27] == you) && (gameboard[pos-36] == you)) {
+                if ((gameboard[pos] == you) && (gameboard[pos-9] == you) && (gameboard[pos-18] == you) && (gameboard[pos-27] == you) && (gameboard[pos-36] == you)) {
                     return -10000
                 }
             }
@@ -97,9 +97,23 @@ struct GomokuGameState {
     }
     
     private func getState() -> Int {
-        // TODO: implement game state detection
+        let wl = winLose()
+        if (wl != 0) {
+            return wl
+        }
+        
+        if ((wl == 0) && (legalMoves.isEmpty)) {
+            return 0
+        }
         
         return 20000 // incomplete game state
+    }
+    
+    func move(pos: Int) -> GomokuGameState {
+        var newGameboard = gameboard
+        newGameboard[pos] = me
+        let nextBlack = me == "B" ? false : true
+        return GomokuGameState(gameboard: newGameboard, isBlack: nextBlack)
     }
     
 }
