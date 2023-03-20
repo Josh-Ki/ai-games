@@ -8,7 +8,7 @@
 import Foundation
 
 // easy AI: random move
-func randomMove(gameState: TicTocToeGameState) -> Int {
+func tttRandomMove(gameState: TicTocToeGameState) -> Int {
     if let r = gameState.legalMoves.randomElement() {
         return r
     }
@@ -16,7 +16,7 @@ func randomMove(gameState: TicTocToeGameState) -> Int {
 }
 
 // medium AI: actively block line containing 2 X's
-func medium(gameState: TicTocToeGameState) -> Int {
+func tttMedium(gameState: TicTocToeGameState) -> Int {
     // https://www.programiz.com/swift-programming/sets
     var opt: Set<Int> = [] // list of return places
     
@@ -59,7 +59,7 @@ func medium(gameState: TicTocToeGameState) -> Int {
     } else if (!opt.isEmpty) {
         return opt.randomElement() ?? -1
     }
-    return randomMove(gameState: gameState)
+    return tttRandomMove(gameState: gameState)
 }
 
 // minimax algorithm with alpha-beta pruning (invincible)
@@ -100,7 +100,7 @@ private func minimax(gameState: TicTocToeGameState, maxAgent: Bool, a: Int, b: I
 }
 
 // https://freecontent.manning.com/classic-computer-science-problems-in-swift-tic-tac-toe/
-func minimaxBestMove(gameState: TicTocToeGameState) -> Int {
+func tttMinimaxBestMove(gameState: TicTocToeGameState) -> Int {
     var v = Int.min
     var bests: [Int] = []
     

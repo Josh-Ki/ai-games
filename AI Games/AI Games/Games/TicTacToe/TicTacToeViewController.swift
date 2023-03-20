@@ -68,11 +68,11 @@ class TicTacToeViewController: UIViewController {
     func AIPlays() {
         var move = -1
         if (aiLevel == 0) {
-            move = randomMove(gameState: toGameState())
+            move = tttRandomMove(gameState: toGameState())
         } else if (aiLevel == 1) {
-            move = medium(gameState: toGameState())
+            move = tttMedium(gameState: toGameState())
         } else {
-            move = minimaxBestMove(gameState: toGameState())
+            move = tttMinimaxBestMove(gameState: toGameState())
         }
         
         switch move {
