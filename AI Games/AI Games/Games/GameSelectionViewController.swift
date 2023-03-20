@@ -25,6 +25,7 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var sudokuButton: UIButton!
     @IBOutlet weak var tictactoeButton: UIButton!
     @IBOutlet weak var fourinarowButton: UIButton!
+    @IBOutlet weak var gomokuButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class GameSelectionViewController: UIViewController {
         customizeButton(sudokuButton)
         customizeButton(tictactoeButton)
         customizeButton(fourinarowButton)
-        
+        customizeButton(sudokuButton)
     }
     private func customizeButton(_ button: UIButton) {
         button.setTitleColor(UIColor.white, for: .normal)

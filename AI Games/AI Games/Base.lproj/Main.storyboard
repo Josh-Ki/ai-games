@@ -49,22 +49,28 @@
                                     <segue destination="y3f-OZ-gnq" kind="show" id="QgT-gW-r4e"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLv-fi-tUS">
-                                <rect key="frame" x="140" y="328" width="134" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLv-fi-tUS">
+                                <rect key="frame" x="140" y="330" width="134" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Gomoku"/>
+                                <connections>
+                                    <segue destination="eHq-Ae-83E" kind="show" id="q9k-Kx-7EF"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nLv-fi-tUS" secondAttribute="trailing" constant="140" id="5vg-Gj-qse"/>
+                            <constraint firstItem="nLv-fi-tUS" firstAttribute="top" secondItem="IF7-3J-fJH" secondAttribute="bottom" constant="10" id="8IW-Ha-wAX"/>
                             <constraint firstItem="hH1-hp-Sbq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="A0v-NS-zaf"/>
+                            <constraint firstItem="nLv-fi-tUS" firstAttribute="top" secondItem="IF7-3J-fJH" secondAttribute="bottom" constant="10" id="Fq1-8F-ssQ"/>
                             <constraint firstItem="IF7-3J-fJH" firstAttribute="top" secondItem="H74-Vv-hkg" secondAttribute="bottom" constant="10" id="ICc-ag-TDq"/>
                             <constraint firstItem="tib-XL-lpX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="135" id="KUQ-v1-oks"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hH1-hp-Sbq" secondAttribute="trailing" constant="140" id="Mkd-cM-c9T"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tib-XL-lpX" secondAttribute="trailing" constant="135" id="PSY-zO-O59"/>
                             <constraint firstItem="hH1-hp-Sbq" firstAttribute="top" secondItem="tib-XL-lpX" secondAttribute="bottom" constant="50" id="Rz7-Bc-3ix"/>
+                            <constraint firstItem="nLv-fi-tUS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="UHq-vM-NDh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="H74-Vv-hkg" secondAttribute="trailing" constant="140" id="dUt-H2-C17"/>
                             <constraint firstItem="IF7-3J-fJH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="fNe-wD-ekj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IF7-3J-fJH" secondAttribute="trailing" constant="140" id="l6i-5f-hii"/>
@@ -76,6 +82,7 @@
                     <connections>
                         <outlet property="fourinarowButton" destination="IF7-3J-fJH" id="dlE-4W-N1j"/>
                         <outlet property="gamesLabel" destination="tib-XL-lpX" id="UsA-yj-iYF"/>
+                        <outlet property="gomokuButton" destination="hH1-hp-Sbq" id="Aad-dg-ozX"/>
                         <outlet property="sudokuButton" destination="hH1-hp-Sbq" id="jGE-AJ-R4a"/>
                         <outlet property="tictactoeButton" destination="H74-Vv-hkg" id="IYq-AQ-jDT"/>
                     </connections>
@@ -335,6 +342,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mt0-0p-3xT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2389" y="-26"/>
+        </scene>
+        <!--Gomoku View Controller-->
+        <scene sceneID="3aT-sU-yGa">
+            <objects>
+                <viewController id="eHq-Ae-83E" customClass="GomokuViewController" customModule="AI_Games" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="y04-pk-CZo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="1xj-U8-qMt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8EM-Qh-0Nr"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R2J-GT-iek" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2388" y="646"/>
         </scene>
         <!--Tic Tac Toe View Controller-->
         <scene sceneID="QCO-wc-i2w">
