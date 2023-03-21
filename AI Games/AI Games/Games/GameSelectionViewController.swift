@@ -8,13 +8,6 @@
 import Foundation
 import UIKit
 
-
-//
-//  GameSelectionViewController.swift
-//  AI Games
-//
-//  Created by Joshua Ki on 2/22/23.
-//
 enum Game {
     case sudoku
     case ttt
