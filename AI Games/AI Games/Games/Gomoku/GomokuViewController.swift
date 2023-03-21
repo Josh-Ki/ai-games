@@ -9,9 +9,9 @@ import UIKit
 
 class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var gameboard: [String] = Array.init(repeating: "", count: 100)
-    var backColours: [UIColor] = []
-    var foreColours: [UIColor] = Array.init(repeating: UIColor.black, count: 100)
+    var gameboard: [String] = Array.init(repeating: "", count: 100) // pieces on gameboard
+    var backColours: [UIColor] = [] // background colours of gameboard cells
+    var foreColours: [UIColor] = Array.init(repeating: UIColor.black, count: 100) // display colours of pieces (only become white when marked in winning sequence)
     var turn = "B"
     var gameOver = false
     
