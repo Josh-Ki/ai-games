@@ -7,12 +7,14 @@
 
 import UIKit
 
+var gomokuAILevel = 0 // difficulty of AI (easy, medium, invicible)
+
 class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var gameboard: [String] = Array.init(repeating: "", count: 100) // pieces on gameboard
     var backColours: [UIColor] = [] // background colours of gameboard cells
     var foreColours: [UIColor] = Array.init(repeating: UIColor.black, count: 100) // display colours of pieces (only become white when marked in winning sequence)
-    var turn = "B"
+    var turn = "B" // black moves first
     var gameOver = false
     
     // https://stackoverflow.com/questions/53768438/collectionview-cell-width-not-changing-for-different-nib
@@ -58,38 +60,64 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                     turn = "B"
                 }
                 
-                let s = toGameState()
+                let s = toGomokuGameState()
+                whatsNext(gameState: s)
                 if (s.state == 20000) {
-                    turnLabel.text = "Turn: \(turn)"
-                } else {
-                    var msg = ""
-                    if (s.state == 10000) {
-                        msg = "\(bw(abbr: s.me)) WINS"
-                    } else if (s.state == -10000) {
-                        msg = "\(bw(abbr: s.you)) WINS"
-                    } else if (s.state == 0) {
-                        msg = "DRAW"
-                    }
-                    resultAlert(title: msg)
-                    turnLabel.text = msg
-                    
-                    // mark winning sequence on gameboard
-                    for i in s.winSeq {
-                        backColours[i] = UIColor.red
-                        foreColours[i] = UIColor.white
-                        
-                        // https://stackoverflow.com/questions/29428090/how-to-convert-int-to-nsindexpath
-                        gomokuView.reloadItems(at: [IndexPath(item: i, section: 0)])
-                    }
-                    
-                    gameOver = true
+                    AIPlays()
                 }
             }
         }
     }
     
+    func whatsNext(gameState: GomokuGameState) {
+        if (gameState.state == 20000) {
+            turnLabel.text = "Turn: \(turn)"
+        } else {
+            var msg = ""
+            if (gameState.state == 10000) {
+                msg = "\(bw(abbr: gameState.me)) WINS"
+            } else if (gameState.state == -10000) {
+                msg = "\(bw(abbr: gameState.you)) WINS"
+            } else if (gameState.state == 0) {
+                msg = "DRAW"
+            }
+            resultAlert(title: msg)
+            turnLabel.text = msg
+            
+            // mark winning sequence on gameboard
+            for i in gameState.winSeq {
+                backColours[i] = UIColor.red
+                foreColours[i] = UIColor.white
+                
+                // https://stackoverflow.com/questions/29428090/how-to-convert-int-to-nsindexpath
+                gomokuView.reloadItems(at: [IndexPath(item: i, section: 0)])
+            }
+            
+            gameOver = true
+        }
+    }
+    
+    func AIPlays() {
+        var move = -1
+        if (gomokuAILevel == 0) {
+            move = gomokuRandomMove(gameState: toGomokuGameState())
+        }
+        gameboard[move] = turn
+        gomokuView.reloadItems(at: [IndexPath(item: move, section: 0)])
+        
+        if (turn == "B") {
+            turn = "W"
+        } else {
+            turn = "B"
+        }
+        
+        let s = toGomokuGameState()
+        whatsNext(gameState: s)
+    }
+    
     @IBOutlet weak var gomokuView: UICollectionView!
     @IBOutlet weak var turnLabel: UILabel!
+    @IBOutlet weak var manPlay: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,6 +141,12 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         gomokuView.delegate = self
         gomokuView.dataSource = self
+        
+        let man: String = ["BLACK", "WHITE"].randomElement()!
+        manPlay.text = "Man plays \(man)"
+        if (man == "WHITE") {
+            AIPlays() // randomly let AI or human start first
+        }
     }
     
     func resultAlert(title: String) {
@@ -128,7 +162,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         return "BLACK"
     }
                             
-    func toGameState() -> GomokuGameState {
+    func toGomokuGameState() -> GomokuGameState {
         let isBlack = turn == "B" ? true : false
         return GomokuGameState(gameboard: gameboard, isBlack: isBlack)
     }

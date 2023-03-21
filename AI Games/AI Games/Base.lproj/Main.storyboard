@@ -393,6 +393,13 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Man plays BLACK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wcl-ZZ-Xa4">
+                                <rect key="frame" x="16" y="494" width="358" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1xj-U8-qMt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -408,6 +415,7 @@
                     <navigationItem key="navigationItem" id="8EM-Qh-0Nr"/>
                     <connections>
                         <outlet property="gomokuView" destination="6eI-Ru-MkE" id="Tx8-aj-d7b"/>
+                        <outlet property="manPlay" destination="Wcl-ZZ-Xa4" id="r1Q-oX-WAT"/>
                         <outlet property="turnLabel" destination="zms-gu-i4q" id="tyh-DK-knb"/>
                     </connections>
                 </viewController>

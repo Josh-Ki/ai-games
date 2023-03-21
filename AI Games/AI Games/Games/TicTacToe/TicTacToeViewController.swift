@@ -13,7 +13,7 @@ import UIKit
 //import Firebase
 
 var ticTacToeWins = 0
-var aiLevel = 1 // difficulty of AI (easy, medium, invicible)
+var tttAILevel = 1 // difficulty of AI (easy, medium, invicible)
 
 class TicTacToeViewController: UIViewController {
     
@@ -67,12 +67,12 @@ class TicTacToeViewController: UIViewController {
     
     func AIPlays() {
         var move = -1
-        if (aiLevel == 0) {
-            move = tttRandomMove(gameState: toGameState())
-        } else if (aiLevel == 1) {
-            move = tttMedium(gameState: toGameState())
+        if (tttAILevel == 0) {
+            move = tttRandomMove(gameState: toTTTGameState())
+        } else if (tttAILevel == 1) {
+            move = tttMedium(gameState: toTTTGameState())
         } else {
-            move = tttMinimaxBestMove(gameState: toGameState())
+            move = tttMinimaxBestMove(gameState: toTTTGameState())
         }
         
         switch move {
@@ -220,7 +220,7 @@ class TicTacToeViewController: UIViewController {
         return button.title(for: .normal) == symbol
     }
     
-    func toGameState() -> TicTocToeGameState {
+    func toTTTGameState() -> TicTocToeGameState {
         var gameboard = [r1c1.title(for: .normal) ?? ""]
         gameboard.append(r1c2.title(for: .normal) ?? "")
         gameboard.append(r1c3.title(for: .normal) ?? "")
