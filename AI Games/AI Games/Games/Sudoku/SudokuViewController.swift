@@ -10,14 +10,24 @@ import UIKit
 class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
-    
+    var selectedDifficulty: String?
     @IBOutlet weak var collectionView: UICollectionView!
     var sudokuArray: [[Int]] = []
     var partialArray: [[Int]] = []
-    let maxCellsToFill = 40
+    var maxCellsToFill : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        switch selectedDifficulty {
+        case "Easy":
+            maxCellsToFill = 30
+        case "Medium":
+            maxCellsToFill = 50
+        case "Hard":
+            maxCellsToFill = 70
+        default:
+            maxCellsToFill = 30
+        }
         (sudokuArray, partialArray) = generateSudokuBoard()
 
         

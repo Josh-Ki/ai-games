@@ -17,7 +17,13 @@ enum Game {
 
 
 class GameSelectionViewController: UIViewController {
-
+    
+    var selectedLevel : String = ""
+    @IBOutlet weak var easy: UIButton!
+    
+    @IBOutlet weak var med: UIButton!
+    
+    @IBOutlet weak var hard: UIButton!
     @IBOutlet weak var gamesLabel: UILabel!
     @IBOutlet weak var sudokuButton: UIButton!
     @IBOutlet weak var tictactoeButton: UIButton!
@@ -30,9 +36,6 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         gamesLabel.layer.borderWidth = 1
         gamesLabel.layer.borderColor = UIColor.white.cgColor
         customizeButton(sudokuButton)
@@ -83,12 +86,38 @@ class GameSelectionViewController: UIViewController {
 
     }
     
+    @IBAction func easyPressed(_ sender: Any) {
+        easy.tintColor = UIColor.green
+        med.tintColor = UIColor.blue
+        hard.tintColor = UIColor.blue
+        selectedLevel = "Easy"
+        
+    }
+    
+    
+    @IBAction func medPressed(_ sender: Any) {
+        easy.tintColor = UIColor.blue
+        med.tintColor = UIColor.green
+        hard.tintColor = UIColor.blue
+        selectedLevel = "Med"
+        
+    }
+    
+    
+    @IBAction func hardPressed(_ sender: Any) {
+        easy.tintColor = UIColor.blue
+        med.tintColor = UIColor.blue
+        hard.tintColor = UIColor.green
+        selectedLevel = "Hard"
+        
+    }
+    
     @IBAction func playPressed(_ sender: Any) {
         
         if selectedGame == .sudoku {
             let sudokuVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "SudokuViewController") as! SudokuViewController
-
+            sudokuVC.selectedDifficulty = selectedLevel
             navigationController?.pushViewController(sudokuVC, animated: true)
         }
         else if selectedGame == .ttt {

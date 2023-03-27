@@ -96,6 +96,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Med"/>
+                                <connections>
+                                    <action selector="medPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R63-XR-9wJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c48-6H-Hsc">
                                 <rect key="frame" x="75" y="653" width="75" height="35"/>
@@ -105,6 +108,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Easy"/>
+                                <connections>
+                                    <action selector="easyPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nd1-EI-KM2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRT-LE-aBR">
                                 <rect key="frame" x="240" y="653" width="75" height="35"/>
@@ -114,6 +120,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Hard"/>
+                                <connections>
+                                    <action selector="hardPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uSG-gY-Yn1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -148,10 +157,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="fVS-4u-ijk"/>
                     <connections>
+                        <outlet property="easy" destination="c48-6H-Hsc" id="xlm-uk-N0o"/>
                         <outlet property="fourinarowButton" destination="WMG-9O-5JI" id="7eh-Va-mgz"/>
                         <outlet property="gamesLabel" destination="tib-XL-lpX" id="UsA-yj-iYF"/>
                         <outlet property="gomokuButton" destination="UeO-go-Uwn" id="m4w-eh-a7H"/>
+                        <outlet property="hard" destination="bRT-LE-aBR" id="drB-Sv-SR7"/>
                         <outlet property="imageView" destination="CHN-BK-OeO" id="Gfl-MC-TTr"/>
+                        <outlet property="med" destination="B5F-bs-CQh" id="djZ-Im-yPi"/>
                         <outlet property="sudokuButton" destination="LMK-M6-ZwT" id="kXq-Y7-Thk"/>
                         <outlet property="tictactoeButton" destination="k1i-XZ-adJ" id="PPs-qc-faV"/>
                     </connections>
