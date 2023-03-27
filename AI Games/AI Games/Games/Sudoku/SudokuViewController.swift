@@ -4,7 +4,7 @@
 //
 //  Created by Joshua Ki on 2/12/23.
 //
-//MARK: This View Controller instantiates a board and allows a user to input numbers into the squares. There is also a timer and label instantiated when this view loads.
+//MARK: This View Controller instantiates a board and allows a user to input numbers into the squares.
 import UIKit
 
 class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

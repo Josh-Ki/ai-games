@@ -6,8 +6,12 @@
 //
 
 import XCTest
+@testable import AI_Games
 
 class AI_GamesUITests: XCTestCase {
+    
+
+
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -38,4 +42,6 @@ class AI_GamesUITests: XCTestCase {
             }
         }
     }
+    
+    
 }
