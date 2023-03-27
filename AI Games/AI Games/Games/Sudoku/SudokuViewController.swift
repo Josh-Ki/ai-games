@@ -26,8 +26,30 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     let itemsPerRow: CGFloat = 9
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
+    
+    @IBAction func hintButtonTapped(_ sender: Any) {
+        // Find all empty cells
+        var emptyCells: [(Int, Int)] = []
+        for row in 0..<9 {
+            for col in 0..<9 {
+                if partialArray[row][col] == 0 {
+                    emptyCells.append((row, col))
+                }
+            }
+        }
+
+        // Select a random empty cell and fill in the correct number
+        if let randomEmptyCell = emptyCells.randomElement() {
+            let row = randomEmptyCell.0
+            let col = randomEmptyCell.1
+            partialArray[row][col] = sudokuArray[row][col]
+            collectionView.reloadItems(at: [IndexPath(row: row * 9 + col, section: 0)])
+        }
+
+    }
+    
+    
     @IBAction func checkButtonTapped(_ sender: UIButton) {
-        print("DL:FKJ")
         for row in 0..<9 {
             for col in 0..<9 {
                 let indexPath = IndexPath(row: row * 9 + col, section: 0)
