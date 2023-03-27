@@ -123,6 +123,7 @@
                         <outlet property="fourinarowButton" destination="WMG-9O-5JI" id="7eh-Va-mgz"/>
                         <outlet property="gamesLabel" destination="tib-XL-lpX" id="UsA-yj-iYF"/>
                         <outlet property="gomokuButton" destination="UeO-go-Uwn" id="m4w-eh-a7H"/>
+                        <outlet property="imageView" destination="CHN-BK-OeO" id="Gfl-MC-TTr"/>
                         <outlet property="sudokuButton" destination="LMK-M6-ZwT" id="kXq-Y7-Thk"/>
                         <outlet property="tictactoeButton" destination="k1i-XZ-adJ" id="PPs-qc-faV"/>
                     </connections>

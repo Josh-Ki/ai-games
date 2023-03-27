@@ -24,44 +24,62 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var fourinarowButton: UIButton!
     @IBOutlet weak var gomokuButton: UIButton!
     var selectedGame : Game?
+    let sudokuImage = UIImage(named: "sudokuimage.jpeg")
+    let tttImage = UIImage(named: "tictactoe.jpeg")
 
+    @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gamesLabel.textColor = UIColor.white
-        gamesLabel.backgroundColor = UIColor.blue
+        
+        
         gamesLabel.layer.borderWidth = 1
         gamesLabel.layer.borderColor = UIColor.white.cgColor
         customizeButton(sudokuButton)
         customizeButton(tictactoeButton)
         customizeButton(fourinarowButton)
         customizeButton(sudokuButton)
+        customizeButton(gomokuButton)
+
     }
     private func customizeButton(_ button: UIButton) {
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.green
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.cornerRadius = 10
+        button.tintColor = UIColor.blue
     }
     
     @IBAction func sudokuPressed(_ sender: Any) {
         selectedGame = .sudoku
-        
+        sudokuButton.tintColor = UIColor.green
+        tictactoeButton.tintColor = UIColor.blue
+        fourinarowButton.tintColor = UIColor.blue
+        gomokuButton.tintColor = UIColor.blue
+        imageView.image = sudokuImage
     }
     
     
     @IBAction func tttPressed(_ sender: Any) {
         selectedGame = .ttt
+        sudokuButton.tintColor = UIColor.blue
+        tictactoeButton.tintColor = UIColor.green
+        fourinarowButton.tintColor = UIColor.blue
+        gomokuButton.tintColor = UIColor.blue
+        imageView.image = tttImage
 
     }
     
     @IBAction func c4Pressed(_ sender: Any) {
         selectedGame = .c4
+        sudokuButton.tintColor = UIColor.blue
+        tictactoeButton.tintColor = UIColor.blue
+        fourinarowButton.tintColor = UIColor.green
+        gomokuButton.tintColor = UIColor.blue
 
     }
     @IBAction func gomokuPressed(_ sender: Any) {
         selectedGame = .gomoku
+        sudokuButton.tintColor = UIColor.blue
+        tictactoeButton.tintColor = UIColor.blue
+        fourinarowButton.tintColor = UIColor.blue
+        gomokuButton.tintColor = UIColor.green
 
     }
     
