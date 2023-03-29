@@ -76,7 +76,7 @@ class AI_GamesTests: XCTestCase {
         XCTAssertEqual(viewController.sudokuArray[0].count, 9)
         XCTAssertEqual(viewController.partialArray.count, 9)
         XCTAssertEqual(viewController.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.maxCellsToFill, 70)
+        XCTAssertEqual(viewController.maxCellsToFill, 64)
     }
 
     func testGenerateSudokuBoard() {

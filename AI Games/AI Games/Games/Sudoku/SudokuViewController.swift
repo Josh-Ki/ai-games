@@ -24,7 +24,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         case "Medium":
             maxCellsToFill = 50
         case "Hard":
-            maxCellsToFill = 70
+            maxCellsToFill = 64
         default:
             maxCellsToFill = 30
         }
