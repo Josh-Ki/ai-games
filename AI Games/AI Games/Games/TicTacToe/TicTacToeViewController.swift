@@ -7,12 +7,13 @@
 //MARK: This View controller creates the tic tac toe board and allows for users to switch between x and o in order to play.
 
 import UIKit
-//import FirebaseFirestore
-//import FirebaseCore
-//import FirebaseAuth
-//import Firebase
+import FirebaseFirestore
+import FirebaseCore
+import FirebaseAuth
+import Firebase
 
 var ticTacToeWins = 0
+var ticTacToeLoss = 0
 var tttAILevel = 1 // difficulty of AI (easy, medium, invicible)
 
 class TicTacToeViewController: UIViewController {
@@ -27,17 +28,22 @@ class TicTacToeViewController: UIViewController {
     @IBOutlet weak var r3c1: UIButton!
     @IBOutlet weak var r3c2: UIButton!
     @IBOutlet weak var r3c3: UIButton!
-//    let userID = Auth.auth().currentUser!.uid
-//    let database = Firestore.firestore()
     
-//    func writeUserData(wins: Int, userID: String) {
-//        let docRef = database.document("/users/\(userID)/tictactoe/wins")
-//        docRef.setData(["wins" : wins])
-//    }
+    let database = Firestore.firestore()
+    
+    func writeUserData(wins: Int, userID: String) {
+        let docRef = database.document("/users/\(userID)/tictactoe/wins")
+        docRef.setData(["wins" : wins])
+    }
+    func writeUserDataLose(loss: Int, userID: String) {
+        let docRef = database.document("/users/\(userID)/tictactoe/loss")
+        docRef.setData(["loss" : loss])
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
+        
     }
     
     var board = [UIButton]()
@@ -56,7 +62,7 @@ class TicTacToeViewController: UIViewController {
                 xScore += 1
                 resultAlert(title: "X WINS")
                 ticTacToeWins += 1
-//                writeUserData(wins: ticTacToeWins, userID: userID)
+                writeUserData(wins: ticTacToeWins, userID: userID)
             } else if (boardIsFull()) {
                 resultAlert(title: "Draw")
             } else {
@@ -110,6 +116,7 @@ class TicTacToeViewController: UIViewController {
         if victory(o) {
             oScore += 1
             resultAlert(title: "O Wins")
+            writeUserDataLose(loss: ticTacToeLoss, userID: userID)
         } else if (boardIsFull()) {
             resultAlert(title: "Draw")
         }
