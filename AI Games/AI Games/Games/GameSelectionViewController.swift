@@ -73,6 +73,7 @@ class GameSelectionViewController: UIViewController {
         gomokuButton.tintColor = UIColor.blue
         imageView.image = sudokuImage
         sudokuBoardViewController.checkButton.isHidden = true
+        sudokuBoardViewController.hintButton.isHidden = true
     }
     
     
