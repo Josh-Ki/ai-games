@@ -6,18 +6,35 @@
 //
 //MARK: This View Controller instantiates a board and allows a user to input numbers into the squares.
 import UIKit
+import FirebaseFirestore
+import FirebaseCore
+import FirebaseAuth
+import Firebase
 
+var sudokuEasyWins = 0
+var sudokuHardWins = 0
+var sudokuMedWins = 0
 class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
+
     var selectedDifficulty: String?
     @IBOutlet weak var collectionView: UICollectionView!
     var sudokuArray: [[Int]] = []
     var partialArray: [[Int]] = []
     var maxCellsToFill : Int = 0
-    
+    let database = Firestore.firestore()
     override func viewDidLoad() {
+        print(selectedDifficulty)
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        //Looks for single or multiple taps.
+         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        //tap.cancelsTouchesInView = false
+
+        view.addGestureRecognizer(tap)
         switch selectedDifficulty {
         case "Easy":
             maxCellsToFill = 30
@@ -32,11 +49,81 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         
     }
+    
+    private func writeUserData(wins: Int, difficulty: String, userID: String) {
+        let docRef = database.document("/users/\(userID)/sudoku/difficulty/\(difficulty)/wins")
+        
+        docRef.setData(["wins" : wins])
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
 
     let itemsPerRow: CGFloat = 9
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
-    
+    func verify() -> Bool {
+
+        
+        // Check that all rows contain distinct values between 1 and 9
+        for row in 0..<9 {
+            var seen = Set<Int>()
+            for col in 0..<9 {
+                let value = partialArray[row][col]
+                if value < 1 || value > 9 || seen.contains(value) {
+                    return false
+                }
+                seen.insert(value)
+            }
+        }
+        
+        // Check that all columns contain distinct values between 1 and 9
+        for col in 0..<9 {
+            var seen = Set<Int>()
+            for row in 0..<9 {
+                let value = partialArray[row][col]
+                if value < 1 || value > 9 || seen.contains(value) {
+                    return false
+                }
+                seen.insert(value)
+            }
+        }
+        
+        // Check that all 3x3 subgrids contain distinct values between 1 and 9
+        for i in 0..<3 {
+            for j in 0..<3 {
+                var seen = Set<Int>()
+                for row in i*3..<i*3+3 {
+                    for col in j*3..<j*3+3 {
+                        let value = partialArray[row][col]
+                        if value < 1 || value > 9 || seen.contains(value) {
+                            return false
+                        }
+                        seen.insert(value)
+                    }
+                }
+            }
+        }
+        
+        // If all checks pass, the board is valid
+        
+        if selectedDifficulty! == "Easy" {
+            sudokuEasyWins += 1
+            writeUserData(wins: sudokuEasyWins, difficulty: selectedDifficulty!, userID: userID)
+        }
+        else if selectedDifficulty! == "Med" {
+            sudokuMedWins += 1
+            writeUserData(wins: sudokuMedWins, difficulty: selectedDifficulty!, userID: userID)
+        }
+        else if selectedDifficulty! == "Hard" {
+            sudokuHardWins += 1
+            writeUserData(wins: sudokuHardWins, difficulty: selectedDifficulty!, userID: userID)
+        }
+
+        return true
+    }
+
     @IBAction func hintButtonTapped(_ sender: Any) {
         // Find all empty cells
         var emptyCells: [(Int, Int)] = []
@@ -60,24 +147,50 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     @IBAction func checkButtonTapped(_ sender: UIButton) {
-        for row in 0..<9 {
-            for col in 0..<9 {
-                let indexPath = IndexPath(row: row * 9 + col, section: 0)
-                guard let cell = collectionView.cellForItem(at: indexPath) as? SudokuCell else {
-                    continue
-                }
-                let userValue = partialArray[row][col]
-                let correctValue = sudokuArray[row][col]
-                if userValue != correctValue {
-                    // User input is incorrect
-                    cell.label.backgroundColor = UIColor.red
-                } else {
-                    // User input is correct
-                    cell.label.backgroundColor = UIColor.green
+        if verify() {
+            let alert = UIAlertController(title: "Solved", message: "You have solved the Sudoku!", preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in
+                self?.restart()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(restartAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+        } else {
+            // Verify failed, show error colors
+            for row in 0..<9 {
+                for col in 0..<9 {
+                    let indexPath = IndexPath(row: row * 9 + col, section: 0)
+                    guard let cell = collectionView.cellForItem(at: indexPath) as? SudokuCell else {
+                        continue
+                    }
+                    let userValue = partialArray[row][col]
+                    let correctValue = sudokuArray[row][col]
+                    if userValue != correctValue {
+                        // User input is incorrect
+                        cell.label.backgroundColor = UIColor.red
+                    } else {
+                        // User input is correct
+                        cell.label.backgroundColor = UIColor.green
+                    }
                 }
             }
         }
+    }
 
+    func restart() {
+        // Reset partialArray to all 0s and randomize initial values
+        partialArray = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+        for row in 0..<9 {
+            for col in 0..<9 {
+                if Int.random(in: 1...100) <= maxCellsToFill {
+                    partialArray[row][col] = sudokuArray[row][col]
+                }
+            }
+        }
+        collectionView.reloadData()
     }
 
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

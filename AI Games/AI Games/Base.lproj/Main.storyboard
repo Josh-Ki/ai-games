@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGX-Of-Zaw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGX-Of-Zaw">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -172,10 +172,10 @@
             </objects>
             <point key="canvasLocation" x="1523.0769230769231" y="-696.6824644549763"/>
         </scene>
-        <!--Sudoku View Controller-->
+        <!--Sudoku-->
         <scene sceneID="TSW-5g-L0b">
             <objects>
-                <viewController restorationIdentifier="SudokuViewController" storyboardIdentifier="SudokuViewController" id="rfC-5l-DFh" customClass="SudokuViewController" customModule="AI_Games" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="SudokuViewController" storyboardIdentifier="SudokuViewController" title="Sudoku" id="rfC-5l-DFh" customClass="SudokuViewController" customModule="AI_Games" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bum-rA-T4Y">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -228,41 +228,74 @@
                                     <outlet property="delegate" destination="rfC-5l-DFh" id="jg8-Dg-iEn"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufO-xL-K1u">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ufO-xL-K1u">
                                 <rect key="frame" x="62" y="725" width="120" height="35"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="6jF-af-m7j"/>
                                     <constraint firstAttribute="width" constant="120" id="II0-Fk-abX"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Hint"/>
+                                <color key="tintColor" red="0.96731370687484741" green="0.76727341720623576" blue="0.42317253194375365" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Hint">
+                                            <attributes>
+                                                <font key="NSFont" size="16" name="Chalkduster"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="titleColor" systemColor="systemCyanColor"/>
+                                </state>
                                 <connections>
                                     <action selector="hintButtonTapped:" destination="rfC-5l-DFh" eventType="touchUpInside" id="Uez-pG-dEp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKL-nU-TEj">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HKL-nU-TEj">
                                 <rect key="frame" x="208" y="725" width="120" height="35"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="49x-tC-tGw"/>
                                     <constraint firstAttribute="height" constant="35" id="knI-zD-yiV"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Check Board"/>
+                                <color key="tintColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Check Board">
+                                            <attributes>
+                                                <font key="NSFont" size="12" name="Chalkduster"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="titleColor" systemColor="systemCyanColor"/>
+                                </state>
                                 <connections>
                                     <action selector="checkButtonTapped:" destination="rfC-5l-DFh" eventType="touchUpInside" id="Vj0-aX-AJT"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sudoku" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fla-Hx-66a">
+                                <rect key="frame" x="111" y="133" width="168" height="50.666666666666657"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="40"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xzU-1c-eop"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Fla-Hx-66a" firstAttribute="leading" secondItem="xzU-1c-eop" secondAttribute="leading" constant="111" id="DMD-fj-8zN"/>
                             <constraint firstItem="eN1-qd-H2K" firstAttribute="centerX" secondItem="xzU-1c-eop" secondAttribute="centerX" id="HTm-O1-17e"/>
                             <constraint firstItem="xzU-1c-eop" firstAttribute="bottom" secondItem="HKL-nU-TEj" secondAttribute="bottom" constant="50" id="Pnf-sb-Veg"/>
                             <constraint firstItem="xzU-1c-eop" firstAttribute="trailing" secondItem="HKL-nU-TEj" secondAttribute="trailing" constant="62" id="Qsp-UK-T1p"/>
                             <constraint firstItem="ufO-xL-K1u" firstAttribute="leading" secondItem="xzU-1c-eop" secondAttribute="leading" constant="62" id="Tbz-Jt-qaQ"/>
                             <constraint firstItem="eN1-qd-H2K" firstAttribute="centerY" secondItem="xzU-1c-eop" secondAttribute="centerY" id="dxy-66-bda"/>
+                            <constraint firstItem="xzU-1c-eop" firstAttribute="trailing" secondItem="Fla-Hx-66a" secondAttribute="trailing" constant="111" id="eNW-6e-lDf"/>
                             <constraint firstItem="xzU-1c-eop" firstAttribute="bottom" secondItem="ufO-xL-K1u" secondAttribute="bottom" constant="50" id="kov-bb-WNh"/>
                             <constraint firstItem="eN1-qd-H2K" firstAttribute="width" secondItem="Bum-rA-T4Y" secondAttribute="width" id="tDC-ke-jTZ"/>
+                            <constraint firstItem="eN1-qd-H2K" firstAttribute="top" secondItem="Fla-Hx-66a" secondAttribute="bottom" constant="50" id="wI1-r1-cJL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="i9d-3V-HH4"/>
@@ -882,6 +915,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

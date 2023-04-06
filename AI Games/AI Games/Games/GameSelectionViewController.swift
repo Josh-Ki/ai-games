@@ -17,6 +17,7 @@ enum Game {
 
 
 class GameSelectionViewController: UIViewController {
+    var sudokuBoardViewController: SudokuViewController?
     
     var selectedLevel : String = ""
     @IBOutlet weak var easy: UIButton!
@@ -32,10 +33,14 @@ class GameSelectionViewController: UIViewController {
     var selectedGame : Game?
     let sudokuImage = UIImage(named: "sudokuimage.jpeg")
     let tttImage = UIImage(named: "tictactoe.jpeg")
-
+    
+    
+    
+    
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         gamesLabel.layer.borderWidth = 1
         gamesLabel.layer.borderColor = UIColor.white.cgColor
         customizeButton(sudokuButton)
@@ -43,13 +48,23 @@ class GameSelectionViewController: UIViewController {
         customizeButton(fourinarowButton)
         customizeButton(sudokuButton)
         customizeButton(gomokuButton)
-
+        
     }
     private func customizeButton(_ button: UIButton) {
         button.tintColor = UIColor.blue
     }
     
     @IBAction func sudokuPressed(_ sender: Any) {
+        // Instantiate the Sudoku board view controller
+        let sudokuBoardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
+        
+        // Add the Sudoku board view controller as a child view controller of the GameSelectionViewController
+        addChild(sudokuBoardViewController)
+        sudokuBoardViewController.view.frame = imageView.bounds
+        imageView.addSubview(sudokuBoardViewController.view)
+        sudokuBoardViewController.didMove(toParent: self)
+        
+        // Update the selected game and image view
         selectedGame = .sudoku
         sudokuButton.tintColor = UIColor.green
         tictactoeButton.tintColor = UIColor.blue
@@ -66,7 +81,7 @@ class GameSelectionViewController: UIViewController {
         fourinarowButton.tintColor = UIColor.blue
         gomokuButton.tintColor = UIColor.blue
         imageView.image = tttImage
-
+        
     }
     
     @IBAction func c4Pressed(_ sender: Any) {
@@ -75,7 +90,7 @@ class GameSelectionViewController: UIViewController {
         tictactoeButton.tintColor = UIColor.blue
         fourinarowButton.tintColor = UIColor.green
         gomokuButton.tintColor = UIColor.blue
-
+        
     }
     @IBAction func gomokuPressed(_ sender: Any) {
         selectedGame = .gomoku
@@ -83,7 +98,7 @@ class GameSelectionViewController: UIViewController {
         tictactoeButton.tintColor = UIColor.blue
         fourinarowButton.tintColor = UIColor.blue
         gomokuButton.tintColor = UIColor.green
-
+        
     }
     
     @IBAction func easyPressed(_ sender: Any) {
@@ -113,32 +128,33 @@ class GameSelectionViewController: UIViewController {
     }
     
     @IBAction func playPressed(_ sender: Any) {
-        
         if selectedGame == .sudoku {
-            let sudokuVC = self.storyboard?.instantiateViewController(
-                withIdentifier: "SudokuViewController") as! SudokuViewController
+            // Instantiate the Sudoku board view controller
+            let sudokuVC = self.storyboard?.instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
             sudokuVC.selectedDifficulty = selectedLevel
+            
+            // Push the SudokuViewController onto the navigation stack
             navigationController?.pushViewController(sudokuVC, animated: true)
         }
         else if selectedGame == .ttt {
             let tttVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "TicTacToeViewController") as! TicTacToeViewController
-
+            
             navigationController?.pushViewController(tttVC, animated: true)
         }
         else if selectedGame == .c4 {
             let c4VC = self.storyboard?.instantiateViewController(
                 withIdentifier: "FourInARowViewController") as! FourInARowViewController
-
+            
             navigationController?.pushViewController(c4VC, animated: true)
         }
         else if selectedGame == .gomoku {
             let gomokuVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "GomokuViewController") as! GomokuViewController
-
+            
             navigationController?.pushViewController(gomokuVC, animated: true)
         }
     }
+    
+    
 }
-
-

@@ -27,10 +27,14 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
         view.addGestureRecognizer(tap)
         
     }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
     
 
     @IBAction func signUpTapped(_ sender: Any) {
-        userID = Auth.auth().currentUser!.uid
+
         guard let email = emailTextField.text, !email.isEmpty,
                 let password = passwordTextField.text, !password.isEmpty,
                 let confirmPassword = passwordTextField.text, !confirmPassword.isEmpty,
@@ -41,7 +45,7 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
             
             // Create user account in Firebase Authentication
             Auth.auth().createUser(withEmail: email, password: password) { [weak self] (result, error) in
-                guard let strongSelf = self else {
+                guard self != nil else {
                     return
                 }
                 
@@ -49,6 +53,7 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
                     // User account created successfully
                     // Navigate to next screen or perform any other action
                     print("USer created")
+                    userID = Auth.auth().currentUser!.uid
                     self?.navigationController?.popViewController(animated: true)
                 } else {
                     print("DIDNT CREATE")
