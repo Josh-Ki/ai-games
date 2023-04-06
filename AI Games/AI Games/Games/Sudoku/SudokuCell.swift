@@ -16,5 +16,6 @@ class SudokuCell: UICollectionViewCell {
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }
+    
 }
 

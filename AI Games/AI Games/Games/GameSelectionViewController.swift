@@ -59,6 +59,7 @@ class GameSelectionViewController: UIViewController {
         let sudokuBoardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
         
         // Add the Sudoku board view controller as a child view controller of the GameSelectionViewController
+       
         addChild(sudokuBoardViewController)
         sudokuBoardViewController.view.frame = imageView.bounds
         imageView.addSubview(sudokuBoardViewController.view)
@@ -71,17 +72,29 @@ class GameSelectionViewController: UIViewController {
         fourinarowButton.tintColor = UIColor.blue
         gomokuButton.tintColor = UIColor.blue
         imageView.image = sudokuImage
+        sudokuBoardViewController.checkButton.isHidden = true
     }
     
     
     @IBAction func tttPressed(_ sender: Any) {
+        
+        // Instantiate the Sudoku board view controller
+        let tttBoardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TicTacToeViewController") as! TicTacToeViewController
+        
+        // Add the Sudoku board view controller as a child view controller of the GameSelectionViewController
+        addChild(tttBoardViewController)
+        tttBoardViewController.view.frame = imageView.bounds
+        imageView.addSubview(tttBoardViewController.view)
+        tttBoardViewController.didMove(toParent: self)
+        
+        
         selectedGame = .ttt
         sudokuButton.tintColor = UIColor.blue
         tictactoeButton.tintColor = UIColor.green
         fourinarowButton.tintColor = UIColor.blue
         gomokuButton.tintColor = UIColor.blue
         imageView.image = tttImage
-        
+        tttBoardViewController.turnLabel.isHidden = true
     }
     
     @IBAction func c4Pressed(_ sender: Any) {

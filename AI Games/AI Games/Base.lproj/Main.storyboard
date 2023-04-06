@@ -300,7 +300,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="i9d-3V-HH4"/>
                     <connections>
+                        <outlet property="checkButton" destination="HKL-nU-TEj" id="NUo-LD-8wb"/>
                         <outlet property="collectionView" destination="eN1-qd-H2K" id="I1M-e6-sbB"/>
+                        <outlet property="hintButton" destination="ufO-xL-K1u" id="4nz-4T-V7Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WN1-1i-hap" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -16,8 +16,10 @@ var sudokuHardWins = 0
 var sudokuMedWins = 0
 class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var checkButton: UIButton!
     
-
+    @IBOutlet weak var hintButton: UIButton!
+    
     var selectedDifficulty: String?
     @IBOutlet weak var collectionView: UICollectionView!
     var sudokuArray: [[Int]] = []
@@ -25,7 +27,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     var maxCellsToFill : Int = 0
     let database = Firestore.firestore()
     override func viewDidLoad() {
-        print(selectedDifficulty)
+        
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         //Looks for single or multiple taps.
