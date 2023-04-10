@@ -238,10 +238,12 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
             let row = indexPath.row / 9
             let col = indexPath.row % 9
             print(partialArray)
+            cell.label.delegate = self
             let value = partialArray[row][col]
             cell.label.text = "\(value == 0 ? "" : "\(value)")"
             cell.label.textAlignment = .center // center the text
             cell.label.tag = indexPath.row
+            
             cell.label.isUserInteractionEnabled = value == 0
             return cell
         }
@@ -253,7 +255,15 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
 
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Get the selected cell
+        let cell = collectionView.cellForItem(at: indexPath) as! SudokuCell
+        print(cell.label.text)
+        // Change the background color of the text field for the selected cell
+        cell.label.backgroundColor = UIColor.green
+
+    }
+
     func generateSudokuBoard() -> ([[Int]], [[Int]]) {
         // Create an empty 9x9 Sudoku board
         var board = Array(repeating: Array(repeating: 0, count: 9), count: 9)
@@ -338,5 +348,44 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
 
+
+}
+extension SudokuViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+
+        guard let cell = textField.superview?.superview as? SudokuCell else { return }
+        for i in 0..<collectionView.numberOfItems(inSection: 0) {
+            guard let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? SudokuCell else { continue }
+            cell.label.backgroundColor = UIColor.white
+        }
+
+        // Change the background color of the selected cell
+        cell.label.backgroundColor = UIColor.lightGray
+        
+        // Get the row and column indices of the selected cell
+        let indexPath = collectionView.indexPath(for: cell)!
+        let row = indexPath.row / 9
+        let col = indexPath.row % 9
+        
+        // Change the background color of all cells in the same row as the selected cell
+        for i in 0..<9 {
+            if i != col {
+                let index = row * 9 + i
+                if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? SudokuCell {
+                    cell.label.backgroundColor = UIColor.lightGray
+                }
+            }
+        }
+        
+        // Change the background color of all cells in the same column as the selected cell
+        for j in 0..<9 {
+            if j != row {
+                let index = j * 9 + col
+                if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? SudokuCell {
+                    cell.label.backgroundColor = UIColor.lightGray
+                }
+            }
+        }
+    }
 
 }
