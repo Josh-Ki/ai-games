@@ -12,7 +12,8 @@ import FirebaseCore
 import FirebaseFirestore
 
 class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
+    let tttTallyView = UIView()
+
     // Title label
     let titleLabel = UILabel()
     
@@ -22,8 +23,8 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     // Array of games
     let games = ["Tic Tac Toe", "Sudoku", "Gomoku", "Connect Four"]
     
-    // Bar chart view to display wins and losses
-    let barChartView = BarChartView()
+    
+    
     
     // Number of wins and losses for Tic Tac Toe
     
@@ -35,7 +36,20 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        for i in 0..<tttWins {
+            let winView = UIView()
+            winView.backgroundColor = .green
+            winView.frame = CGRect(x: i * 10, y: 0, width: 8, height: 40)
+            tttTallyView.addSubview(winView)
+        }
 
+        for i in 0..<tttLose {
+            let loseView = UIView()
+            loseView.backgroundColor = .red
+            loseView.frame = CGRect(x: i * 10, y: 50, width: 8, height: 40)
+            tttTallyView.addSubview(loseView)
+        }
 
         
         // Set up the title label
@@ -46,9 +60,6 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         gamePickerView.delegate = self
         gamePickerView.dataSource = self
         
-        // Set up the bar chart view
-        barChartView.wins = tttWins
-        barChartView.losses = tttLose
         
         // Set up the logout button
         logoutButton.setTitle("Logout", for: .normal)
@@ -60,18 +71,28 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // Add the views to the view
         view.addSubview(titleLabel)
         view.addSubview(gamePickerView)
-        view.addSubview(barChartView)
-        view.addSubview(logoutButton)
         
+        view.addSubview(logoutButton)
+        view.addSubview(tttTallyView)
+
         // Set up constraints
         setupConstraints()
     }
     
+    
     func setupConstraints() {
+        tttTallyView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tttTallyView.topAnchor.constraint(equalTo: gamePickerView.bottomAnchor, constant: 20),
+            tttTallyView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tttTallyView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            tttTallyView.heightAnchor.constraint(equalToConstant: 90)
+        ])
+
         // Disable autoresizing mask translation
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         gamePickerView.translatesAutoresizingMaskIntoConstraints = false
-        barChartView.translatesAutoresizingMaskIntoConstraints = false
+        
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         
         // Set up constraints for the views
@@ -83,10 +104,7 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             gamePickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             gamePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            barChartView.topAnchor.constraint(equalTo: gamePickerView.bottomAnchor, constant: 20),
-            barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            barChartView.heightAnchor.constraint(equalToConstant: 200),
+        
             
             logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -113,15 +131,31 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selectedGame = games[row]
         
-        // Update the bar chart to display data for the selected game here
+        // Remove any existing views from the tally view
+        tttTallyView.subviews.forEach { $0.removeFromSuperview() }
         
-        if selectedGame == "Tic Tac Toe" {
-            barChartView.wins = tttWins
-            barChartView.losses = tttLose
+        // Update the tally view based on the selected game
+        switch selectedGame {
+        case "Tic Tac Toe":
+            for i in 0..<tttWins {
+                let winView = UIView()
+                winView.backgroundColor = .green
+                winView.frame = CGRect(x: i * 10, y: 0, width: 8, height: 40)
+                tttTallyView.addSubview(winView)
+            }
+
+            for i in 0..<tttLose {
+                let loseView = UIView()
+                loseView.backgroundColor = .red
+                loseView.frame = CGRect(x: i * 10, y: 50, width: 8, height: 40)
+                tttTallyView.addSubview(loseView)
+            }
+        // Add cases for other games here as well...
+        default:
+            break
         }
-        
-        // Update the chart for other games here as well...
     }
+
     
     
 //
@@ -139,16 +173,14 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 print("USER IS SIGNED IN")
                 let userID = Auth.auth().currentUser?.uid
               // User is signed in
-                let docRefWin = database.document("/users/\(userID)/tictactoe/wins")
-                let docRefLoss = database.document("/users/\(userID)/tictactoe/loss")
+                let docRefWin =  database.document("/users/\(userID!)/tictactoe/wins")
+                let docRefLoss = database.document("/users/\(userID!)/tictactoe/loss")
                 docRefWin.getDocument { (document, error) in
                     if let document = document, document.exists {
                         let data = document.data()
-                        let wins = data?["wins"] as? Int ?? 0
-                        // Use the retrieved wins value here
-                        self.tttWins = wins
-                        
-
+                        let wins = data?["wins"] as? Int
+                        self.tttWins = wins!
+                        print(wins!)
                     } else {
                         print("Document does not exist")
                     }
@@ -156,10 +188,10 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 docRefLoss.getDocument { (document, error) in
                     if let document = document, document.exists {
                         let data = document.data()
-                        let loss = data?["loss"] as? Int ?? 0
+                        let loss = data?["loss"] as? Int
                         // Use the retrieved wins value here
-                        self.tttLose = loss
-                        
+                        self.tttLose = loss!
+                        print(loss!)
 
                     } else {
                         print("Document does not exist")
@@ -197,47 +229,3 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 //
 }
 
-class BarChartView: UIView {
-    
-    // Number of wins and losses to display in the chart
-    var wins = 0 {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
-    var losses = 0 {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
-    override func draw(_ rect: CGRect) {
-        
-        let context = UIGraphicsGetCurrentContext()
-        
-        let totalGames = wins + losses
-        
-        if totalGames > 0 {
-            let winRatio = CGFloat(wins) / CGFloat(totalGames)
-            let lossRatio = CGFloat(losses) / CGFloat(totalGames)
-            
-            let barWidth = rect.width / 2 - 20
-            let barMaxHeight = rect.height - 20
-            
-            // Draw the win bar
-            let winBarHeight = barMaxHeight * winRatio
-            let winBarRect = CGRect(x: 10, y: rect.height - winBarHeight, width: barWidth, height: winBarHeight)
-            
-            context?.setFillColor(UIColor.green.cgColor)
-            context?.fill(winBarRect)
-            
-            // Draw the loss bar
-            let lossBarHeight = barMaxHeight * lossRatio
-            let lossBarRect = CGRect(x: rect.width / 2 + 10, y: rect.height - lossBarHeight, width: barWidth, height: lossBarHeight)
-            
-            context?.setFillColor(UIColor.red.cgColor)
-            context?.fill(lossBarRect)
-        }
-    }
-}

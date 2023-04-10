@@ -116,6 +116,7 @@ class TicTacToeViewController: UIViewController {
         if victory(o) {
             oScore += 1
             resultAlert(title: "O Wins")
+            ticTacToeLoss += 1
             writeUserDataLose(loss: ticTacToeLoss, userID: userID)
         } else if (boardIsFull()) {
             resultAlert(title: "Draw")

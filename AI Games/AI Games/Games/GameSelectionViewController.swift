@@ -40,9 +40,9 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-        gamesLabel.layer.borderWidth = 1
-        gamesLabel.layer.borderColor = UIColor.white.cgColor
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        
+        
         customizeButton(sudokuButton)
         customizeButton(tictactoeButton)
         customizeButton(fourinarowButton)
@@ -99,6 +99,15 @@ class GameSelectionViewController: UIViewController {
     }
     
     @IBAction func c4Pressed(_ sender: Any) {
+        
+        // Instantiate the Sudoku board view controller
+        let c4BoardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FourInARowViewController") as! FourInARowViewController
+        
+        // Add the Sudoku board view controller as a child view controller of the GameSelectionViewController
+        addChild(c4BoardViewController)
+        c4BoardViewController.view.frame = imageView.bounds
+        imageView.addSubview(c4BoardViewController.view)
+        c4BoardViewController.didMove(toParent: self)
         selectedGame = .c4
         sudokuButton.tintColor = UIColor.blue
         tictactoeButton.tintColor = UIColor.blue

@@ -20,13 +20,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tib-XL-lpX">
-                                <rect key="frame" x="135" y="112" width="120" height="48"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="40"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tib-XL-lpX">
+                                <rect key="frame" x="0.0" y="112" width="390" height="48"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="40"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CHN-BK-OeO">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="instagram_profile_image (1)" translatesAutoresizingMaskIntoConstraints="NO" id="CHN-BK-OeO">
                                 <rect key="frame" x="75" y="185" width="240" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="CIJ-u7-QKO"/>
@@ -39,7 +39,16 @@
                                     <constraint firstAttribute="width" constant="118" id="z9g-kq-man"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Sudoku"/>
+                                <buttonConfiguration key="configuration" style="filled">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Sudoku">
+                                            <attributes>
+                                                <font key="NSFont" size="12" name="Chalkduster"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="sudokuPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zqn-PV-MtI"/>
                                 </connections>
@@ -136,11 +145,10 @@
                             <constraint firstItem="c48-6H-Hsc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="75" id="CkY-O6-8gB"/>
                             <constraint firstItem="CHN-BK-OeO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="75" id="Ga1-Rg-3Eo"/>
                             <constraint firstItem="XE2-Jg-zhq" firstAttribute="top" secondItem="c48-6H-Hsc" secondAttribute="bottom" constant="18" id="JCw-HY-mGq"/>
-                            <constraint firstItem="tib-XL-lpX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="135" id="KUQ-v1-oks"/>
                             <constraint firstItem="bRT-LE-aBR" firstAttribute="leading" secondItem="B5F-bs-CQh" secondAttribute="trailing" constant="7" id="NYp-7N-pja"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tib-XL-lpX" secondAttribute="trailing" constant="135" id="PSY-zO-O59"/>
                             <constraint firstItem="XE2-Jg-zhq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="75" id="XI8-B8-TEQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XE2-Jg-zhq" secondAttribute="trailing" constant="75" id="Zky-Mh-gy3"/>
+                            <constraint firstItem="tib-XL-lpX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="as3-eE-2QU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="k1i-XZ-adJ" secondAttribute="trailing" constant="75" id="heB-Um-sPW"/>
                             <constraint firstItem="WMG-9O-5JI" firstAttribute="top" secondItem="LMK-M6-ZwT" secondAttribute="bottom" constant="8" symbolic="YES" id="jW1-Kl-rwN"/>
                             <constraint firstItem="bRT-LE-aBR" firstAttribute="top" secondItem="UeO-go-Uwn" secondAttribute="bottom" constant="19" id="lae-M3-hJl"/>
@@ -149,6 +157,7 @@
                             <constraint firstItem="B5F-bs-CQh" firstAttribute="top" secondItem="WMG-9O-5JI" secondAttribute="bottom" constant="19" id="nYI-dP-toD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XE2-Jg-zhq" secondAttribute="bottom" constant="20" id="oio-MS-WhZ"/>
                             <constraint firstItem="tib-XL-lpX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="21" id="qvY-37-DeT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tib-XL-lpX" secondAttribute="trailing" id="srH-hq-grd"/>
                             <constraint firstItem="c48-6H-Hsc" firstAttribute="top" secondItem="WMG-9O-5JI" secondAttribute="bottom" constant="19" id="t1S-n1-L60"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UeO-go-Uwn" secondAttribute="trailing" constant="75" id="tea-LI-8ac"/>
                             <constraint firstItem="UeO-go-Uwn" firstAttribute="top" secondItem="k1i-XZ-adJ" secondAttribute="bottom" constant="8" symbolic="YES" id="vUN-v3-hIY"/>
@@ -912,6 +921,7 @@
     </scenes>
     <resources>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
+        <image name="instagram_profile_image (1)" width="1024" height="1024"/>
         <namedColor name="AccentColor">
             <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
