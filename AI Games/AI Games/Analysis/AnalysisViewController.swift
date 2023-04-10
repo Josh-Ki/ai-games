@@ -21,10 +21,10 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     let gamePickerView = UIPickerView()
     
     // Array of games
-    let games = ["Tic Tac Toe", "Sudoku", "Gomoku", "Connect Four"]
+    let games = ["tictactoe", "sudoku", "gomoku", "connect 4"]
     
     
-    
+    var selectedGame = "tictactoe"
     
     // Number of wins and losses for Tic Tac Toe
     
@@ -36,6 +36,7 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         for i in 0..<tttWins {
             let winView = UIView()
@@ -53,8 +54,9 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
         
         // Set up the title label
-        titleLabel.text = "Game Analysis"
-        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        titleLabel.text = "game analysis"
+        titleLabel.font = UIFont(name: "Chalkduster", size: 30.0)
+        titleLabel.textColor = UIColor.systemCyan
         
         // Set up the picker view
         gamePickerView.delegate = self
@@ -62,7 +64,7 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         
         // Set up the logout button
-        logoutButton.setTitle("Logout", for: .normal)
+        logoutButton.setTitle("logout", for: .normal)
         logoutButton.setTitleColor(.white, for: .normal)
         logoutButton.backgroundColor = .red
         logoutButton.layer.cornerRadius = 10
@@ -124,19 +126,26 @@ class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return games.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return games[row]
+
+
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = games[row]
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemCyan
+        ]
+        return NSAttributedString(string: title, attributes: attributes)
     }
+
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let selectedGame = games[row]
+        selectedGame = games[row]
         
         // Remove any existing views from the tally view
         tttTallyView.subviews.forEach { $0.removeFromSuperview() }
         
         // Update the tally view based on the selected game
         switch selectedGame {
-        case "Tic Tac Toe":
+        case "tictactoe":
             for i in 0..<tttWins {
                 let winView = UIView()
                 winView.backgroundColor = .green

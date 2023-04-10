@@ -913,7 +913,7 @@
         <scene sceneID="t34-Zb-IRp">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ra3-ha-fgC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Games" id="EnX-xE-gkS"/>
+                    <tabBarItem key="tabBarItem" title="Games" image="checkerboard.rectangle" catalog="system" id="EnX-xE-gkS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8o0-Ul-mk6">
                         <rect key="frame" x="0.0" y="47" width="390" height="44"/>
@@ -967,7 +967,7 @@
         <scene sceneID="iUj-YU-wdQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xra-gX-IJR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Analysis" id="iyc-eP-9Qg"/>
+                    <tabBarItem key="tabBarItem" title="Analysis" image="chart.xyaxis.line" catalog="system" id="iyc-eP-9Qg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TfB-Qw-5WS">
                         <rect key="frame" x="0.0" y="47" width="390" height="44"/>
@@ -984,6 +984,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chart.xyaxis.line" catalog="system" width="128" height="102"/>
+        <image name="checkerboard.rectangle" catalog="system" width="128" height="93"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
         <image name="info" width="64" height="64"/>
         <image name="instagram_profile_image (1)" width="1024" height="1024"/>
