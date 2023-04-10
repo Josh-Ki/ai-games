@@ -32,12 +32,16 @@ class TicTacToeViewController: UIViewController {
     let database = Firestore.firestore()
     
     func writeUserData(wins: Int, userID: String) {
-        let docRef = database.document("/users/\(userID)/tictactoe/wins")
-        docRef.setData(["wins" : wins])
+        if (userID != "") {
+            let docRef = database.document("/users/\(userID)/tictactoe/wins")
+            docRef.setData(["wins" : wins])
+        }
     }
     func writeUserDataLose(loss: Int, userID: String) {
-        let docRef = database.document("/users/\(userID)/tictactoe/loss")
-        docRef.setData(["loss" : loss])
+        if (userID != "") {
+            let docRef = database.document("/users/\(userID)/tictactoe/loss")
+            docRef.setData(["loss" : loss])
+        }
     }
 
     override func viewDidLoad() {
@@ -148,8 +152,14 @@ class TicTacToeViewController: UIViewController {
         return true
     }
 
-    func resultAlert(title:String) {
-        let ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+    func resultAlert(title: String) {
+        var ac: UIAlertController = UIAlertController()
+        if (UIDevice.current.userInterfaceIdiom == .phone) {
+            ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        } else if (UIDevice.current.userInterfaceIdiom == .pad) {
+            ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        }
+        
         ac.addAction(UIAlertAction(title: "Reset", style: .default, handler: { (_) in
             self.resetBoard()
         }))
