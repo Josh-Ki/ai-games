@@ -9,7 +9,8 @@ import UIKit
 
 var gomokuAILevel = 0 // difficulty of AI (easy, medium, invicible)
 
-class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+// https://stackoverflow.com/questions/31662155/how-to-change-uicollectionviewcell-size-programmatically-in-swift
+class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var gameboard: [String] = Array.init(repeating: "", count: 100) // pieces on gameboard
     var backColours: [UIColor] = [] // background colours of gameboard cells
@@ -22,6 +23,10 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         return 100
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: gomokuView.frame.width/10.0, height: gomokuView.frame.width/10.0)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GomokuCell
         
@@ -29,19 +34,8 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         cell.pieceLabel.text = gameboard[i]
         cell.backgroundColor = backColours[i]
         cell.pieceLabel.textColor = foreColours[i]
-//        if (i % 20 < 10) {
-//            if (i % 2 == 0) {
-//                cell.backgroundColor = UIColor.yellow
-//            } else {
-//                cell.backgroundColor = UIColor.cyan
-//            }
-//        } else {
-//            if (i % 2 == 0) {
-//                cell.backgroundColor = UIColor.cyan
-//            } else {
-//                cell.backgroundColor = UIColor.yellow
-//            }
-//        }
+        cell.pieceLabel.frame = CGRect(x: 8, y: 8, width: cell.frame.width-16, height: cell.frame.height-16)
+        cell.pieceLabel.font = .boldSystemFont(ofSize: cell.pieceLabel.frame.width-4)
         
         return cell
     }
@@ -119,11 +113,24 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var turnLabel: UILabel!
     @IBOutlet weak var manPlay: UILabel!
     
+    func layout() {
+        // https://stackoverflow.com/questions/5677716/how-to-get-the-screen-width-and-height-in-ios
+        let w = self.view.frame.size.width
+        // print("Screen width:", w)
+        
+        gomokuView.frame = CGRect(x: 10, y: 44, width: w-20, height: w+24)
+        // print("Gameboard size \(gomokuView.frame.width)*\(gomokuView.frame.height)")
+        turnLabel.frame = CGRect(x: 16, y: 76+w, width: w-32, height: 30)
+        manPlay.frame = CGRect(x: 16, y: 114+w, width: w-32, height: 23)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
 
         // Do any additional setup after loading the view.
+        layout()
+        
         for i in 0...99 { // initialise colours of gameboard cells
             if (i % 20 < 10) {
                 if (i % 2 == 0) {
@@ -151,7 +158,13 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func resultAlert(title: String) {
-        let ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        var ac: UIAlertController = UIAlertController()
+        if (UIDevice.current.userInterfaceIdiom == .phone) {
+            ac = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        } else if (UIDevice.current.userInterfaceIdiom == .pad) {
+            ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        }
+        
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(ac, animated: true)
     }
