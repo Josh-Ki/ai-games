@@ -20,8 +20,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Games" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tib-XL-lpX">
-                                <rect key="frame" x="0.0" y="112" width="390" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="games" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tib-XL-lpX">
+                                <rect key="frame" x="0.0" y="112" width="390" height="61"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="40"/>
                                 <color key="textColor" systemColor="systemCyanColor"/>
                                 <nil key="highlightedColor"/>
@@ -33,7 +33,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LMK-M6-ZwT">
-                                <rect key="frame" x="75" y="440" width="118" height="93"/>
+                                <rect key="frame" x="75" y="444" width="118" height="93"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="93" id="VxM-pl-wmN"/>
@@ -42,10 +42,17 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button">
                                     <attributedString key="attributedTitle">
-                                        <fragment content="Sudoku">
+                                        <fragment content="s">
+                                            <attributes>
+                                                <font key="NSFont" size="12" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="udoku">
                                             <attributes>
                                                 <font key="NSFont" size="15" name="Chalkduster"/>
                                                 <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
@@ -55,7 +62,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1i-XZ-adJ">
-                                <rect key="frame" x="197" y="440" width="118" height="93"/>
+                                <rect key="frame" x="197" y="444" width="118" height="93"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="118" id="fEy-sx-ANH"/>
@@ -63,13 +70,13 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="15"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="TicTacToe"/>
+                                <state key="normal" title="tictactoe"/>
                                 <connections>
                                     <action selector="tttPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="49q-0c-Qbm"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMG-9O-5JI">
-                                <rect key="frame" x="75" y="541" width="118" height="93"/>
+                                <rect key="frame" x="75" y="545" width="118" height="93"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="118" id="4kd-a8-3VX"/>
@@ -77,13 +84,13 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="15"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Connect 4"/>
+                                <state key="normal" title="connect 4"/>
                                 <connections>
                                     <action selector="c4Pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fvn-Ta-0gr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UeO-go-Uwn">
-                                <rect key="frame" x="197" y="541" width="118" height="93"/>
+                                <rect key="frame" x="197" y="545" width="118" height="93"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="93" id="V3J-jb-KGH"/>
@@ -91,51 +98,91 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="15"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Gomoku"/>
+                                <state key="normal" title="gomoku"/>
                                 <connections>
                                     <action selector="gomokuPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nno-is-a7j"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XE2-Jg-zhq">
-                                <rect key="frame" x="75" y="706" width="240" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Play"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XE2-Jg-zhq">
+                                <rect key="frame" x="75" y="710" width="240" height="31"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="play">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="15" name="Chalkduster"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
                                 <connections>
                                     <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zNY-ae-Eww"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5F-bs-CQh">
-                                <rect key="frame" x="158" y="653" width="75" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B5F-bs-CQh">
+                                <rect key="frame" x="158" y="657" width="75" height="35"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="ejI-hs-cxr"/>
                                     <constraint firstAttribute="height" constant="35" id="qz2-xW-1Bl"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Med"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="medium">
+                                            <attributes>
+                                                <font key="NSFont" size="15" name="Chalkduster"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
                                 <connections>
                                     <action selector="medPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R63-XR-9wJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c48-6H-Hsc">
-                                <rect key="frame" x="75" y="653" width="75" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c48-6H-Hsc">
+                                <rect key="frame" x="75" y="657" width="75" height="35"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="Apo-ug-wZp"/>
                                     <constraint firstAttribute="height" constant="35" id="rlr-Fr-Hsi"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Easy"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="easy">
+                                            <attributes>
+                                                <font key="NSFont" size="15" name="Chalkduster"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
                                 <connections>
                                     <action selector="easyPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nd1-EI-KM2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRT-LE-aBR">
-                                <rect key="frame" x="240" y="653" width="75" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bRT-LE-aBR">
+                                <rect key="frame" x="240" y="657" width="75" height="35"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="3WL-mJ-HF3"/>
                                     <constraint firstAttribute="width" constant="75" id="46q-hl-Z6s"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Hard"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="hard">
+                                            <attributes>
+                                                <font key="NSFont" size="15" name="Chalkduster"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
                                 <connections>
                                     <action selector="hardPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uSG-gY-Yn1"/>
                                 </connections>
@@ -153,7 +200,6 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="CHN-BK-OeO" firstAttribute="top" secondItem="tib-XL-lpX" secondAttribute="bottom" constant="25" id="11q-Aj-ydu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bRT-LE-aBR" secondAttribute="trailing" constant="75" id="3Bv-CL-hzz"/>
                             <constraint firstItem="WMG-9O-5JI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="75" id="5Le-73-7OD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CHN-BK-OeO" secondAttribute="trailing" constant="75" id="6c4-nQ-BEn"/>
@@ -163,6 +209,7 @@
                             <constraint firstItem="XE2-Jg-zhq" firstAttribute="top" secondItem="c48-6H-Hsc" secondAttribute="bottom" constant="18" id="JCw-HY-mGq"/>
                             <constraint firstItem="bRT-LE-aBR" firstAttribute="leading" secondItem="B5F-bs-CQh" secondAttribute="trailing" constant="7" id="NYp-7N-pja"/>
                             <constraint firstItem="XE2-Jg-zhq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="75" id="XI8-B8-TEQ"/>
+                            <constraint firstItem="CHN-BK-OeO" firstAttribute="top" secondItem="tib-XL-lpX" secondAttribute="bottom" constant="12" id="Z2A-qZ-5pA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XE2-Jg-zhq" secondAttribute="trailing" constant="75" id="Zky-Mh-gy3"/>
                             <constraint firstItem="tib-XL-lpX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="as3-eE-2QU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="k1i-XZ-adJ" secondAttribute="trailing" constant="75" id="heB-Um-sPW"/>
@@ -189,6 +236,7 @@
                         <outlet property="hard" destination="bRT-LE-aBR" id="drB-Sv-SR7"/>
                         <outlet property="imageView" destination="CHN-BK-OeO" id="Gfl-MC-TTr"/>
                         <outlet property="med" destination="B5F-bs-CQh" id="djZ-Im-yPi"/>
+                        <outlet property="play" destination="XE2-Jg-zhq" id="tO3-eI-gzK"/>
                         <outlet property="sudokuButton" destination="LMK-M6-ZwT" id="kXq-Y7-Thk"/>
                         <outlet property="tictactoeButton" destination="k1i-XZ-adJ" id="PPs-qc-faV"/>
                     </connections>

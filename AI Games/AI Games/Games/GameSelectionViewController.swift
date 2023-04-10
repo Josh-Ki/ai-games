@@ -28,6 +28,8 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var med: UIButton!
     
     @IBOutlet weak var hard: UIButton!
+    
+    @IBOutlet weak var play: UIButton!
     @IBOutlet weak var gamesLabel: UILabel!
     @IBOutlet weak var sudokuButton: UIButton!
     @IBOutlet weak var tictactoeButton: UIButton!
@@ -43,18 +45,24 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageView.layer.cornerRadius = 20.0
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
-        
+
         
         customizeButton(sudokuButton)
         customizeButton(tictactoeButton)
         customizeButton(fourinarowButton)
         customizeButton(sudokuButton)
         customizeButton(gomokuButton)
+        customizeButton(easy)
+        customizeButton(med)
+        customizeButton(hard)
+        customizeButton(play)
+        
         
     }
     private func customizeButton(_ button: UIButton) {
-        button.tintColor = UIColor.blue
+        button.layer.cornerRadius = 20.0
     }
     
     
@@ -118,19 +126,22 @@ class GameSelectionViewController: UIViewController {
     
     @IBAction func c4Pressed(_ sender: Any) {
         
-        // Instantiate the Sudoku board view controller
-        let c4BoardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FourInARowViewController") as! FourInARowViewController
         
-        // Add the Sudoku board view controller as a child view controller of the GameSelectionViewController
-        addChild(c4BoardViewController)
-        c4BoardViewController.view.frame = imageView.bounds
-        imageView.addSubview(c4BoardViewController.view)
-        c4BoardViewController.didMove(toParent: self)
+        
         selectedGame = .c4
         sudokuButton.tintColor = UIColor.blue
         tictactoeButton.tintColor = UIColor.blue
         fourinarowButton.tintColor = UIColor.green
         gomokuButton.tintColor = UIColor.blue
+        // Remove the previous child view controller
+        for childViewController in children {
+            childViewController.removeFromParent()
+            childViewController.view.removeFromSuperview()
+        }
+
+        // Set the new image
+        imageView.image = UIImage(named: "c4board")
+
         
     }
     @IBAction func gomokuPressed(_ sender: Any) {
@@ -139,6 +150,14 @@ class GameSelectionViewController: UIViewController {
         tictactoeButton.tintColor = UIColor.blue
         fourinarowButton.tintColor = UIColor.blue
         gomokuButton.tintColor = UIColor.green
+        // Remove the previous child view controller
+        for childViewController in children {
+            childViewController.removeFromParent()
+            childViewController.view.removeFromSuperview()
+        }
+
+        // Set the new image
+        imageView.image = UIImage(named: "gomokuboard")
         
     }
     
