@@ -19,6 +19,7 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         resetBoard()
         setCellWidthHeight()
     }

@@ -186,35 +186,75 @@ class GameSelectionViewController: UIViewController {
         selectedLevel = "Hard"
         
     }
-    
     @IBAction func playPressed(_ sender: Any) {
         if selectedGame == .sudoku {
             // Instantiate the Sudoku board view controller
             let sudokuVC = self.storyboard?.instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
             sudokuVC.selectedDifficulty = selectedLevel
             
-            // Push the SudokuViewController onto the navigation stack
-            navigationController?.pushViewController(sudokuVC, animated: true)
+            // Animate the Play button expanding and moving to the new view controller
+            UIView.animate(withDuration: 0.5, animations: {
+                self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
+                self.play.alpha = 0
+            }) { (finished) in
+                // Push the SudokuViewController onto the navigation stack after the animation is complete
+                self.navigationController?.pushViewController(sudokuVC, animated: false)
+                
+                // Reset the Play button's properties to their original values
+                self.play.transform = CGAffineTransform.identity
+                self.play.alpha = 1
+            }
         }
         else if selectedGame == .ttt {
             let tttVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "TicTacToeViewController") as! TicTacToeViewController
             
-            navigationController?.pushViewController(tttVC, animated: true)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
+                self.play.alpha = 0
+            }) { (finished) in
+                // Push the SudokuViewController onto the navigation stack after the animation is complete
+                self.navigationController?.pushViewController(tttVC, animated: false)
+                
+                // Reset the Play button's properties to their original values
+                self.play.transform = CGAffineTransform.identity
+                self.play.alpha = 1
+            }
         }
         else if selectedGame == .c4 {
             let c4VC = self.storyboard?.instantiateViewController(
                 withIdentifier: "FourInARowViewController") as! FourInARowViewController
             
-            navigationController?.pushViewController(c4VC, animated: true)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
+                self.play.alpha = 0
+            }) { (finished) in
+                // Push the SudokuViewController onto the navigation stack after the animation is complete
+                self.navigationController?.pushViewController(c4VC, animated: false)
+                
+                // Reset the Play button's properties to their original values
+                self.play.transform = CGAffineTransform.identity
+                self.play.alpha = 1
+            }
         }
         else if selectedGame == .gomoku {
             let gomokuVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "GomokuViewController") as! GomokuViewController
             
-            navigationController?.pushViewController(gomokuVC, animated: true)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
+                self.play.alpha = 0
+            }) { (finished) in
+                // Push the SudokuViewController onto the navigation stack after the animation is complete
+                self.navigationController?.pushViewController(gomokuVC, animated: false)
+                
+                // Reset the Play button's properties to their original values
+                self.play.transform = CGAffineTransform.identity
+                self.play.alpha = 1
+            }
         }
     }
+
     
     
 }

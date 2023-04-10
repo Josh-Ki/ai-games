@@ -43,6 +43,7 @@ class TicTacToeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         
     }
     

@@ -121,6 +121,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
 
         // Do any additional setup after loading the view.
         for i in 0...99 { // initialise colours of gameboard cells
