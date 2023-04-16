@@ -23,6 +23,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var hintButton: UIButton!
     var sudoku = Sudoku()
     var selectedDifficulty: String?
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     
@@ -30,7 +31,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        
         // Register for keyboard notifications
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -144,7 +145,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
 
     
-    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int, board: [[Int]]) {
+    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int, board: [[Int]], hints: Int) {
         let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
         let newDocRef = collectionRef.document()
         
@@ -152,7 +153,8 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
             "id": newDocRef.documentID,
             "wins": wins,
             "time": time,
-            "board": board.flatMap { $0 }
+            "board": board.flatMap { $0 },
+            "hints": hints
         ] as [String : Any]
         
         newDocRef.setData(winData)
@@ -241,17 +243,17 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         if selectedDifficulty! == "Easy" {
             sudoku.easyWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray)
+            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed)
         }
         else if selectedDifficulty! == "Med" {
             sudoku.medWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray)
+            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed)
         }
         else if selectedDifficulty! == "Hard" {
             sudoku.hardWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray)
+            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed)
         }
 
         return true
@@ -277,6 +279,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
 
     @IBAction func hintButtonTapped(_ sender: Any) {
+        sudoku.hintsUsed += 1
         // Find all empty cells
         var emptyCells: [(Int, Int)] = []
         for row in 0..<9 {
@@ -312,7 +315,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             present(alert, animated: true, completion: nil)
         } else {
-            sudoku.attempts += 1
+            
             flashBoardRed()
         }
     }
@@ -362,6 +365,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
         func restart() {
+            sudoku.hintsUsed = 0
         // Generate a new Sudoku board
         let boards = generateSudokuBoard()
             sudoku.sudokuArray = boards.0

@@ -37,6 +37,7 @@
 		80C3BB4929C7CEB300A38C02 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C3BB4829C7CEB300A38C02 /* AI.swift */; };
 		80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BB29A6BA360098541A /* ScanViewController.swift */; };
 		80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */; };
+		80EF285329EC63BB00308024 /* RetrieveAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */; };
 		E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B529906C39003E2B05 /* AppDelegate.swift */; };
 		E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B729906C39003E2B05 /* SceneDelegate.swift */; };
 		E56184BA29906C39003E2B05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B929906C39003E2B05 /* ViewController.swift */; };
@@ -92,6 +93,7 @@
 		80C3BB4829C7CEB300A38C02 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 		80D6E7BB29A6BA360098541A /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionViewController.swift; sourceTree = "<group>"; };
+		80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAnalysis.swift; sourceTree = "<group>"; };
 		E56184B229906C39003E2B05 /* AI Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AI Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184B529906C39003E2B05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E56184B729906C39003E2B05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				80B4596129AC304400CD0EBE /* AnalysisViewController.swift */,
 				80076A6E29EB33090045ADD9 /* ProfileViewController.swift */,
+				80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				80814CA929A55315001D53E6 /* FourInARowViewController.swift in Sources */,
 				80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */,
 				80AB957E29AC969B0015FCAA /* TicTacToeTurn.swift in Sources */,
+				80EF285329EC63BB00308024 /* RetrieveAnalysis.swift in Sources */,
 				E5BE501A29AFC019005849BF /* TicTacToeGameState.swift in Sources */,
 				80814CAD29A55691001D53E6 /* Board.swift in Sources */,
 				80814CB429A6AA30001D53E6 /* CameraViewController.swift in Sources */,

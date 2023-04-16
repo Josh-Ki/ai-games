@@ -12,8 +12,7 @@ import FirebaseCore
 import FirebaseAuth
 import Firebase
 
-var ticTacToeWins = 0
-var ticTacToeLoss = 0
+
 var tttAILevel = 1 // difficulty of AI (easy, medium, invicible)
 
 class TicTacToeViewController: UIViewController {
@@ -28,26 +27,134 @@ class TicTacToeViewController: UIViewController {
     @IBOutlet weak var r3c1: UIButton!
     @IBOutlet weak var r3c2: UIButton!
     @IBOutlet weak var r3c3: UIButton!
-    
+    var tictactoe = TicTacToeData()
+    var tictactoeEnd = TicTacToeEnd.draw
     let database = Firestore.firestore()
+    var selectedDifficulty: String?
     
-    func writeUserData(wins: Int, userID: String) {
-        if (userID != "") {
-            let docRef = database.document("/users/\(userID)/tictactoe/wins")
-            docRef.setData(["wins" : wins])
+    private func writeTicTacToeData(wins: Int, losses: Int, draws: Int, moves: [String], userID: String, total: Int) {
+        var tempState = ""
+        if tictactoeEnd == TicTacToeEnd.win {
+             tempState = "Win"
         }
-    }
-    func writeUserDataLose(loss: Int, userID: String) {
-        if (userID != "") {
-            let docRef = database.document("/users/\(userID)/tictactoe/loss")
-            docRef.setData(["loss" : loss])
+        if tictactoeEnd == TicTacToeEnd.draw {
+             tempState = "Draw"
         }
-    }
+        if tictactoeEnd == TicTacToeEnd.lose {
+             tempState = "Loss"
+        }
+            
+        let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(selectedDifficulty!)")
+        let newDocRef = collectionRef.document()
+        
+            let data = [
+                "id": newDocRef.documentID,
+                "wins": wins,
+                "losses": losses,
+                "draw": draws,
+                "moves": moves,
+                "gameFinished": tempState,
+                "total": total
+            ] as [String : Any]
+            
+            newDocRef.setData(data)
+        }
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        switch selectedDifficulty {
+        case "Easy":
+            
+            tttGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.tictactoe.easyWins = highestWins
+                    print("Highest number of wins for easy: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for easy")
+                }
+                if let highestDraw = highestDraw {
+                    self.tictactoe.easyDraw = highestDraw
+                    print("Highest number of draw for easy: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for easy")
+                }
+                if let highestLoss = highestLoss {
+                    self.tictactoe.easyLoss = highestLoss
+                    print("Highest number of loss for easy: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for easy")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.tictactoe.totalEasy = highestTotal
+                    print("total number of games is \(highestTotal)")
+                }
+                
+            }
+        case "Med":
+            
+            tttGetHighestMed(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.tictactoe.medWins = highestWins
+                    print("Highest number of wins for easy: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+                if let highestDraw = highestDraw {
+                    self.tictactoe.medDraw = highestDraw
+                    print("Highest number of draws for med: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for med")
+                }
+                if let highestLoss = highestLoss {
+                    self.tictactoe.medLoss = highestLoss
+                    print("Highest number of loss for med: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.tictactoe.totalMed = highestTotal
+                    print("total number of games is \(highestTotal)")
+                }
+                
+            }
+        case "Hard":
+            
+            tttGetHighestMed(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.tictactoe.hardWins = highestWins
+                    print("Highest number of wins for hard: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for hard")
+                }
+                if let highestDraw = highestDraw {
+                    self.tictactoe.hardDraw = highestDraw
+                    print("Highest number of draws for hard: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for hard")
+                }
+                if let highestLoss = highestLoss {
+                    self.tictactoe.hardLoss = highestLoss
+                    print("Highest number of loss for hard: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for hard")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.tictactoe.totalHard = highestTotal
+                    print("total number of games is \(highestTotal)")
+                }
+                
+            }
+        default:
+            print("Defaulted")
+            
+        }
         
     }
     
@@ -66,10 +173,17 @@ class TicTacToeViewController: UIViewController {
             if victory(x) {
                 xScore += 1
                 resultAlert(title: "X WINS")
-                ticTacToeWins += 1
-                writeUserData(wins: ticTacToeWins, userID: userID)
+                tictactoe.easyWins += 1
+                tictactoe.totalEasy += 1
+                tictactoeEnd = TicTacToeEnd.win
+                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
             } else if (boardIsFull()) {
                 resultAlert(title: "Draw")
+                tictactoe.easyDraw += 1
+                tictactoe.totalEasy += 1
+                tictactoeEnd = TicTacToeEnd.draw
+                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+
             } else {
                 AIPlays()
             }
@@ -121,9 +235,16 @@ class TicTacToeViewController: UIViewController {
         if victory(o) {
             oScore += 1
             resultAlert(title: "O Wins")
-            ticTacToeLoss += 1
-            writeUserDataLose(loss: ticTacToeLoss, userID: userID)
+            tictactoe.easyLoss += 1
+            tictactoeEnd = TicTacToeEnd.lose
+            tictactoe.totalEasy += 1
+            writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
         } else if (boardIsFull()) {
+            tictactoe.easyDraw += 1
+            tictactoeEnd = TicTacToeEnd.draw
+            tictactoe.totalEasy += 1
+            writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
+
             resultAlert(title: "Draw")
         }
         
@@ -186,20 +307,31 @@ class TicTacToeViewController: UIViewController {
         }
     }
 
+    var moves: [String] = []
+
     func addToBoard(_ sender: UIButton) -> Bool {
         if (sender.title(for: .normal) == nil) {
             if (currentTurn == TicTacToeTurn.x) {
                 sender.setTitle(x, for: .normal)
                 userMoves += 1
+                moves.append("X played at (\(sender.tag / 3), \(sender.tag % 3))") // add move to array
                 print("man move \(userMoves)")
                 currentTurn = TicTacToeTurn.o
                 turnLabel.text = o
+            } else {
+                sender.setTitle(o, for: .normal)
+                userMoves += 1
+                moves.append("O played at (\(sender.tag / 3), \(sender.tag % 3))") // add move to array
+                print("ai move \(userMoves)")
+                currentTurn = TicTacToeTurn.x
+                turnLabel.text = x
             }
             sender.isEnabled = false
             return true
         }
         return false
     }
+
     
     func victory(_ s :String) -> Bool {
         // Horizontal Victory
@@ -253,4 +385,132 @@ class TicTacToeViewController: UIViewController {
         return TicTocToeGameState(gameboard: gameboard, turn: currentTurn == TicTacToeTurn.x ? "X" : "O")
     }
     
+}
+
+extension TicTacToeViewController {
+    private func tttGetHighestEasy(difficulty: String, userID: String, completion: @escaping (Int?, Int?, Int?, Int?) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(difficulty)")
+        
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(nil, nil, nil, nil)
+            } else {
+                var highestWins: Int?
+                var highestLoss: Int?
+                var highestTotal: Int?
+                
+                var highestDraw: Int?
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let wins = data["wins"] as! Int
+                    let loss = data["losses"] as! Int
+                    let draw = data["draw"] as! Int
+                    let total = data["total"] as! Int
+                    
+                    if highestWins == nil || wins > highestWins! {
+                        highestWins = wins
+                    }
+                    if highestDraw == nil || draw > highestDraw! {
+                        highestDraw = draw
+                    }
+                    if highestLoss == nil || loss > highestLoss! {
+                        highestLoss = loss
+                    }
+                    
+                    if highestTotal == nil || total > highestTotal! {
+                        print("HIGHEST TIC TAC TOE IS \(highestTotal)")
+                        highestTotal = total
+                    }
+                }
+                
+                completion(highestWins, highestTotal, highestLoss, highestDraw)
+            }
+        }
+        
+    }
+    private func tttGetHighestMed(difficulty: String, userID: String, completion: @escaping (Int?, Int?, Int?, Int?) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(difficulty)")
+        
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(nil, nil, nil, nil)
+            } else {
+                var highestWins: Int?
+                var highestLoss: Int?
+                var highestTotal: Int?
+                
+                var highestDraw: Int?
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let wins = data["wins"] as! Int
+                    let loss = data["losses"] as! Int
+                    let draw = data["draw"] as! Int
+                    let total = data["total"] as! Int
+                    
+                    if highestWins == nil || wins > highestWins! {
+                        highestWins = wins
+                    }
+                    if highestDraw == nil || draw > highestDraw! {
+                        highestDraw = draw
+                    }
+                    if highestLoss == nil || loss > highestLoss! {
+                        highestLoss = loss
+                    }
+                    
+                    if highestTotal == nil || total > highestTotal! {
+                        print("HIGHEST TIC TAC TOE IS \(highestTotal)")
+                        highestTotal = total
+                    }
+                }
+                
+                completion(highestWins, highestTotal, highestLoss, highestDraw)
+            }
+        }
+        
+    }
+
+    private func tttGetHighestHard(difficulty: String, userID: String, completion: @escaping (Int?, Int?, Int?, Int?) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(difficulty)")
+        
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(nil, nil, nil, nil)
+            } else {
+                var highestWins: Int?
+                var highestLoss: Int?
+                var highestTotal: Int?
+                
+                var highestDraw: Int?
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let wins = data["wins"] as! Int
+                    let loss = data["losses"] as! Int
+                    let draw = data["draw"] as! Int
+                    let total = data["total"] as! Int
+                    
+                    if highestWins == nil || wins > highestWins! {
+                        highestWins = wins
+                    }
+                    if highestDraw == nil || draw > highestDraw! {
+                        highestDraw = draw
+                    }
+                    if highestLoss == nil || loss > highestLoss! {
+                        highestLoss = loss
+                    }
+                    
+                    if highestTotal == nil || total > highestTotal! {
+                        print("HIGHEST TIC TAC TOE IS \(highestTotal)")
+                        highestTotal = total
+                    }
+                }
+                
+                completion(highestWins, highestTotal, highestLoss, highestDraw)
+            }
+        }
+        
+    }
+
 }

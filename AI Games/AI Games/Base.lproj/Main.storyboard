@@ -941,30 +941,8 @@
                                 <color key="textColor" systemColor="systemCyanColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Wins: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIF-DN-Hd9">
-                                <rect key="frame" x="75" y="373" width="240" height="38"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
-                                <color key="textColor" systemColor="systemCyanColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZR6-6c-Rbt">
-                                <rect key="frame" x="135" y="637" width="120" height="93"/>
-                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Button">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="tips">
-                                            <attributes>
-                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <font key="NSFont" size="15" name="Chalkduster"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OhE-N9-lpK">
-                                <rect key="frame" x="75" y="179" width="240" height="27"/>
+                                <rect key="frame" x="75" y="179" width="240" height="31"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button">
@@ -988,8 +966,8 @@
                                     <action selector="sudokuButtonPressed:" destination="GoN-XV-V1I" eventType="touchUpInside" id="gcV-Z0-XGe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oo4-pS-SKG">
-                                <rect key="frame" x="75" y="214" width="240" height="27"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oo4-pS-SKG">
+                                <rect key="frame" x="75" y="215" width="240" height="31"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button">
@@ -1006,8 +984,8 @@
                                     <action selector="tictactoeButtonPressed:" destination="GoN-XV-V1I" eventType="touchUpInside" id="lad-an-j1m"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wpf-wZ-BfV">
-                                <rect key="frame" x="75" y="284" width="240" height="27"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wpf-wZ-BfV">
+                                <rect key="frame" x="75" y="287" width="240" height="31"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button">
@@ -1024,15 +1002,8 @@
                                     <action selector="gomokuButtonPressed:" destination="GoN-XV-V1I" eventType="touchUpInside" id="uh9-qE-6sT"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Loss: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BDq-jt-bxk">
-                                <rect key="frame" x="75" y="431" width="240" height="38"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
-                                <color key="textColor" systemColor="systemCyanColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c4c-HA-8L2">
-                                <rect key="frame" x="75" y="249" width="240" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c4c-HA-8L2">
+                                <rect key="frame" x="75" y="251" width="240" height="31"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button">
@@ -1047,35 +1018,123 @@
                                     </attributedString>
                                 </state>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZPQ-QN-Ofi">
+                                <rect key="frame" x="75" y="377.66666666666669" width="240" height="79"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="wsW-HT-w0L"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SudokuCell" id="vMB-Ik-AzC">
+                                        <rect key="frame" x="0.0" y="50" width="240" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vMB-Ik-AzC" id="TAj-VD-bld">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Easy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09P-6e-Dsc">
+                                <rect key="frame" x="75" y="338" width="240" height="31.666666666666686"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="25"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Med" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohq-BS-3Zy">
+                                <rect key="frame" x="75" y="474" width="240" height="32"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="25"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tYL-Ne-X4E">
+                                <rect key="frame" x="75" y="514" width="240" height="79"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="ztK-1b-qL7"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SudokuCell" id="3rA-5C-rBu">
+                                        <rect key="frame" x="0.0" y="50" width="240" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3rA-5C-rBu" id="HWW-Bh-nvF">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bK5-gD-Odb">
+                                <rect key="frame" x="78" y="650.33333333333337" width="240" height="79"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="k9t-o9-SDK"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SudokuCell" id="FoI-lC-fDS">
+                                        <rect key="frame" x="0.0" y="50" width="240" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FoI-lC-fDS" id="FOI-E2-Its">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ss-yj-v1y">
+                                <rect key="frame" x="75" y="610.33333333333337" width="240" height="32"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="25"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qJ9-xm-d60"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="tYL-Ne-X4E" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="3z2-q1-YgX"/>
                             <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="OhE-N9-lpK" secondAttribute="trailing" constant="75" id="66G-CS-KVA"/>
-                            <constraint firstItem="BDq-jt-bxk" firstAttribute="top" secondItem="JIF-DN-Hd9" secondAttribute="bottom" constant="20" id="8em-de-pfW"/>
+                            <constraint firstItem="c4c-HA-8L2" firstAttribute="top" secondItem="oo4-pS-SKG" secondAttribute="bottom" constant="5" id="8fT-27-YFd"/>
+                            <constraint firstItem="ohq-BS-3Zy" firstAttribute="top" secondItem="ZPQ-QN-Ofi" secondAttribute="bottom" constant="17.333333333333314" id="98K-Ql-BBq"/>
+                            <constraint firstItem="09P-6e-Dsc" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="9u5-h4-1t4"/>
                             <constraint firstItem="1qT-qf-1Tr" firstAttribute="top" secondItem="qJ9-xm-d60" secondAttribute="top" constant="21" id="9ve-Lc-Kav"/>
                             <constraint firstItem="OhE-N9-lpK" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="Dh4-5P-QQU"/>
-                            <constraint firstItem="oo4-pS-SKG" firstAttribute="top" secondItem="OhE-N9-lpK" secondAttribute="bottom" constant="8" symbolic="YES" id="KZL-zC-ScV"/>
-                            <constraint firstItem="ZR6-6c-Rbt" firstAttribute="top" secondItem="BDq-jt-bxk" secondAttribute="bottom" constant="168" id="QLA-jF-pSY"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="c4c-HA-8L2" secondAttribute="trailing" constant="75" id="EOi-Hx-SSy"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="ohq-BS-3Zy" secondAttribute="trailing" constant="75" id="Erb-as-Rg9"/>
+                            <constraint firstItem="oo4-pS-SKG" firstAttribute="top" secondItem="OhE-N9-lpK" secondAttribute="bottom" constant="5" id="KZL-zC-ScV"/>
+                            <constraint firstItem="Wpf-wZ-BfV" firstAttribute="top" secondItem="c4c-HA-8L2" secondAttribute="bottom" constant="5" id="LBO-TL-mjd"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="bK5-gD-Odb" secondAttribute="trailing" constant="72" id="LRb-it-Z4P"/>
+                            <constraint firstItem="Wpf-wZ-BfV" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="QLI-Y8-TFx"/>
+                            <constraint firstItem="ZPQ-QN-Ofi" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="Qdb-Mf-GII"/>
+                            <constraint firstItem="6ss-yj-v1y" firstAttribute="top" secondItem="tYL-Ne-X4E" secondAttribute="bottom" constant="17.329999999999998" id="Qtj-dv-PuX"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="Wpf-wZ-BfV" secondAttribute="trailing" constant="75" id="QvF-91-Lm4"/>
+                            <constraint firstItem="tYL-Ne-X4E" firstAttribute="top" secondItem="ohq-BS-3Zy" secondAttribute="bottom" constant="8" id="SoD-4l-Hbn"/>
                             <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="1qT-qf-1Tr" secondAttribute="trailing" constant="75" id="TQ7-HM-Er3"/>
-                            <constraint firstItem="JIF-DN-Hd9" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="UxU-Lo-S2b"/>
-                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="JIF-DN-Hd9" secondAttribute="trailing" constant="75" id="VRo-7N-Ggi"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="oo4-pS-SKG" secondAttribute="trailing" constant="75" id="Trs-bz-N0x"/>
+                            <constraint firstItem="ohq-BS-3Zy" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="WMP-Il-VhT"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="tYL-Ne-X4E" secondAttribute="trailing" constant="75" id="a4P-oV-ba2"/>
+                            <constraint firstItem="oo4-pS-SKG" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="bg7-he-deD"/>
+                            <constraint firstItem="6ss-yj-v1y" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="cwU-7I-BRa"/>
+                            <constraint firstItem="09P-6e-Dsc" firstAttribute="top" secondItem="Wpf-wZ-BfV" secondAttribute="bottom" constant="20" id="ejs-Sj-bhR"/>
                             <constraint firstItem="OhE-N9-lpK" firstAttribute="top" secondItem="1qT-qf-1Tr" secondAttribute="bottom" constant="29" id="geR-Ze-okv"/>
-                            <constraint firstItem="JIF-DN-Hd9" firstAttribute="top" secondItem="Wpf-wZ-BfV" secondAttribute="bottom" constant="62" id="roq-5Y-zaH"/>
-                            <constraint firstItem="BDq-jt-bxk" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="uh6-dr-5e8"/>
+                            <constraint firstItem="c4c-HA-8L2" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="hWc-Ee-4nh"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="6ss-yj-v1y" secondAttribute="trailing" constant="75" id="hct-Oo-uKU"/>
+                            <constraint firstItem="ZPQ-QN-Ofi" firstAttribute="top" secondItem="09P-6e-Dsc" secondAttribute="bottom" constant="8" id="iXh-gf-X5h"/>
+                            <constraint firstItem="bK5-gD-Odb" firstAttribute="top" secondItem="6ss-yj-v1y" secondAttribute="bottom" constant="8" id="lle-re-RQT"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="09P-6e-Dsc" secondAttribute="trailing" constant="75" id="qho-oL-vYN"/>
+                            <constraint firstItem="bK5-gD-Odb" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="78" id="tt4-jk-L9x"/>
                             <constraint firstItem="1qT-qf-1Tr" firstAttribute="leading" secondItem="qJ9-xm-d60" secondAttribute="leading" constant="75" id="var-qK-8ZE"/>
-                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="BDq-jt-bxk" secondAttribute="trailing" constant="75" id="wKo-sl-NVS"/>
-                            <constraint firstItem="BDq-jt-bxk" firstAttribute="top" secondItem="JIF-DN-Hd9" secondAttribute="bottom" constant="20" id="zsD-Z1-dHE"/>
+                            <constraint firstItem="qJ9-xm-d60" firstAttribute="trailing" secondItem="ZPQ-QN-Ofi" secondAttribute="trailing" constant="75" id="zyH-Ja-Ucz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3vG-0u-MYb"/>
                     <connections>
                         <outlet property="connect4Button" destination="c4c-HA-8L2" id="Jp2-87-SfE"/>
+                        <outlet property="easyTableView" destination="ZPQ-QN-Ofi" id="prU-4R-K3Z"/>
                         <outlet property="gomokuButton" destination="Wpf-wZ-BfV" id="UJ9-F2-qsM"/>
-                        <outlet property="lossLabel" destination="BDq-jt-bxk" id="TO1-uR-UCF"/>
+                        <outlet property="hardTableView" destination="bK5-gD-Odb" id="lCp-ye-Zy5"/>
+                        <outlet property="medTableView" destination="tYL-Ne-X4E" id="9WP-qw-T7z"/>
                         <outlet property="sudokuButton" destination="OhE-N9-lpK" id="GNY-eA-MV6"/>
                         <outlet property="tictactoeButton" destination="oo4-pS-SKG" id="Uz1-hm-A55"/>
-                        <outlet property="winLabel" destination="JIF-DN-Hd9" id="yWf-Lh-GOI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="67Q-iU-Inf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -47,6 +47,7 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+
         imageView.layer.cornerRadius = 20.0
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
 
@@ -208,9 +209,10 @@ class GameSelectionViewController: UIViewController {
             }
         }
         else if selectedGame == .ttt {
+            
             let tttVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "TicTacToeViewController") as! TicTacToeViewController
-            
+            tttVC.selectedDifficulty = selectedLevel
             UIView.animate(withDuration: 0.5, animations: {
                 self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
                 self.play.alpha = 0

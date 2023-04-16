@@ -14,11 +14,13 @@ struct Sudoku {
     var medWins: Int = 0
     var hardWins: Int = 0
     var maxCellsToFill: Int = 0
-    var attempts: Int = 0
+    var hintsUsed: Int = 0
     var sudokuArray: [[Int]] = []
     var partialArray: [[Int]] = []
     var startingArray: [[Int]] = []
 }
+
+
 extension SudokuViewController {
     
     func flashBoardRed() {
@@ -138,7 +140,7 @@ extension SudokuViewController {
                 cellsToBlank -= 1
             }
         }
-        
+        sudoku.hintsUsed = 0
         return (board, partialBoard)
     }
 

@@ -11,28 +11,390 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 
-class AnalysisViewController: UIViewController{
+class AnalysisViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tttWins = 0
     var tttLose = 0
+    var selectedGame : Game?
+    @IBOutlet weak var easyTableView: UITableView!
+    
+    @IBOutlet weak var tttEasyTableView: UITableView!
+    
+    @IBOutlet weak var medTableView: UITableView!
+    
+    @IBOutlet weak var hardTableView: UITableView!
     
     @IBOutlet weak var sudokuButton: UIButton!
     
     @IBOutlet weak var tictactoeButton: UIButton!
     @IBOutlet weak var connect4Button: UIButton!
     @IBOutlet weak var gomokuButton: UIButton!
+    var easyGames: [SudokuGame] = []
+    var medGames: [SudokuGame] = []
+    var hardGames: [SudokuGame] = []
+    var tttEasyGames: [TicTacToeGame] = []
+    var tttHardGames: [TicTacToeGame] = []
+    var tttMedGames: [TicTacToeGame] = []
     
-    @IBOutlet weak var winLabel: UILabel!
     
-    @IBOutlet weak var lossLabel: UILabel!
     @IBAction func sudokuButtonPressed(_ sender: Any) {
-    }
-    @IBAction func tictactoeButtonPressed(_ sender: Any) {
-        winLabel.text = "Wins: \(tttWins)"
-        lossLabel.text = "Wins: \(tttLose)"
+        selectedGame = .sudoku
+        // Expand animation
+        UIView.animate(withDuration: 0.4, animations: {
+            self.sudokuButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (_) in
+            // Shrink animation
+            UIView.animate(withDuration: 0.2) {
+                self.sudokuButton.transform = .identity
+            }
+        }
+        
+        // Change color
+        sudokuButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
+        tictactoeButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        
+        // Show tables
+        easyTableView.isHidden = false
+        medTableView.isHidden = false
+        hardTableView.isHidden = false
+        easyTableView.reloadData()
+        medTableView.reloadData()
+        
         
     }
+    @IBAction func tictactoeButtonPressed(_ sender: Any) {
+        selectedGame = .ttt
+        // Expand animation
+        UIView.animate(withDuration: 0.4, animations: {
+            self.tictactoeButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (_) in
+            // Shrink animation
+            UIView.animate(withDuration: 0.2) {
+                self.tictactoeButton.transform = .identity
+            }
+        }
+        sudokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        tictactoeButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
+        tictactoeButton.backgroundColor = UIColor.red
+        easyTableView.reloadData()
+        medTableView.reloadData()
+        hardTableView.reloadData()
+        
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch tableView {
+        case easyTableView:
+            if selectedGame == .sudoku {
+                return easyGames.count
+            }
+            if selectedGame == .ttt {
+                return tttEasyGames.count
+            }
+            return easyGames.count
+        case medTableView:
+            if selectedGame == .sudoku {
+                return medGames.count
+            }
+            if selectedGame == .ttt {
+                return tttMedGames.count
+            }
+            return medGames.count
+        case hardTableView:
+            if selectedGame == .sudoku {
+                return hardGames.count
+            }
+            if selectedGame == .ttt {
+                return tttHardGames.count
+            }
+            return hardGames.count
+        default:
+            return 0
+        }
+    }
+    private func customizeButton(_ button: UIButton) {
+        button.layer.cornerRadius = 20.0
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SudokuCell", for: indexPath)
+        cell.layer.cornerRadius = 20
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = UIColor.black.cgColor
+           cell.layer.masksToBounds = true
+           cell.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        
+        switch tableView {
+        case easyTableView:
+            for view in cell.contentView.subviews {
+                view.removeFromSuperview()
+            }
+            if selectedGame == .sudoku{
+                let game = easyGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.wins)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                
+                stackView.addArrangedSubview(checkmarkImageView)
+                
+                // Add time label to stack view
+                let timeLabel = UILabel()
+                let minutes = game.time / 60
+                let seconds = game.time % 60
+                let timeString = String(format: "%d:%02d", minutes, seconds)
+                
+                timeLabel.text = "\(timeString)s"
+                stackView.addArrangedSubview(timeLabel)
+                
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+            }
+            
+            else if selectedGame == .ttt {
+                let game = tttEasyGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.total)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
+                let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                if game.gameFinished == "Win"{
+                    stackView.addArrangedSubview(checkmarkImageView)
+                }
+                if game.gameFinished == "Loss" {
+                    stackView.addArrangedSubview(xImageView)
+                }
+                if game.gameFinished == "Draw"{
+                    stackView.addArrangedSubview(catImageView)
+                }
+                
+                
+
+                
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+                
+            }
+        case medTableView:
+            for view in cell.contentView.subviews {
+            view.removeFromSuperview()
+        }
+        if selectedGame == .sudoku{
+            let game = medGames[indexPath.row]
+            let stackView = UIStackView()
+            stackView.axis = .horizontal
+            stackView.alignment = .center
+            stackView.distribution = .equalCentering
+            stackView.spacing = 8
+            
+            // Add game number label to stack view
+            let gameNumberLabel = UILabel()
+            gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+            gameNumberLabel.text = "Game \(game.wins)"
+            stackView.addArrangedSubview(gameNumberLabel)
+            
+            // Add checkmark to stack view
+            let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+            checkmarkImageView.tintColor = .green
+            
+            stackView.addArrangedSubview(checkmarkImageView)
+            
+            // Add time label to stack view
+            let timeLabel = UILabel()
+            let minutes = game.time / 60
+            let seconds = game.time % 60
+            let timeString = String(format: "%d:%02d", minutes, seconds)
+            
+            timeLabel.text = "\(timeString)s"
+            stackView.addArrangedSubview(timeLabel)
+            
+            // Configure cell with stack view
+            cell.contentView.addSubview(stackView)
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+            ])
+        }
+        
+        else if selectedGame == .ttt {
+            let game = tttMedGames[indexPath.row]
+            let stackView = UIStackView()
+            stackView.axis = .horizontal
+            stackView.alignment = .center
+            stackView.distribution = .equalCentering
+            stackView.spacing = 8
+            
+            // Add game number label to stack view
+            let gameNumberLabel = UILabel()
+            gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+            gameNumberLabel.text = "Game \(game.total)"
+            stackView.addArrangedSubview(gameNumberLabel)
+            
+            // Add checkmark to stack view
+            let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
+            let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+            let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+            checkmarkImageView.tintColor = .green
+            if game.gameFinished == "Win"{
+                stackView.addArrangedSubview(checkmarkImageView)
+            }
+            if game.gameFinished == "Loss" {
+                stackView.addArrangedSubview(xImageView)
+            }
+            if game.gameFinished == "Draw"{
+                stackView.addArrangedSubview(catImageView)
+            }
+            
+            
+
+            
+            // Configure cell with stack view
+            cell.contentView.addSubview(stackView)
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+            ])
+            
+        }
+        case hardTableView:
+            for view in cell.contentView.subviews {
+                view.removeFromSuperview()
+            }
+            if selectedGame == .sudoku{
+                let game = hardGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.wins)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                
+                stackView.addArrangedSubview(checkmarkImageView)
+                
+                // Add time label to stack view
+                let timeLabel = UILabel()
+                let minutes = game.time / 60
+                let seconds = game.time % 60
+                let timeString = String(format: "%d:%02d", minutes, seconds)
+                
+                timeLabel.text = "\(timeString)s"
+                stackView.addArrangedSubview(timeLabel)
+                
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+            }
+            
+            else if selectedGame == .ttt {
+                let game = tttHardGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.total)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
+                let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                if game.gameFinished == "Win"{
+                    stackView.addArrangedSubview(checkmarkImageView)
+                }
+                if game.gameFinished == "Loss" {
+                    stackView.addArrangedSubview(xImageView)
+                }
+                if game.gameFinished == "Draw"{
+                    stackView.addArrangedSubview(catImageView)
+                }
+                
+
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+                
+            }
+        default:
+            break
+        }
+
+        
+        
+        return cell
+    }
+
+
+
     
     @IBAction func gomokuButtonPressed(_ sender: Any) {
     }
@@ -42,25 +404,30 @@ class AnalysisViewController: UIViewController{
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        print(tttWins)
-        print(tttLose)
-        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
-//        for i in 0..<tttWins {
-//
-//        }
-//
-//        for i in 0..<tttLose {
-//        }
+        customizeButton(sudokuButton)
+        customizeButton(gomokuButton)
+        customizeButton(tictactoeButton)
+        customizeButton(connect4Button)
+        medTableView.delegate = self
+        medTableView.dataSource = self
+        hardTableView.delegate = self
+        hardTableView.dataSource = self
+        easyTableView.delegate = self
+        easyTableView.dataSource = self
 
-
-    }
-    
-    
-
-    
-    let database = Firestore.firestore()
-    override func viewWillAppear(_ animated: Bool) {
+        easyTableView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        medTableView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        hardTableView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+  
+        easyTableView.showsVerticalScrollIndicator = false
+        medTableView.showsVerticalScrollIndicator = false
+        hardTableView.showsVerticalScrollIndicator = false
         
+        easyTableView.isHidden = true
+        medTableView.isHidden = true
+        hardTableView.isHidden = true
+        
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         let user = Auth.auth().currentUser
         
 
@@ -68,6 +435,51 @@ class AnalysisViewController: UIViewController{
                 print("USER IS SIGNED IN")
                 let userID = Auth.auth().currentUser?.uid
               // User is signed in
+                fetchGamesAndHints(userID: userID!, difficulty: "Easy") { games in
+                    self.easyGames = games
+                    DispatchQueue.main.async {
+                        self.easyTableView.reloadData()
+                    }
+                }
+                
+                fetchGamesAndHints(userID: userID!, difficulty: "Med") { games in
+                    self.medGames = games
+                    DispatchQueue.main.async {
+                        self.medTableView.reloadData()
+                    }
+                }
+                
+                fetchGamesAndHints(userID: userID!, difficulty: "Hard") { games in
+                    self.hardGames = games
+                    DispatchQueue.main.async {
+                        self.hardTableView.reloadData()
+                    }
+                }
+                
+                fetchTicTacToeGamesForWins(userID: userID!, difficulty: "Easy") { games in
+                    self.tttEasyGames = games
+                    
+                    DispatchQueue.main.async {
+                        self.easyTableView.reloadData()
+                    }
+                }
+
+                fetchTicTacToeGamesForWins(userID: userID!, difficulty: "Med") { games in
+                    self.tttMedGames = games
+                    DispatchQueue.main.async {
+                        self.medTableView.reloadData()
+                    }
+                }
+
+                fetchTicTacToeGamesForWins(userID: userID!, difficulty: "Hard") { games in
+                    self.tttHardGames = games
+                    DispatchQueue.main.async {
+                        self.hardTableView.reloadData()
+                    }
+                }
+
+
+
                 let docRefWin =  database.document("/users/\(userID!)/tictactoe/wins")
                 let docRefLoss = database.document("/users/\(userID!)/tictactoe/loss")
                 docRefWin.getDocument { (document, error) in
@@ -102,6 +514,23 @@ class AnalysisViewController: UIViewController{
 
                 navigationController?.pushViewController(vc, animated: true)
             }
+//        for i in 0..<tttWins {
+//
+//        }
+//
+//        for i in 0..<tttLose {
+//        }
+
+
+    }
+    
+    
+
+    
+    let database = Firestore.firestore()
+    override func viewWillAppear(_ animated: Bool) {
+        
+
     }
 //
 //
