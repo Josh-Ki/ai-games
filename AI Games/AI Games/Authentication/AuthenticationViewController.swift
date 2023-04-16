@@ -64,7 +64,7 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        userID = Auth.auth().currentUser!.uid
+        
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             return
         }
@@ -75,6 +75,7 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
             }
             
             if error == nil {
+                userID = Auth.auth().currentUser!.uid
                 // User logged in successfully
                 // Navigate to next screen or perform any other action
                 self?.navigationController?.popViewController(animated: true)

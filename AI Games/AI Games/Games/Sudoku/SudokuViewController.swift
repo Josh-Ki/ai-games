@@ -19,20 +19,24 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     var seconds = 0
     
     @IBOutlet weak var checkButton: UIButton!
-    
+    var grayedIndices: [Int] = []
     @IBOutlet weak var hintButton: UIButton!
     var sudoku = Sudoku()
     var selectedDifficulty: String?
     @IBOutlet weak var collectionView: UICollectionView!
-    var sudokuArray: [[Int]] = []
-    var partialArray: [[Int]] = []
+
     
     let database = Firestore.firestore()
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+        // Register for keyboard notifications
+              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         time = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        collectionView.backgroundColor = view.backgroundColor
         //Looks for single or multiple taps.
          let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
 
@@ -41,6 +45,8 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
         view.addGestureRecognizer(tap)
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(checkButtonLongPressed(_:)))
+            checkButton.addGestureRecognizer(longPressRecognizer)
         switch selectedDifficulty {
         case "Easy":
             sudoku.maxCellsToFill = 51
@@ -76,18 +82,40 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         default:
             sudoku.maxCellsToFill = 30
         }
-        (sudokuArray, partialArray) = generateSudokuBoard()
+        (sudoku.sudokuArray, sudoku.partialArray) = generateSudokuBoard()
+        sudoku.startingArray = sudoku.partialArray
         // Call the function to calculate the average time for the current user and difficulty
-        calculateAverageTimeForUserAndDifficulty(userID: userID, difficulty: "Easy") { (averageTime) in
-            if let averageTime = averageTime {
-                // The average time was successfully calculated
-                print("The average time for user123 on hard difficulty is \(averageTime) seconds.")
-            } else {
-                // There was an error fetching the documents or there were no documents
-                print("Could not calculate the average time.")
-            }
-        }
+//        calculateAverageTimeForUserAndDifficulty(userID: userID, difficulty: "Easy") { (averageTime) in
+//            if let averageTime = averageTime {
+//                // The average time was successfully calculated
+//                print("The average time for user123 on hard difficulty is \(averageTime) seconds.")
+//            } else {
+//                // There was an error fetching the documents or there were no documents
+//                print("Could not calculate the average time.")
+//            }
+//        }
 
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        collectionView.contentInset = insets
+        collectionView.scrollIndicatorInsets = insets
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        collectionView.contentInset = .zero
+        collectionView.scrollIndicatorInsets = .zero
         
     }
     private func getHighestWinsForDifficulty(difficulty: String, userID: String, completion: @escaping (Int?) -> Void) {
@@ -116,14 +144,15 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
 
     
-    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int) {
+    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int, board: [[Int]]) {
         let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
         let newDocRef = collectionRef.document()
         
         let winData = [
             "id": newDocRef.documentID,
             "wins": wins,
-            "time": time
+            "time": time,
+            "board": board.flatMap { $0 }
         ] as [String : Any]
         
         newDocRef.setData(winData)
@@ -171,7 +200,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         for row in 0..<9 {
             var seen = Set<Int>()
             for col in 0..<9 {
-                let value = partialArray[row][col]
+                let value = sudoku.partialArray[row][col]
                 if value < 1 || value > 9 || seen.contains(value) {
                     return false
                 }
@@ -183,7 +212,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         for col in 0..<9 {
             var seen = Set<Int>()
             for row in 0..<9 {
-                let value = partialArray[row][col]
+                let value = sudoku.partialArray[row][col]
                 if value < 1 || value > 9 || seen.contains(value) {
                     return false
                 }
@@ -197,7 +226,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
                 var seen = Set<Int>()
                 for row in i*3..<i*3+3 {
                     for col in j*3..<j*3+3 {
-                        let value = partialArray[row][col]
+                        let value = sudoku.partialArray[row][col]
                         if value < 1 || value > 9 || seen.contains(value) {
                             return false
                         }
@@ -212,17 +241,17 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         if selectedDifficulty! == "Easy" {
             sudoku.easyWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!))
+            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray)
         }
         else if selectedDifficulty! == "Med" {
             sudoku.medWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!))
+            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray)
         }
         else if selectedDifficulty! == "Hard" {
             sudoku.hardWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!))
+            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray)
         }
 
         return true
@@ -252,7 +281,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         var emptyCells: [(Int, Int)] = []
         for row in 0..<9 {
             for col in 0..<9 {
-                if partialArray[row][col] == 0 {
+                if sudoku.partialArray[row][col] == 0 {
                     emptyCells.append((row, col))
                 }
             }
@@ -262,7 +291,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         if let randomEmptyCell = emptyCells.randomElement() {
             let row = randomEmptyCell.0
             let col = randomEmptyCell.1
-            partialArray[row][col] = sudokuArray[row][col]
+            sudoku.partialArray[row][col] = sudoku.sudokuArray[row][col]
             collectionView.reloadItems(at: [IndexPath(row: row * 9 + col, section: 0)])
         }
 
@@ -288,16 +317,23 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    
     @IBAction func checkButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.checkButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                self.checkButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
+            })
+            
+            // Long press started, show error colors
             for row in 0..<9 {
                 for col in 0..<9 {
                     let indexPath = IndexPath(row: row * 9 + col, section: 0)
                     guard let cell = collectionView.cellForItem(at: indexPath) as? SudokuCell else {
                         continue
                     }
-                    let userValue = partialArray[row][col]
-                    let correctValue = sudokuArray[row][col]
+                    let userValue = sudoku.partialArray[row][col]
+                    let correctValue = sudoku.sudokuArray[row][col]
                     if userValue != correctValue {
                         // User input is incorrect
                         cell.label.backgroundColor = UIColor.red
@@ -307,7 +343,13 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
                     }
                 }
             }
-        } else {
+        } else if sender.state == .ended || sender.state == .cancelled {
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                        self.checkButton.transform = CGAffineTransform.identity
+                self.checkButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+                    })
+            // Long press ended, reset cell colors
             for row in 0..<9 {
                 for col in 0..<9 {
                     let indexPath = IndexPath(row: row * 9 + col, section: 0)
@@ -319,11 +361,11 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
     }
-    func restart() {
+        func restart() {
         // Generate a new Sudoku board
         let boards = generateSudokuBoard()
-        sudokuArray = boards.0
-        partialArray = boards.1
+            sudoku.sudokuArray = boards.0
+            sudoku.partialArray = boards.1
         
         // Reset timer and reload collection view data
         seconds = 0
@@ -366,34 +408,34 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         let row = textField.tag / 9
         let col = textField.tag % 9
         if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
-            partialArray[row][col] = value
+            sudoku.partialArray[row][col] = value
             
         } else {
-            partialArray[row][col] = 0
+            sudoku.partialArray[row][col] = 0
             textField.text = ""
         }
     }
     
 
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: indexPath) as! SudokuCell
+        let row = indexPath.row / 9
+        let col = indexPath.row % 9
 
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: indexPath) as! SudokuCell
-            let row = indexPath.row / 9
-            let col = indexPath.row % 9
-            
-            cell.label.delegate = self
-            let value = partialArray[row][col]
-            cell.label.text = "\(value == 0 ? "" : "\(value)")"
-            cell.label.textAlignment = .center // center the text
-            cell.label.tag = indexPath.row
-            
-            cell.label.isUserInteractionEnabled = value == 0
-            return cell
-        }
+        cell.label.delegate = self
+        let value = sudoku.partialArray[row][col]
+        cell.label.text = "\(value == 0 ? "" : "\(value)")"
+        cell.label.textAlignment = .center // center the text
+        cell.label.tag = indexPath.row
 
-        func textFieldDidChange(_ textField: UITextField) {
+        cell.label.isUserInteractionEnabled = value == 0
 
-        }
+        // Reset the background color of the cell
+        cell.label.backgroundColor = grayedIndices.contains(indexPath.row) ? UIColor.lightGray : UIColor.white
+
+        return cell
+    }
+
 
 
 
@@ -402,6 +444,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         // Get the selected cell
         let cell = collectionView.cellForItem(at: indexPath) as! SudokuCell
         
+        print("D:JSDL:KF")
         // Change the background color of the text field for the selected cell
         cell.label.backgroundColor = UIColor.green
 
@@ -411,40 +454,61 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 }
 extension SudokuViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-
         guard let cell = textField.superview?.superview as? SudokuCell else { return }
-        for i in 0..<collectionView.numberOfItems(inSection: 0) {
-            guard let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? SudokuCell else { continue }
-            cell.label.backgroundColor = UIColor.white
+        
+        // Clear the array of grayed indices
+        grayedIndices.removeAll()
+        
+        // Add the indices of the cells that should be grayed out to the array
+        let indexPath = collectionView.indexPath(for: cell)!
+        let row = indexPath.row / 9
+        let col = indexPath.row % 9
+        for i in 0..<9 {
+            if i != col {
+                let index = row * 9 + i
+                grayedIndices.append(index)
+            }
+        }
+        for j in 0..<9 {
+            if j != row {
+                let index = j * 9 + col
+                grayedIndices.append(index)
+            }
         }
 
         // Change the background color of the selected cell
         cell.label.backgroundColor = UIColor.lightGray
-        
-        // Get the row and column indices of the selected cell
-        let indexPath = collectionView.indexPath(for: cell)!
-        let row = indexPath.row / 9
-        let col = indexPath.row % 9
-        
+
         // Change the background color of all cells in the same row as the selected cell
         for i in 0..<9 {
             if i != col {
                 let index = row * 9 + i
                 if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? SudokuCell {
                     cell.label.backgroundColor = UIColor.lightGray
+                    grayedIndices.append(index)
                 }
             }
         }
-        
+
         // Change the background color of all cells in the same column as the selected cell
         for j in 0..<9 {
             if j != row {
                 let index = j * 9 + col
                 if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? SudokuCell {
                     cell.label.backgroundColor = UIColor.lightGray
+                    grayedIndices.append(index)
                 }
             }
         }
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        grayedIndices.removeAll()
+        collectionView.reloadData()
+        
+        
+    }
+
+
 
 }

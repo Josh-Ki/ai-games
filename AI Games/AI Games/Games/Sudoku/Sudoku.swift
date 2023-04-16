@@ -9,14 +9,15 @@ import Foundation
 import UIKit
 
 
-
 struct Sudoku {
     var easyWins: Int = 0
     var medWins: Int = 0
     var hardWins: Int = 0
     var maxCellsToFill: Int = 0
     var attempts: Int = 0
-    
+    var sudokuArray: [[Int]] = []
+    var partialArray: [[Int]] = []
+    var startingArray: [[Int]] = []
 }
 extension SudokuViewController {
     
@@ -31,7 +32,7 @@ extension SudokuViewController {
             }
         }
         
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] timer in
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
             for row in 0..<9 {
                 for col in 0..<9 {
                     let indexPath = IndexPath(row: row * 9 + col, section: 0)
