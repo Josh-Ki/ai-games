@@ -64,6 +64,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func tictactoeButtonPressed(_ sender: Any) {
         selectedGame = .ttt
+        
         // Expand animation
         UIView.animate(withDuration: 0.4, animations: {
             self.tictactoeButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
@@ -73,9 +74,10 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
                 self.tictactoeButton.transform = .identity
             }
         }
+        
         sudokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
         tictactoeButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
-        tictactoeButton.backgroundColor = UIColor.red
+        
         easyTableView.reloadData()
         medTableView.reloadData()
         hardTableView.reloadData()
