@@ -11,24 +11,27 @@ import FirebaseCore
 import FirebaseAuth
 import Firebase
 
-var sudokuEasyWins = 0
-var sudokuHardWins = 0
-var sudokuMedWins = 0
+
 class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    @IBOutlet weak var timer: UILabel!
+    var time = Timer()
+    var seconds = 0
     
     @IBOutlet weak var checkButton: UIButton!
     
     @IBOutlet weak var hintButton: UIButton!
-    
+    var sudoku = Sudoku()
     var selectedDifficulty: String?
     @IBOutlet weak var collectionView: UICollectionView!
     var sudokuArray: [[Int]] = []
     var partialArray: [[Int]] = []
-    var maxCellsToFill : Int = 0
+    
     let database = Firestore.firestore()
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        time = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         //Looks for single or multiple taps.
          let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
@@ -37,26 +40,122 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         //tap.cancelsTouchesInView = false
 
         view.addGestureRecognizer(tap)
+        
         switch selectedDifficulty {
         case "Easy":
-            maxCellsToFill = 30
-        case "Medium":
-            maxCellsToFill = 50
+            sudoku.maxCellsToFill = 51
+            getHighestWinsForDifficulty(difficulty: "Easy", userID: userID) { (highestWins) in
+                if let highestWins = highestWins {
+                    self.sudoku.easyWins = highestWins
+                    print("Highest number of wins for easy: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for easy")
+                }
+            }
+//            maxCellsToFill = 30
+        case "Med":
+            sudoku.maxCellsToFill = 31
+            getHighestWinsForDifficulty(difficulty: "Med", userID: userID) { (highestWins) in
+                if let highestWins = highestWins {
+                    self.sudoku.medWins = highestWins
+                    print("Highest number of wins for med: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+            }
         case "Hard":
-            maxCellsToFill = 64
+            sudoku.maxCellsToFill = 17
+            getHighestWinsForDifficulty(difficulty: "Hard", userID: userID) { (highestWins) in
+                if let highestWins = highestWins {
+                    self.sudoku.hardWins = highestWins
+                    print("Highest number of wins for hard: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+            }
         default:
-            maxCellsToFill = 30
+            sudoku.maxCellsToFill = 30
         }
         (sudokuArray, partialArray) = generateSudokuBoard()
+        // Call the function to calculate the average time for the current user and difficulty
+        calculateAverageTimeForUserAndDifficulty(userID: userID, difficulty: "Easy") { (averageTime) in
+            if let averageTime = averageTime {
+                // The average time was successfully calculated
+                print("The average time for user123 on hard difficulty is \(averageTime) seconds.")
+            } else {
+                // There was an error fetching the documents or there were no documents
+                print("Could not calculate the average time.")
+            }
+        }
 
         
     }
-    
-    private func writeUserData(wins: Int, difficulty: String, userID: String) {
-        let docRef = database.document("/users/\(userID)/sudoku/difficulty/\(difficulty)/wins")
+    private func getHighestWinsForDifficulty(difficulty: String, userID: String, completion: @escaping (Int?) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
         
-        docRef.setData(["wins" : wins])
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(nil)
+            } else {
+                var highestWins: Int?
+                
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let wins = data["wins"] as! Int
+                    
+                    if highestWins == nil || wins > highestWins! {
+                        highestWins = wins
+                    }
+                }
+                
+                completion(highestWins)
+            }
+        }
     }
+
+
+    
+    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int) {
+        let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
+        let newDocRef = collectionRef.document()
+        
+        let winData = [
+            "id": newDocRef.documentID,
+            "wins": wins,
+            "time": time
+        ] as [String : Any]
+        
+        newDocRef.setData(winData)
+    }
+    private func calculateAverageTimeForUserAndDifficulty(userID: String, difficulty: String, completion: @escaping (Int?) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
+        
+        collectionRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            var totalTime = 0
+            var numDocuments = 0
+            
+            for document in querySnapshot!.documents {
+                let time = document.data()["time"] as? Int ?? 0
+                totalTime += time
+                numDocuments += 1
+            }
+            
+            if numDocuments > 0 {
+                let averageTime = totalTime / numDocuments
+                completion(averageTime)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -111,20 +210,42 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         // If all checks pass, the board is valid
         
         if selectedDifficulty! == "Easy" {
-            sudokuEasyWins += 1
-            writeUserData(wins: sudokuEasyWins, difficulty: selectedDifficulty!, userID: userID)
+            sudoku.easyWins += 1
+            time.invalidate()
+            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!))
         }
         else if selectedDifficulty! == "Med" {
-            sudokuMedWins += 1
-            writeUserData(wins: sudokuMedWins, difficulty: selectedDifficulty!, userID: userID)
+            sudoku.medWins += 1
+            time.invalidate()
+            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!))
         }
         else if selectedDifficulty! == "Hard" {
-            sudokuHardWins += 1
-            writeUserData(wins: sudokuHardWins, difficulty: selectedDifficulty!, userID: userID)
+            sudoku.hardWins += 1
+            time.invalidate()
+            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!))
         }
 
         return true
     }
+    
+    func timeStringToSeconds(_ timeString: String) -> Int {
+        let components = timeString.components(separatedBy: ":")
+        guard components.count == 2,
+            let minutes = Int(components[0]),
+            let seconds = Int(components[1]) else {
+                return 0
+        }
+        return minutes * 60 + seconds
+    }
+
+    @objc func updateTimer() {
+            seconds += 1
+            let minutes = seconds / 60
+            let remainingSeconds = seconds % 60
+            
+            // Update the timer label with the new time
+            timer.text = String(format: "%d:%02d", minutes, remainingSeconds)
+        }
 
     @IBAction func hintButtonTapped(_ sender: Any) {
         // Find all empty cells
@@ -149,6 +270,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     @IBAction func checkButtonTapped(_ sender: UIButton) {
+        
         if verify() {
             let alert = UIAlertController(title: "Solved", message: "You have solved the Sudoku!", preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in
@@ -161,7 +283,13 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             present(alert, animated: true, completion: nil)
         } else {
-            // Verify failed, show error colors
+            sudoku.attempts += 1
+            flashBoardRed()
+        }
+    }
+
+    @IBAction func checkButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
             for row in 0..<9 {
                 for col in 0..<9 {
                     let indexPath = IndexPath(row: row * 9 + col, section: 0)
@@ -179,21 +307,36 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
                     }
                 }
             }
-        }
-    }
-
-    func restart() {
-        // Reset partialArray to all 0s and randomize initial values
-        partialArray = Array(repeating: Array(repeating: 0, count: 9), count: 9)
-        for row in 0..<9 {
-            for col in 0..<9 {
-                if Int.random(in: 1...100) <= maxCellsToFill {
-                    partialArray[row][col] = sudokuArray[row][col]
+        } else {
+            for row in 0..<9 {
+                for col in 0..<9 {
+                    let indexPath = IndexPath(row: row * 9 + col, section: 0)
+                    guard let cell = collectionView.cellForItem(at: indexPath) as? SudokuCell else {
+                        continue
+                    }
+                    cell.label.backgroundColor = UIColor.white
                 }
             }
         }
-        collectionView.reloadData()
     }
+    func restart() {
+        // Generate a new Sudoku board
+        let boards = generateSudokuBoard()
+        sudokuArray = boards.0
+        partialArray = boards.1
+        
+        // Reset timer and reload collection view data
+        seconds = 0
+        timer.text = "0:00"
+        time = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        time.fire()
+        turnCellsToWhite()
+        collectionView.reloadData()
+        
+        
+
+    }
+
 
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
@@ -224,7 +367,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         let col = textField.tag % 9
         if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
             partialArray[row][col] = value
-            print(partialArray[row][col])
+            
         } else {
             partialArray[row][col] = 0
             textField.text = ""
@@ -237,7 +380,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: indexPath) as! SudokuCell
             let row = indexPath.row / 9
             let col = indexPath.row % 9
-            print(partialArray)
+            
             cell.label.delegate = self
             let value = partialArray[row][col]
             cell.label.text = "\(value == 0 ? "" : "\(value)")"
@@ -258,95 +401,11 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Get the selected cell
         let cell = collectionView.cellForItem(at: indexPath) as! SudokuCell
-        print(cell.label.text)
+        
         // Change the background color of the text field for the selected cell
         cell.label.backgroundColor = UIColor.green
 
     }
-
-    func generateSudokuBoard() -> ([[Int]], [[Int]]) {
-        // Create an empty 9x9 Sudoku board
-        var board = Array(repeating: Array(repeating: 0, count: 9), count: 9)
-
-        // Define a function to check if a value is valid in a given position
-        func isValid(_ value: Int, _ row: Int, _ col: Int) -> Bool {
-            // Check if the value is already in the same row or column
-            for i in 0..<9 {
-                if board[row][i] == value || board[i][col] == value {
-                    return false
-                }
-            }
-
-            // Check if the value is already in the same 3x3 subgrid
-            let subgridRow = (row / 3) * 3
-            let subgridCol = (col / 3) * 3
-            for i in subgridRow..<(subgridRow + 3) {
-                for j in subgridCol..<(subgridCol + 3) {
-                    if board[i][j] == value {
-                        return false
-                    }
-                }
-            }
-
-            return true
-        }
-
-        // Define a function to fill the board recursively
-        func fillBoard(_ row: Int, _ col: Int) -> Bool {
-            // Check if we have filled all rows of the board
-            if row == 9 {
-                return true
-            }
-
-            // Calculate the next position to fill
-            let nextCol = (col + 1) % 9
-            let nextRow = nextCol == 0 ? row + 1 : row
-
-            // Shuffle the numbers 1-9 to generate a random order
-            var numbers = Array(1...9)
-            numbers.shuffle()
-
-            // Try each number in the shuffled order until we find a valid one
-            for number in numbers {
-                if isValid(number, row, col) {
-                    // Place the valid number in the current position
-                    board[row][col] = number
-
-                    // Recursively fill the rest of the board
-                    if fillBoard(nextRow, nextCol) {
-                        return true
-                    }
-
-                    // If we couldn't fill the rest of the board, backtrack
-                    board[row][col] = 0
-                }
-            }
-
-            // If we couldn't find a valid number for this position, backtrack
-            return false
-        }
-
-        // Fill the board starting from the top-left corner
-        fillBoard(0, 0)
-
-        // Create a copy of the board for partially filled board
-        var partialBoard = board.map { $0.map { $0 } }
-
-
-        // Randomly remove cells from the board to create a partially filled board
-        var cellsToFill = maxCellsToFill
-        while cellsToFill > 0 {
-            let row = Int.random(in: 0..<9)
-            let col = Int.random(in: 0..<9)
-            if partialBoard[row][col] != 0 {
-                partialBoard[row][col] = 0
-                cellsToFill -= 1
-            }
-        }
-
-        return (board, partialBoard)
-    }
-
 
 
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80076A6F29EB33090045ADD9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80076A6E29EB33090045ADD9 /* ProfileViewController.swift */; };
+		80076A7129EC3D360045ADD9 /* Sudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80076A7029EC3D360045ADD9 /* Sudoku.swift */; };
 		80179F8A29DA8F89006C58B8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F8929DA8F89006C58B8 /* FirebaseAuth */; };
 		80179F8C29DA8F89006C58B8 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F8B29DA8F89006C58B8 /* FirebaseDatabase */; };
 		80179F8E29DA8F89006C58B8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F8D29DA8F89006C58B8 /* FirebaseFirestore */; };
@@ -70,6 +72,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		80076A6E29EB33090045ADD9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		80076A7029EC3D360045ADD9 /* Sudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sudoku.swift; sourceTree = "<group>"; };
 		802F068229C83C6E0057CEE4 /* SudokuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCell.swift; sourceTree = "<group>"; };
 		8058296029A302D3000C76BE /* SudokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewController.swift; sourceTree = "<group>"; };
 		8058296229A302E1000C76BE /* TicTacToeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 			children = (
 				8058296029A302D3000C76BE /* SudokuViewController.swift */,
 				802F068229C83C6E0057CEE4 /* SudokuCell.swift */,
+				80076A7029EC3D360045ADD9 /* Sudoku.swift */,
 			);
 			path = Sudoku;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				80B4596129AC304400CD0EBE /* AnalysisViewController.swift */,
+				80076A6E29EB33090045ADD9 /* ProfileViewController.swift */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";
@@ -456,12 +462,14 @@
 				E5A1F27A29C94BD400AE1834 /* GomokuCell.swift in Sources */,
 				8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */,
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
+				80076A7129EC3D360045ADD9 /* Sudoku.swift in Sources */,
 				80C3BB4929C7CEB300A38C02 /* AI.swift in Sources */,
 				E59F7E9C29C8B325002F4C1E /* GomokuViewController.swift in Sources */,
 				80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */,
 				E5BE501829AFBA47005849BF /* TicTacToeAI.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
 				E5A6400E29C857A500276B68 /* GomokuGameState.swift in Sources */,
+				80076A6F29EB33090045ADD9 /* ProfileViewController.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
 			);

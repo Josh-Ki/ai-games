@@ -11,168 +11,54 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 
-class AnalysisViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    let tttTallyView = UIView()
-
-    // Title label
-    let titleLabel = UILabel()
-    
-    // Picker view to select a game
-    let gamePickerView = UIPickerView()
-    
-    // Array of games
-    let games = ["tictactoe", "sudoku", "gomoku", "connect 4"]
-    
-    
-    var selectedGame = "tictactoe"
-    
-    // Number of wins and losses for Tic Tac Toe
+class AnalysisViewController: UIViewController{
     
     var tttWins = 0
     var tttLose = 0
-    // Logout button
-    let logoutButton = UIButton()
+    
+    @IBOutlet weak var sudokuButton: UIButton!
+    
+    @IBOutlet weak var tictactoeButton: UIButton!
+    @IBOutlet weak var connect4Button: UIButton!
+    @IBOutlet weak var gomokuButton: UIButton!
+    
+    @IBOutlet weak var winLabel: UILabel!
+    
+    @IBOutlet weak var lossLabel: UILabel!
+    @IBAction func sudokuButtonPressed(_ sender: Any) {
+    }
+    @IBAction func tictactoeButtonPressed(_ sender: Any) {
+        winLabel.text = "Wins: \(tttWins)"
+        lossLabel.text = "Wins: \(tttLose)"
+        
+    }
+    
+    
+    @IBAction func gomokuButtonPressed(_ sender: Any) {
+    }
+    
+
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        print(tttWins)
+        print(tttLose)
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
-        for i in 0..<tttWins {
-            let winView = UIView()
-            winView.backgroundColor = .green
-            winView.frame = CGRect(x: i * 10, y: 0, width: 8, height: 40)
-            tttTallyView.addSubview(winView)
-        }
-
-        for i in 0..<tttLose {
-            let loseView = UIView()
-            loseView.backgroundColor = .red
-            loseView.frame = CGRect(x: i * 10, y: 50, width: 8, height: 40)
-            tttTallyView.addSubview(loseView)
-        }
-
-        
-        // Set up the title label
-        titleLabel.text = "game analysis"
-        titleLabel.font = UIFont(name: "Chalkduster", size: 30.0)
-        titleLabel.textColor = UIColor.systemCyan
-        
-        // Set up the picker view
-        gamePickerView.delegate = self
-        gamePickerView.dataSource = self
-        
-        
-        // Set up the logout button
-        logoutButton.setTitle("logout", for: .normal)
-        logoutButton.setTitleColor(.white, for: .normal)
-        logoutButton.backgroundColor = .red
-        logoutButton.layer.cornerRadius = 10
-        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        
-        // Add the views to the view
-        view.addSubview(titleLabel)
-        view.addSubview(gamePickerView)
-        
-        view.addSubview(logoutButton)
-        view.addSubview(tttTallyView)
-
-        // Set up constraints
-        setupConstraints()
-    }
-    
-    
-    func setupConstraints() {
-        tttTallyView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tttTallyView.topAnchor.constraint(equalTo: gamePickerView.bottomAnchor, constant: 20),
-            tttTallyView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            tttTallyView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tttTallyView.heightAnchor.constraint(equalToConstant: 90)
-        ])
-
-        // Disable autoresizing mask translation
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        gamePickerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Set up constraints for the views
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            gamePickerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            gamePickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            gamePickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-        
-            
-            logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoutButton.widthAnchor.constraint(equalToConstant: 100),
-            logoutButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
-
-    // MARK: - UIPickerViewDelegate & UIPickerViewDataSource
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return games.count
-    }
-    
-
-
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let title = games[row]
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.systemCyan
-        ]
-        return NSAttributedString(string: title, attributes: attributes)
-    }
-
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedGame = games[row]
-        
-        // Remove any existing views from the tally view
-        tttTallyView.subviews.forEach { $0.removeFromSuperview() }
-        
-        // Update the tally view based on the selected game
-        switch selectedGame {
-        case "tictactoe":
-            for i in 0..<tttWins {
-                let winView = UIView()
-                winView.backgroundColor = .green
-                winView.frame = CGRect(x: i * 10, y: 0, width: 8, height: 40)
-                tttTallyView.addSubview(winView)
-            }
-
-            for i in 0..<tttLose {
-                let loseView = UIView()
-                loseView.backgroundColor = .red
-                loseView.frame = CGRect(x: i * 10, y: 50, width: 8, height: 40)
-                tttTallyView.addSubview(loseView)
-            }
-        // Add cases for other games here as well...
-        default:
-            break
-        }
-    }
-
-    
-    
+//        for i in 0..<tttWins {
 //
+//        }
 //
+//        for i in 0..<tttLose {
+//        }
+
+
+    }
+    
+    
+
     
     let database = Firestore.firestore()
-//    @IBOutlet weak var tttWins: UILabel!
-//
     override func viewWillAppear(_ animated: Bool) {
         
         let user = Auth.auth().currentUser
