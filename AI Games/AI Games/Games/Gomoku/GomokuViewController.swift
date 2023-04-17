@@ -56,7 +56,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 let s = toGomokuGameState()
                 whatsNext(gameState: s)
-                if (s.state == 20000) {
+                if (s.state == -2) {
                     AIPlays()
                 }
             }
@@ -64,13 +64,13 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func whatsNext(gameState: GomokuGameState) {
-        if (gameState.state == 20000) {
+        if (gameState.state == -2) {
             turnLabel.text = "Turn: \(turn)"
         } else {
             var msg = ""
-            if (gameState.state == 10000) {
+            if (gameState.state == 1) {
                 msg = "\(bw(abbr: gameState.me)) WINS"
-            } else if (gameState.state == -10000) {
+            } else if (gameState.state == -1) {
                 msg = "\(bw(abbr: gameState.you)) WINS"
             } else if (gameState.state == 0) {
                 msg = "DRAW"

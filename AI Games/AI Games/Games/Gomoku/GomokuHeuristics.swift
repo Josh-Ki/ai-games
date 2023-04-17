@@ -63,30 +63,10 @@ private func genD2Pos(offset: Int) -> [[Int]] {
     return r
 }
 
-func validD1(pos: Int) -> Bool {
-    if (((pos >= 0) && (pos <= 3)) || ((pos >= 10) && (pos <= 12)) || ((pos == 20) || (pos == 21)) || (pos == 30)) {
-        return false
-    }
-    if (((pos >= 96) && (pos <= 99)) || ((pos >= 87) && (pos <= 89)) || ((pos == 78) || (pos == 79)) || (pos == 69)) {
-        return false
-    }
-    return true
-}
-
-func validD2(pos: Int) -> Bool {
-    if (((pos >= 6) && (pos <= 9)) || ((pos >= 17) && (pos <= 19)) || ((pos == 28) || (pos == 29)) || (pos == 39)) {
-        return false
-    }
-    if (((pos >= 90) && (pos <= 93)) || ((pos >= 80) && (pos <= 82)) || ((pos == 70) || (pos == 71)) || (pos == 60)) {
-        return false
-    }
-    return true
-}
-
 // calculate heuristic score for each pattern
 // n: streak of n (0-5) pattern
 // block: 0, 1 or 2 blocked sides for pattern
-func patternScore(n: Int, block: Int, actualTurn: Bool) -> Int {
+private func patternScore(n: Int, block: Int, actualTurn: Bool) -> Int {
     if (n >= 5) {
         return winScore
     }
@@ -102,7 +82,7 @@ func patternScore(n: Int, block: Int, actualTurn: Bool) -> Int {
 }
 
 // «my» heuristic score from horizontal patterns (depending on whether it's «my» turn)
-func heurScoreH(gameboard: [String], me: String, turn: String) -> Int {
+private func heurScoreH(gameboard: [String], me: String, turn: String) -> Int {
     var n = 0;
     var block = 2
     var score = 0
@@ -141,7 +121,7 @@ func heurScoreH(gameboard: [String], me: String, turn: String) -> Int {
 }
 
 // «my» heuristic score from vertical patterns (depending on whether it's «my» turn)
-func heurScoreV(gameboard: [String], me: String, turn: String) -> Int {
+private func heurScoreV(gameboard: [String], me: String, turn: String) -> Int {
     var n = 0;
     var block = 2
     var score = 0
@@ -180,7 +160,7 @@ func heurScoreV(gameboard: [String], me: String, turn: String) -> Int {
 }
 
 // «my» heuristic score from positive diagonal patterns (depending on whether it's «my» turn)
-func heurScoreD1(gameboard: [String], me: String, turn: String) -> Int {
+private func heurScoreD1(gameboard: [String], me: String, turn: String) -> Int {
     var n = 0;
     var block = 2
     var score = 0
@@ -218,7 +198,7 @@ func heurScoreD1(gameboard: [String], me: String, turn: String) -> Int {
 }
 
 // «my» heuristic score from negative diagonal patterns (depending on whether it's «my» turn)
-func heurScoreD2(gameboard: [String], me: String, turn: String) -> Int {
+private func heurScoreD2(gameboard: [String], me: String, turn: String) -> Int {
     var n = 0;
     var block = 2
     var score = 0
@@ -255,6 +235,7 @@ func heurScoreD2(gameboard: [String], me: String, turn: String) -> Int {
     return score
 }
 
+// calculate «my» heuristic score (depending on whose turn)
 func heurScore(gameboard: [String], me: String, turn: String) -> Int {
     return heurScoreH(gameboard: gameboard, me: me, turn: turn) + heurScoreV(gameboard: gameboard, me: me, turn: turn) + heurScoreD1(gameboard: gameboard, me: me, turn: turn) + heurScoreD2(gameboard: gameboard, me: me, turn: turn)
 }
