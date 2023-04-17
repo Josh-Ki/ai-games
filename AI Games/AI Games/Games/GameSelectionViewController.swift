@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 import UIKit
 
 enum Game {
@@ -82,6 +83,33 @@ class GameSelectionViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
         
     }
+    
+    
+    @IBAction func profileButtonPressed(_ sender: Any) {
+        let user = Auth.auth().currentUser
+        
+
+            if user != nil {
+                let profileVC = self.storyboard?.instantiateViewController(
+                    withIdentifier: "ProfileViewController") as! ProfileViewController
+                
+                    // Push the SudokuViewController onto the navigation stack after the animation is complete
+                    self.navigationController?.pushViewController(profileVC, animated: false)
+                
+            } else {
+                let alert = UIAlertController(title: "Not Signed In", message: "Please sign in or create an account to access your profile.", preferredStyle: .alert)
+                        
+                        // Add an action to the alert to allow the user to dismiss it
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        
+                        // Present the alert to the user
+                        self.present(alert, animated: true, completion: nil)
+            
+            }
+
+
+    }
+    
     
     @IBAction func sudokuPressed(_ sender: Any) {
         // Instantiate the Sudoku board view controller
@@ -228,7 +256,7 @@ class GameSelectionViewController: UIViewController {
         else if selectedGame == .c4 {
             let c4VC = self.storyboard?.instantiateViewController(
                 withIdentifier: "FourInARowViewController") as! FourInARowViewController
-            
+            c4VC.selectedDifficulty = selectedLevel
             UIView.animate(withDuration: 0.5, animations: {
                 self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
                 self.play.alpha = 0

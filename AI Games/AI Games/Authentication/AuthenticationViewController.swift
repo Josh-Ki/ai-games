@@ -17,7 +17,7 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         //Looks for single or multiple taps.
          let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
 
@@ -25,6 +25,8 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
         //tap.cancelsTouchesInView = false
 
         view.addGestureRecognizer(tap)
+        view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+
         
     }
     @objc func dismissKeyboard() {

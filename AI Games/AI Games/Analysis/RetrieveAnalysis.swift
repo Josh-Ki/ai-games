@@ -28,8 +28,43 @@ struct TicTacToeGame {
     let gameFinished: String
 }
 
+struct FourInARowGame {
+    let id: String
+    let wins: Int
+    let lose: Int
+    let draw: Int
+    let total: Int
+    let gameFinished: String
+}
 
 extension AnalysisViewController {
+    func fetchConnect4GamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([FourInARowGame]) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(difficulty)")
+        collectionRef.order(by: "total", descending: false).getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching Tic Tac Toe games for wins: \(error)")
+                completionHandler([])
+                return
+            }
+            
+            var games: [FourInARowGame] = []
+            
+            for doc in snapshot!.documents {
+                let data = doc.data()
+                let id = data["id"] as! String
+                let gameFinished = data["gameFinished"] as! String
+                let wins = data["wins"] as! Int
+                let lose = data["losses"] as! Int
+                let draw = data["draw"] as! Int
+                let total = data["total"] as! Int
+                
+                let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished)
+                games.append(game)
+            }
+            
+            completionHandler(games)
+        }
+    }
     
     func fetchTicTacToeGamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([TicTacToeGame]) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(difficulty)")

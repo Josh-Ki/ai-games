@@ -173,16 +173,46 @@ class TicTacToeViewController: UIViewController {
             if victory(x) {
                 xScore += 1
                 resultAlert(title: "X WINS")
-                tictactoe.easyWins += 1
-                tictactoe.totalEasy += 1
-                tictactoeEnd = TicTacToeEnd.win
-                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+                if selectedDifficulty == "Easy"{
+                    tictactoe.easyWins += 1
+                    tictactoe.totalEasy += 1
+                    tictactoeEnd = TicTacToeEnd.win
+                    writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+                }
+                else if selectedDifficulty == "Med"{
+                    tictactoe.medWins += 1
+                    tictactoe.totalMed += 1
+                    tictactoeEnd = TicTacToeEnd.win
+                    writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed)
+                }
+                else if selectedDifficulty == "Hard"{
+                    tictactoe.hardWins += 1
+                    tictactoe.totalHard += 1
+                    tictactoeEnd = TicTacToeEnd.win
+                    writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
+                }
+                
             } else if (boardIsFull()) {
                 resultAlert(title: "Draw")
-                tictactoe.easyDraw += 1
-                tictactoe.totalEasy += 1
-                tictactoeEnd = TicTacToeEnd.draw
-                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+                if selectedDifficulty == "Easy"{
+                    tictactoe.easyDraw += 1
+                    tictactoe.totalEasy += 1
+                    tictactoeEnd = TicTacToeEnd.draw
+                    writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+                }
+                else if selectedDifficulty == "Med"{
+                    tictactoe.medDraw += 1
+                    tictactoe.totalMed += 1
+                    tictactoeEnd = TicTacToeEnd.draw
+                    writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed)
+                }
+                else if selectedDifficulty == "Hard"{
+                    tictactoe.hardDraw += 1
+                    tictactoe.totalHard += 1
+                    tictactoeEnd = TicTacToeEnd.draw
+                    writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
+                }
+                
 
             } else {
                 AIPlays()
@@ -235,15 +265,52 @@ class TicTacToeViewController: UIViewController {
         if victory(o) {
             oScore += 1
             resultAlert(title: "O Wins")
-            tictactoe.easyLoss += 1
-            tictactoeEnd = TicTacToeEnd.lose
-            tictactoe.totalEasy += 1
-            writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
+            if selectedDifficulty == "Easy"{
+                tictactoe.easyLoss += 1
+                tictactoeEnd = TicTacToeEnd.lose
+                tictactoe.totalEasy += 1
+                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
+            }
+            else if selectedDifficulty == "Med"{
+                tictactoe.medLoss += 1
+                tictactoeEnd = TicTacToeEnd.lose
+                tictactoe.totalMed += 1
+                writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID,total: tictactoe.totalMed)
+            }
+            else if selectedDifficulty == "Hard"{
+                tictactoe.hardLoss += 1
+                tictactoeEnd = TicTacToeEnd.lose
+                tictactoe.totalHard += 1
+                writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID,total: tictactoe.totalHard)
+            }
         } else if (boardIsFull()) {
             tictactoe.easyDraw += 1
             tictactoeEnd = TicTacToeEnd.draw
             tictactoe.totalEasy += 1
             writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
+
+            
+        }
+        
+    else if (boardIsFull()) {
+            if selectedDifficulty == "Easy"{
+                tictactoe.easyDraw += 1
+                tictactoe.totalEasy += 1
+                tictactoeEnd = TicTacToeEnd.draw
+                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+            }
+            else if selectedDifficulty == "Med"{
+                tictactoe.medDraw += 1
+                tictactoe.totalMed += 1
+                tictactoeEnd = TicTacToeEnd.draw
+                writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed)
+            }
+            else if selectedDifficulty == "Hard"{
+                tictactoe.hardDraw += 1
+                tictactoe.totalHard += 1
+                tictactoeEnd = TicTacToeEnd.draw
+                writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
+            }
 
             resultAlert(title: "Draw")
         }

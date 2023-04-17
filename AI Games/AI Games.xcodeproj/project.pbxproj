@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		80076A6F29EB33090045ADD9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80076A6E29EB33090045ADD9 /* ProfileViewController.swift */; };
 		80076A7129EC3D360045ADD9 /* Sudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80076A7029EC3D360045ADD9 /* Sudoku.swift */; };
 		80179F8A29DA8F89006C58B8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F8929DA8F89006C58B8 /* FirebaseAuth */; };
 		80179F8C29DA8F89006C58B8 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F8B29DA8F89006C58B8 /* FirebaseDatabase */; };
@@ -19,6 +18,10 @@
 		80179F9829DA8F89006C58B8 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F9729DA8F89006C58B8 /* FirebaseRemoteConfig */; };
 		80179F9A29DA8F89006C58B8 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F9929DA8F89006C58B8 /* FirebaseRemoteConfigSwift */; };
 		80179F9C29DA8F89006C58B8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 80179F9B29DA8F89006C58B8 /* FirebaseStorage */; };
+		801CD9D829ED9D0000DD081F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CD9D729ED9D0000DD081F /* ProfileViewController.swift */; };
+		801CD9DA29EDAD5700DD081F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CD9D929EDAD5700DD081F /* Profile.swift */; };
+		801CD9DC29EDB20500DD081F /* FourInARowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CD9DB29EDB20500DD081F /* FourInARowData.swift */; };
+		801CD9DE29EDB2B700DD081F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CD9DD29EDB2B700DD081F /* Extension.swift */; };
 		802F068329C83C6E0057CEE4 /* SudokuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F068229C83C6E0057CEE4 /* SudokuCell.swift */; };
 		8058296129A302D3000C76BE /* SudokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058296029A302D3000C76BE /* SudokuViewController.swift */; };
 		8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058296229A302E1000C76BE /* TicTacToeViewController.swift */; };
@@ -73,8 +76,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		80076A6E29EB33090045ADD9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		80076A7029EC3D360045ADD9 /* Sudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sudoku.swift; sourceTree = "<group>"; };
+		801CD9D729ED9D0000DD081F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		801CD9D929EDAD5700DD081F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		801CD9DB29EDB20500DD081F /* FourInARowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourInARowData.swift; sourceTree = "<group>"; };
+		801CD9DD29EDB2B700DD081F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		802F068229C83C6E0057CEE4 /* SudokuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCell.swift; sourceTree = "<group>"; };
 		8058296029A302D3000C76BE /* SudokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewController.swift; sourceTree = "<group>"; };
 		8058296229A302E1000C76BE /* TicTacToeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +156,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		801CD9D629ED9CF500DD081F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				801CD9D729ED9D0000DD081F /* ProfileViewController.swift */,
+				801CD9D929EDAD5700DD081F /* Profile.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		80814CA729A552E9001D53E6 /* FourInARow */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +174,8 @@
 				80814CAE29A556B6001D53E6 /* BoardItem.swift */,
 				80814CB029A55811001D53E6 /* Turn.swift */,
 				80C3BB4829C7CEB300A38C02 /* AI.swift */,
+				801CD9DB29EDB20500DD081F /* FourInARowData.swift */,
+				801CD9DD29EDB2B700DD081F /* Extension.swift */,
 			);
 			path = FourInARow;
 			sourceTree = "<group>";
@@ -205,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				80B4596129AC304400CD0EBE /* AnalysisViewController.swift */,
-				80076A6E29EB33090045ADD9 /* ProfileViewController.swift */,
 				80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */,
 			);
 			path = Analysis;
@@ -243,6 +259,7 @@
 		E56184B429906C39003E2B05 /* AI Games */ = {
 			isa = PBXGroup;
 			children = (
+				801CD9D629ED9CF500DD081F /* Profile */,
 				80BC469929D15972001B89CB /* images */,
 				80B4596029AC303100CD0EBE /* Analysis */,
 				80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */,
@@ -464,16 +481,19 @@
 				802F068329C83C6E0057CEE4 /* SudokuCell.swift in Sources */,
 				80B4595B29AC09A200CD0EBE /* AuthenticationViewController.swift in Sources */,
 				E5A1F27A29C94BD400AE1834 /* GomokuCell.swift in Sources */,
+				801CD9DE29EDB2B700DD081F /* Extension.swift in Sources */,
 				8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */,
 				E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */,
+				801CD9DA29EDAD5700DD081F /* Profile.swift in Sources */,
 				80076A7129EC3D360045ADD9 /* Sudoku.swift in Sources */,
+				801CD9D829ED9D0000DD081F /* ProfileViewController.swift in Sources */,
 				80C3BB4929C7CEB300A38C02 /* AI.swift in Sources */,
 				E59F7E9C29C8B325002F4C1E /* GomokuViewController.swift in Sources */,
 				80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */,
+				801CD9DC29EDB20500DD081F /* FourInARowData.swift in Sources */,
 				E5BE501829AFBA47005849BF /* TicTacToeAI.swift in Sources */,
 				80814CB129A55811001D53E6 /* Turn.swift in Sources */,
 				E5A6400E29C857A500276B68 /* GomokuGameState.swift in Sources */,
-				80076A6F29EB33090045ADD9 /* ProfileViewController.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
 			);

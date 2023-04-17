@@ -7,6 +7,10 @@
 //MARK: Creates the collectionview and cell and includes functionality for the game of four in a row.
 import Foundation
 import UIKit
+import FirebaseFirestore
+import FirebaseCore
+import FirebaseAuth
+import Firebase
 
 class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -16,12 +20,107 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
     var redScore = 0
     var yellowScore = 0
     
+    var fourInARowData = FourInARowData()
+    var fourInARowEnd = FourInARowEnd.draw
+    let database = Firestore.firestore()
+    var selectedDifficulty: String?
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         resetBoard()
         setCellWidthHeight()
+        
+        switch selectedDifficulty {
+        case "Easy":
+            
+            c4GetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.fourInARowData.easyWins = highestWins
+                    print("Highest number of wins for easy: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for easy")
+                }
+                if let highestDraw = highestDraw {
+                    self.fourInARowData.easyDraw = highestDraw
+                    print("Highest number of draw for easy: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for easy")
+                }
+                if let highestLoss = highestLoss {
+                    self.fourInARowData.easyLoss = highestLoss
+                    print("Highest number of loss for easy: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for easy")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.fourInARowData.totalEasy = highestTotal
+                    print("total number of games is \(highestTotal)")
+                }
+                
+            }
+        case "Med":
+            
+            c4GetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.fourInARowData.medWins = highestWins
+                    print("Highest number of wins for easy: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+                if let highestDraw = highestDraw {
+                    self.fourInARowData.medDraw = highestDraw
+                    print("Highest number of draws for med: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for med")
+                }
+                if let highestLoss = highestLoss {
+                    self.fourInARowData.medLoss = highestLoss
+                    print("Highest number of loss for med: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.fourInARowData.totalMed = highestTotal
+                    print("total number of games is \(highestTotal)")
+                }
+                
+            }
+        case "Hard":
+            
+            c4GetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.fourInARowData.hardWins = highestWins
+                    print("Highest number of wins for hard: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for hard")
+                }
+                if let highestDraw = highestDraw {
+                    self.fourInARowData.hardDraw = highestDraw
+                    print("Highest number of draws for hard: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for hard")
+                }
+                if let highestLoss = highestLoss {
+                    self.fourInARowData.hardLoss = highestLoss
+                    print("Highest number of loss for hard: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for hard")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.fourInARowData.totalHard = highestTotal
+                    print("total number of games is \(highestTotal)")
+                }
+                
+            }
+        default:
+            print("Defaulted")
+            
+        }
     }
     
     
@@ -69,13 +168,72 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         
         if victory() {
             if yellowTurn {
+                
                 yellowScore += 1
-            } else {
+                if selectedDifficulty == "Easy"{
+                    fourInARowData.easyWins += 1
+                    fourInARowData.totalEasy += 1
+                    fourInARowEnd = FourInARowEnd.win
+                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy)
+                }
+                else if selectedDifficulty == "Med"{
+                    fourInARowData.medWins += 1
+                    fourInARowData.totalMed += 1
+                    fourInARowEnd = FourInARowEnd.win
+                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed)
+                }
+                else if selectedDifficulty == "Hard"{
+                    fourInARowData.hardWins += 1
+                    fourInARowData.totalHard += 1
+                    fourInARowEnd = FourInARowEnd.win
+                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard)
+                }
+            }
+            else{
+                if selectedDifficulty == "Easy"{
+                    fourInARowData.easyLoss += 1
+                    fourInARowEnd = FourInARowEnd.lose
+                    fourInARowData.totalEasy += 1
+                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw,userID: userID,total: fourInARowData.totalEasy)
+                }
+                else if selectedDifficulty == "Med"{
+                    fourInARowData.medLoss += 1
+                    fourInARowEnd = FourInARowEnd.lose
+                    fourInARowData.totalMed += 1
+                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID,total: fourInARowData.totalMed)
+                }
+                else if selectedDifficulty == "Hard"{
+                    fourInARowData.hardLoss += 1
+                    fourInARowEnd = FourInARowEnd.lose
+                    fourInARowData.totalHard += 1
+                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard)
+                }
                 redScore += 1
             }
             resultAlert(currentTurnVictoryMessage())
-        } else if boardIsFull() {
+            }
+            
+        
+    else if boardIsFull() {
             resultAlert("Draw")
+            if selectedDifficulty == "Easy"{
+                fourInARowData.easyDraw += 1
+                fourInARowData.totalEasy += 1
+                fourInARowEnd = FourInARowEnd.draw
+                writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy)
+            }
+            else if selectedDifficulty == "Med"{
+                fourInARowData.medDraw += 1
+                fourInARowData.totalMed += 1
+                fourInARowEnd = FourInARowEnd.draw
+                writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed)
+            }
+            else if selectedDifficulty == "Hard"{
+                fourInARowData.hardDraw += 1
+                fourInARowData.totalHard += 1
+                fourInARowEnd = FourInARowEnd.draw
+                writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard)
+            }
         } else {
             toggleTurn(turnImage)
             
