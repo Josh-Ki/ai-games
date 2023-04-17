@@ -5,17 +5,16 @@
 //  Created by Tony NGOK on 17/04/2023.
 //
 
-// Based on: https://blog.theofekfoundation.org/artificial-intelligence/2015/12/11/minimax-for-gomoku-connect-five/
-
 import Foundation
 
-let winScore = 400000000
+let winScore = 100000000
 
+// https://github.com/canberkakcali/gomoku-ai-minimax/blob/master/src/Minimax.java
 // heuristic scores for streak of n (0-4) patterns
 // position 0 of subarray n: open pattern score
 // position 1 of subarray n: 1-side blocked pattern score
-let actualScores = [[0, 0], [2, 1], [10, 4], [20000, 14], [200000000, 200000000]]
-let opponentScores = [[0, 0], [2, 1], [10, 4], [100, 10], [1000000, 100]]
+let actualScores = [[0, 0], [1, 1], [7, 3], [50000, 10], [1000000, 1000000]]
+let opponentScores = [[0, 0], [1, 1], [5, 3], [200, 5], [250000, 200]]
 
 func calcPos(y: Int, x: Int) -> Int {
     return y*10+x
@@ -81,9 +80,10 @@ private func patternScore(n: Int, block: Int, actualTurn: Bool) -> Int {
     return opponentScores[n][block]
 }
 
+// https://blog.theofekfoundation.org/artificial-intelligence/2015/12/11/minimax-for-gomoku-connect-five/
 // «my» heuristic score from horizontal patterns (depending on whether it's «my» turn)
 private func heurScoreH(gameboard: [String], me: String, turn: String) -> Int {
-    var n = 0;
+    var n = 0
     var block = 2
     var score = 0
     
@@ -122,7 +122,7 @@ private func heurScoreH(gameboard: [String], me: String, turn: String) -> Int {
 
 // «my» heuristic score from vertical patterns (depending on whether it's «my» turn)
 private func heurScoreV(gameboard: [String], me: String, turn: String) -> Int {
-    var n = 0;
+    var n = 0
     var block = 2
     var score = 0
     
@@ -161,7 +161,7 @@ private func heurScoreV(gameboard: [String], me: String, turn: String) -> Int {
 
 // «my» heuristic score from positive diagonal patterns (depending on whether it's «my» turn)
 private func heurScoreD1(gameboard: [String], me: String, turn: String) -> Int {
-    var n = 0;
+    var n = 0
     var block = 2
     var score = 0
     
@@ -199,7 +199,7 @@ private func heurScoreD1(gameboard: [String], me: String, turn: String) -> Int {
 
 // «my» heuristic score from negative diagonal patterns (depending on whether it's «my» turn)
 private func heurScoreD2(gameboard: [String], me: String, turn: String) -> Int {
-    var n = 0;
+    var n = 0
     var block = 2
     var score = 0
     
