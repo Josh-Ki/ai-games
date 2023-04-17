@@ -51,6 +51,7 @@
 		E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */; };
 		E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */; };
 		E59F7E9C29C8B325002F4C1E /* GomokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59F7E9B29C8B325002F4C1E /* GomokuViewController.swift */; };
+		E59F8D0229EDAC3700B92812 /* GomokuHeuristics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59F8D0129EDAC3700B92812 /* GomokuHeuristics.swift */; };
 		E5A1F27A29C94BD400AE1834 /* GomokuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A1F27929C94BD400AE1834 /* GomokuCell.swift */; };
 		E5A6400C29C8579100276B68 /* GomokuAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6400B29C8579100276B68 /* GomokuAI.swift */; };
 		E5A6400E29C857A500276B68 /* GomokuGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A6400D29C857A500276B68 /* GomokuGameState.swift */; };
@@ -114,6 +115,7 @@
 		E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITests.swift; sourceTree = "<group>"; };
 		E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E59F7E9B29C8B325002F4C1E /* GomokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuViewController.swift; sourceTree = "<group>"; };
+		E59F8D0129EDAC3700B92812 /* GomokuHeuristics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuHeuristics.swift; sourceTree = "<group>"; };
 		E5A1F27929C94BD400AE1834 /* GomokuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuCell.swift; sourceTree = "<group>"; };
 		E5A6400B29C8579100276B68 /* GomokuAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuAI.swift; sourceTree = "<group>"; };
 		E5A6400D29C857A500276B68 /* GomokuGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuGameState.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 			children = (
 				E59F7E9B29C8B325002F4C1E /* GomokuViewController.swift */,
 				E5A6400D29C857A500276B68 /* GomokuGameState.swift */,
+				E59F8D0129EDAC3700B92812 /* GomokuHeuristics.swift */,
 				E5A6400B29C8579100276B68 /* GomokuAI.swift */,
 				E5A1F27929C94BD400AE1834 /* GomokuCell.swift */,
 			);
@@ -467,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80814CA929A55315001D53E6 /* FourInARowViewController.swift in Sources */,
+				E59F8D0229EDAC3700B92812 /* GomokuHeuristics.swift in Sources */,
 				80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */,
 				80AB957E29AC969B0015FCAA /* TicTacToeTurn.swift in Sources */,
 				80EF285329EC63BB00308024 /* RetrieveAnalysis.swift in Sources */,
