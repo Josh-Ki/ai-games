@@ -92,10 +92,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func AIPlays() {
-        var move = -1
-        if (gomokuAILevel == 0) {
-            move = gomokuRandomMove(gameState: toGomokuGameState())
-        }
+        let move = gomokuMinimaxBestMove(gameState: toGomokuGameState(), depth: gomokuAILevel+1)
         gameboard[move] = turn
         gomokuView.reloadItems(at: [IndexPath(item: move, section: 0)])
         
@@ -116,10 +113,8 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     func layout() {
         // https://stackoverflow.com/questions/5677716/how-to-get-the-screen-width-and-height-in-ios
         let w = self.view.frame.size.width
-        // print("Screen width:", w)
         
         gomokuView.frame = CGRect(x: 10, y: 44, width: w-20, height: w+24)
-        // print("Gameboard size \(gomokuView.frame.width)*\(gomokuView.frame.height)")
         turnLabel.frame = CGRect(x: 16, y: 76+w, width: w-32, height: 30)
         manPlay.frame = CGRect(x: 16, y: 114+w, width: w-32, height: 23)
     }
