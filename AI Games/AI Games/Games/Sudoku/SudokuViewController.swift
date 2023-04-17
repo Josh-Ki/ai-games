@@ -431,7 +431,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         cell.label.text = "\(value == 0 ? "" : "\(value)")"
         cell.label.textAlignment = .center // center the text
         cell.label.tag = indexPath.row
-
+        cell.label.keyboardType = .numberPad
         cell.label.isUserInteractionEnabled = value == 0
 
         // Reset the background color of the cell

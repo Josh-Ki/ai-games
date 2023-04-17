@@ -231,7 +231,8 @@ animateButton(button: tictactoeButton)
                 
                 // Add checkmark to stack view
                 let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
-                let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+                xImageView.tintColor = .red
+                let catImageView = UIImageView(image: UIImage(systemName: "pawprint"))
                 let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
                 checkmarkImageView.tintColor = .green
                 if game.gameFinished == "Win"{
