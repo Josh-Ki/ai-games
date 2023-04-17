@@ -36,22 +36,60 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     var tttHardGames: [TicTacToeGame] = []
     var tttMedGames: [TicTacToeGame] = []
     
+    func animateButton(button: UIButton){
+        UIView.animate(withDuration: 0.4, animations: {
+            button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (_) in
+            // Shrink animation
+            UIView.animate(withDuration: 0.2) {
+                button.transform = .identity
+            }
+        }
+    }
+
+    @IBAction func c4Pressed(_ sender: Any) {
+        selectedGame = .c4
+        animateButton(button: connect4Button)
+        connect4Button.backgroundColor = UIColor.green.withAlphaComponent(0.5)
+        sudokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        tictactoeButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        gomokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        
+        // Show tables
+        easyTableView.isHidden = false
+        medTableView.isHidden = false
+        hardTableView.isHidden = false
+        easyTableView.reloadData()
+        medTableView.reloadData()
+    }
+    @IBAction func gomokuButtonPressed(_ sender: Any) {
+        selectedGame = .gomoku
+        animateButton(button: gomokuButton)
+        // Change color
+        gomokuButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
+        sudokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        tictactoeButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        connect4Button.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        
+        // Show tables
+        easyTableView.isHidden = false
+        medTableView.isHidden = false
+        hardTableView.isHidden = false
+        easyTableView.reloadData()
+        medTableView.reloadData()
+    }
+    
     
     @IBAction func sudokuButtonPressed(_ sender: Any) {
         selectedGame = .sudoku
         // Expand animation
-        UIView.animate(withDuration: 0.4, animations: {
-            self.sudokuButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { (_) in
-            // Shrink animation
-            UIView.animate(withDuration: 0.2) {
-                self.sudokuButton.transform = .identity
-            }
-        }
-        
+
+        animateButton(button: sudokuButton)
         // Change color
         sudokuButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
         tictactoeButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        connect4Button.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        gomokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
         
         // Show tables
         easyTableView.isHidden = false
@@ -66,18 +104,12 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
         selectedGame = .ttt
         
         // Expand animation
-        UIView.animate(withDuration: 0.4, animations: {
-            self.tictactoeButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { (_) in
-            // Shrink animation
-            UIView.animate(withDuration: 0.2) {
-                self.tictactoeButton.transform = .identity
-            }
-        }
+animateButton(button: tictactoeButton)
         
         sudokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
         tictactoeButton.backgroundColor = UIColor.green.withAlphaComponent(0.5)
-        
+        gomokuButton.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
+        connect4Button.backgroundColor = UIColor(red: 0.999975, green: 0.758761, blue: 0.35136, alpha: 1)
         easyTableView.reloadData()
         medTableView.reloadData()
         hardTableView.reloadData()
@@ -398,9 +430,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 
 
     
-    @IBAction func gomokuButtonPressed(_ sender: Any) {
-    }
-    
+
 
     
     override func viewDidLoad() {
