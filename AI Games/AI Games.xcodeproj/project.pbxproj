@@ -38,6 +38,7 @@
 		80BC469B29D1597C001B89CB /* sudokuimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 80BC469A29D1597C001B89CB /* sudokuimage.jpeg */; };
 		80BC469D29D16A38001B89CB /* tictactoe.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 80BC469C29D16A38001B89CB /* tictactoe.jpeg */; };
 		80C3BB4929C7CEB300A38C02 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C3BB4829C7CEB300A38C02 /* AI.swift */; };
+		80CB3D3C29EE1C9200D4A54A /* DetailedSudokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CB3D3B29EE1C9200D4A54A /* DetailedSudokuViewController.swift */; };
 		80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BB29A6BA360098541A /* ScanViewController.swift */; };
 		80D6E7BE29A6CB380098541A /* GameSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */; };
 		80EF285329EC63BB00308024 /* RetrieveAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */; };
@@ -98,6 +99,7 @@
 		80BC469A29D1597C001B89CB /* sudokuimage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sudokuimage.jpeg; sourceTree = "<group>"; };
 		80BC469C29D16A38001B89CB /* tictactoe.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tictactoe.jpeg; sourceTree = "<group>"; };
 		80C3BB4829C7CEB300A38C02 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
+		80CB3D3B29EE1C9200D4A54A /* DetailedSudokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedSudokuViewController.swift; sourceTree = "<group>"; };
 		80D6E7BB29A6BA360098541A /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		80D6E7BD29A6CB380098541A /* GameSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionViewController.swift; sourceTree = "<group>"; };
 		80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAnalysis.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				80B4596129AC304400CD0EBE /* AnalysisViewController.swift */,
 				80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */,
+				80CB3D3B29EE1C9200D4A54A /* DetailedSudokuViewController.swift */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				E5A6400E29C857A500276B68 /* GomokuGameState.swift in Sources */,
 				E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */,
 				80D6E7BC29A6BA360098541A /* ScanViewController.swift in Sources */,
+				80CB3D3C29EE1C9200D4A54A /* DetailedSudokuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

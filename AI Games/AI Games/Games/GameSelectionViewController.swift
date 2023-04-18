@@ -20,10 +20,13 @@ enum Game {
 class GameSelectionViewController: UIViewController {
     
     
+    @IBOutlet weak var profileButton: UIButton!
     
-    @IBOutlet weak var infoButton: UIBarButtonItem!
+
     
     var sudokuBoardViewController: SudokuViewController?
+    
+    @IBOutlet weak var infoButton: UIButton!
     
     var selectedLevel : String = ""
     @IBOutlet weak var easy: UIButton!
@@ -48,6 +51,9 @@ class GameSelectionViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileButton.contentMode = .scaleAspectFit
+        infoButton.imageView?.contentMode = .scaleAspectFit
 
         imageView.layer.cornerRadius = 20.0
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)

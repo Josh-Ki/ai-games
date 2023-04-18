@@ -16,6 +16,8 @@ struct SudokuGame {
     let time: Int
     let board: [[Int]]
     let hints: Int
+    let mistakes: Int
+    let mistakesCoordinates: [(Int, Int)]
     
 }
 
@@ -109,12 +111,14 @@ extension AnalysisViewController {
                     let hints = data["hints"] as? Int ?? 0
                     let board = data["board"] as? [Int] ?? []
                     let id = data["id"] as? String ?? ""
+                    let mistakes = data["mistakes"] as? Int ?? 0
+                    let mistakesCoordinates = data["mistakesCoordinates"] as? [[String: Int]] ?? []
                     
                     // Create a Game object from the retrieved data
                     let unflattenedBoard = stride(from: 0, to: board.count, by: 9).map {
                         Array(board[$0..<min($0 + 9, board.count)])
                     }
-                    let game = SudokuGame(id: id, wins: wins, time: time, board: unflattenedBoard, hints: hints)
+                    let game = SudokuGame(id: id, wins: wins, time: time, board: unflattenedBoard, hints: hints, mistakes: mistakes, mistakesCoordinates: mistakesCoordinates.map { ($0["row"]!, $0["column"]!) })
                     
                     // Add the game to your array of games
                     games.append(game)

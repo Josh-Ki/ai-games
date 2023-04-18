@@ -35,15 +35,12 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         // Register for keyboard notifications
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         time = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         collectionView.backgroundColor = view.backgroundColor
         //Looks for single or multiple taps.
          let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-
-        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-        //tap.cancelsTouchesInView = false
-
         view.addGestureRecognizer(tap)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(checkButtonLongPressed(_:)))
@@ -85,16 +82,6 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         (sudoku.sudokuArray, sudoku.partialArray) = generateSudokuBoard()
         sudoku.startingArray = sudoku.partialArray
-        // Call the function to calculate the average time for the current user and difficulty
-//        calculateAverageTimeForUserAndDifficulty(userID: userID, difficulty: "Easy") { (averageTime) in
-//            if let averageTime = averageTime {
-//                // The average time was successfully calculated
-//                print("The average time for user123 on hard difficulty is \(averageTime) seconds.")
-//            } else {
-//                // There was an error fetching the documents or there were no documents
-//                print("Could not calculate the average time.")
-//            }
-//        }
 
         
     }
@@ -145,16 +132,18 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
 
     
-    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int, board: [[Int]], hints: Int) {
+    private func writeUserData(wins: Int, difficulty: String, userID: String, time: Int, board: [[Int]], hints: Int, mistakes: Int, mistakesCoordinates: [(Int,Int)]) {
         let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
         let newDocRef = collectionRef.document()
-        
+        print(mistakesCoordinates)
         let winData = [
             "id": newDocRef.documentID,
             "wins": wins,
             "time": time,
             "board": board.flatMap { $0 },
-            "hints": hints
+            "hints": hints,
+            "mistakes": mistakes,
+            "mistakesCoordinates": mistakesCoordinates.map { ["row": $0.0, "column": $0.1] }
         ] as [String : Any]
         
         newDocRef.setData(winData)
@@ -243,17 +232,17 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         if selectedDifficulty! == "Easy" {
             sudoku.easyWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed)
+            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
         }
         else if selectedDifficulty! == "Med" {
             sudoku.medWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed)
+            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
         }
         else if selectedDifficulty! == "Hard" {
             sudoku.hardWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed)
+            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
         }
 
         return true
@@ -366,6 +355,8 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
         func restart() {
             sudoku.hintsUsed = 0
+            sudoku.mistakesMade = 0
+            sudoku.mistakeCoordinates = []
         // Generate a new Sudoku board
         let boards = generateSudokuBoard()
             sudoku.sudokuArray = boards.0
@@ -413,8 +404,16 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         let col = textField.tag % 9
         if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
             sudoku.partialArray[row][col] = value
+            if sudoku.partialArray[row][col] != sudoku.sudokuArray[row][col]{
+                print("ITS WrONG")
+                sudoku.mistakesMade += 1
+                sudoku.mistakeCoordinates.append((row,col))
+                
+            }
             
-        } else {
+            
+        }
+        else {
             sudoku.partialArray[row][col] = 0
             textField.text = ""
         }
@@ -432,8 +431,14 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         cell.label.textAlignment = .center // center the text
         cell.label.tag = indexPath.row
         cell.label.keyboardType = .numberPad
-        cell.label.isUserInteractionEnabled = value == 0
-
+        
+        
+        if sudoku.startingArray[row][col] != 0 {
+            cell.label.isUserInteractionEnabled = false
+        } else {
+            cell.label.isUserInteractionEnabled = true
+        }
+        
         // Reset the background color of the cell
         cell.label.backgroundColor = grayedIndices.contains(indexPath.row) ? UIColor.lightGray : UIColor.white
 
@@ -504,13 +509,13 @@ extension SudokuViewController: UITextFieldDelegate {
                 }
             }
         }
+        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         grayedIndices.removeAll()
         collectionView.reloadData()
-        
-        
+    
     }
 
 

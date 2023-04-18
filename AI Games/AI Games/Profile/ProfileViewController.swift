@@ -8,12 +8,16 @@
 import Foundation
 import UIKit
 import FirebaseAuth
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UITextFieldDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var logoutButton: UIButton!
+    
+    @IBOutlet weak var nameTextField: UITextField!
     
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTextField.delegate = self
+        nameTextField.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         
@@ -29,11 +33,32 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate &
         imageView.layer.borderColor = UIColor.black.cgColor
         
         // Add a tap gesture recognizer to the image view
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
-        imageView.addGestureRecognizer(tapGesture)
+        let tapGestureProfile = UITapGestureRecognizer(target: self, action: #selector(changeProfilePicture))
+        imageView.addGestureRecognizer(tapGestureProfile)
         imageView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+               tapGesture.cancelsTouchesInView = true
+               view.addGestureRecognizer(tapGesture)
         
         
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+           if let text = textField.text {
+               // Save the text to a property of your view controller
+               print(text)
+               nameTextField.borderStyle = .none
+           }
+       }
+       
+       // Dismiss keyboard when user taps outside of the text field or image view
+       @objc func dismissKeyboard() {
+           view.endEditing(true)
+       }
+
+       // Dismiss keyboard when user presses return key
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     @objc func changeProfilePicture() {
         let imagePicker = UIImagePickerController()

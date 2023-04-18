@@ -15,9 +15,11 @@ struct Sudoku {
     var hardWins: Int = 0
     var maxCellsToFill: Int = 0
     var hintsUsed: Int = 0
+    var mistakesMade: Int = 0
     var sudokuArray: [[Int]] = []
     var partialArray: [[Int]] = []
     var startingArray: [[Int]] = []
+    var mistakeCoordinates: [(Int,Int)] = []
 }
 
 

@@ -569,7 +569,20 @@ animateButton(button: tictactoeButton)
 
 
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+
+            let game = easyGames[indexPath.row]
+        
     
+        let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedSudokuViewController") as! DetailedSudokuViewController
+        detailVC.mistakes = game.mistakes
+        detailVC.hints = game.hints
+        detailVC.gameNumber = game.wins
+
+            // Present the new view controller
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
 
 
     
