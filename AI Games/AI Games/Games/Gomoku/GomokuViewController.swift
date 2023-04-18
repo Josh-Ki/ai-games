@@ -92,7 +92,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func AIPlays() {
-        let move = gomokuMinimaxBestMove(gameState: toGomokuGameState(), depth: gomokuAILevel+1)
+        let move = gomokuMinimaxBestMove(gameState: toGomokuGameState(), depth: gomokuAILevel)
         gameboard[move] = turn
         gomokuView.reloadItems(at: [IndexPath(item: move, section: 0)])
         

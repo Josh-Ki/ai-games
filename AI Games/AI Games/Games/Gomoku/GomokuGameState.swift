@@ -30,7 +30,6 @@ struct GomokuGameState {
         
         self.legalMoves = getLegalMoves()
         self.heuristics = (heurScore(gameboard: self.gameboard, me: self.me, turn: self.me), heurScore(gameboard: self.gameboard, me: self.you, turn: self.me))
-        print(self.heuristics, "d=\(self.heuristics.0-self.heuristics.1)") // debug
         self.state = getState()
         if ((self.state == -1) || (self.state == 1)) {
             // https://www.marcosantadev.com/arrayslice-in-swift/
