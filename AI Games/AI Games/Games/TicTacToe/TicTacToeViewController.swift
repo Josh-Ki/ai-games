@@ -12,9 +12,6 @@ import FirebaseCore
 import FirebaseAuth
 import Firebase
 
-
-var tttAILevel = 1 // difficulty of AI (easy, medium, invicible)
-
 class TicTacToeViewController: UIViewController {
     
     @IBOutlet weak var turnLabel: UILabel!
@@ -31,6 +28,7 @@ class TicTacToeViewController: UIViewController {
     var tictactoeEnd = TicTacToeEnd.draw
     let database = Firestore.firestore()
     var selectedDifficulty: String?
+    var tttAILevel = 0 // difficulty of AI (easy, medium, invicible)
     
     private func writeTicTacToeData(wins: Int, losses: Int, draws: Int, moves: [String], userID: String, total: Int) {
         var tempState = ""
@@ -68,7 +66,7 @@ class TicTacToeViewController: UIViewController {
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         switch selectedDifficulty {
         case "Easy":
-            
+            tttAILevel = 0
             tttGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                 if let highestWins = highestWins {
                     self.tictactoe.easyWins = highestWins
@@ -96,7 +94,7 @@ class TicTacToeViewController: UIViewController {
                 
             }
         case "Med":
-            
+            tttAILevel = 1
             tttGetHighestMed(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                 if let highestWins = highestWins {
                     self.tictactoe.medWins = highestWins
@@ -124,7 +122,7 @@ class TicTacToeViewController: UIViewController {
                 
             }
         case "Hard":
-            
+            tttAILevel = 2
             tttGetHighestMed(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                 if let highestWins = highestWins {
                     self.tictactoe.hardWins = highestWins

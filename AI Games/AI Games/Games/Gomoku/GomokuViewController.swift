@@ -7,8 +7,6 @@
 
 import UIKit
 
-var gomokuAILevel = 1 // difficulty of AI (easy, medium, hard)
-
 // https://stackoverflow.com/questions/31662155/how-to-change-uicollectionviewcell-size-programmatically-in-swift
 class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -17,6 +15,8 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     var foreColours: [UIColor] = Array.init(repeating: UIColor.black, count: 100) // display colours of pieces (only become white when marked in winning sequence)
     var turn = "B" // black moves first
     var gameOver = false
+    var selectedDifficulty: String?
+    var gomokuAILevel = 0 // difficulty of AI (easy, medium, hard)
     
     // https://stackoverflow.com/questions/53768438/collectionview-cell-width-not-changing-for-different-nib
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -154,6 +154,17 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         gomokuView.delegate = self
         gomokuView.dataSource = self
+        
+        switch selectedDifficulty {
+        case "Easy":
+            gomokuAILevel = 0
+        case "Med":
+            gomokuAILevel = 1
+        case "Hard":
+            gomokuAILevel = 2
+        default:
+            print("Defaulted")
+        }
         
         let man: String = ["BLACK", "WHITE"].randomElement()!
         manPlay.text = "Man plays \(man)"

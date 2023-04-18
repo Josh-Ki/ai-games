@@ -272,7 +272,7 @@ class GameSelectionViewController: UIViewController {
         else if selectedGame == .gomoku {
             let gomokuVC = self.storyboard?.instantiateViewController(
                 withIdentifier: "GomokuViewController") as! GomokuViewController
-            
+            gomokuVC.selectedDifficulty = selectedLevel
             UIView.animate(withDuration: 0.5, animations: {
                 self.play.transform = CGAffineTransform(scaleX: 5, y: 5)
                 self.play.alpha = 0
