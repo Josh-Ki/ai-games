@@ -17,6 +17,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     var gameOver = false
     var selectedDifficulty: String?
     var gomokuAILevel = 0 // difficulty of AI (easy, medium, hard)
+    var lastMove = -1
     
     // https://stackoverflow.com/questions/53768438/collectionview-cell-width-not-changing-for-different-nib
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -41,10 +42,17 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (lastMove >= 0) {
+            foreColours[lastMove] = UIColor.black
+            gomokuView.reloadItems(at: [IndexPath(item: lastMove, section: 0)])
+        }
+        
         if (!gameOver) {
             let i = indexPath.row
             if (gameboard[i] == "") {
                 gameboard[i] = turn
+                lastMove = i
+                foreColours[i] = UIColor.red
                 gomokuView.reloadItems(at: [indexPath])
                 
                 // switch turn
@@ -80,7 +88,11 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
             
             // mark winning sequence on gameboard
             for i in gameState.winSeq {
-                backColours[i] = UIColor.red
+                if (i == lastMove) {
+                    backColours[i] = UIColor.red
+                } else {
+                    backColours[i] = UIColor.purple
+                }
                 foreColours[i] = UIColor.white
                 
                 // https://stackoverflow.com/questions/29428090/how-to-convert-int-to-nsindexpath
@@ -94,11 +106,20 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     func AIPlays() {
         gomokuView.isUserInteractionEnabled = false
         manPlay.text = "AI playing \(bw(abbr: turn))"
+        
         DispatchQueue.global(qos: .userInitiated).async { [self] in
             let move = gomokuMinimaxBestMove(gameState: toGomokuGameState(), depth: gomokuAILevel)
             
             DispatchQueue.main.async { [self] in
                 gameboard[move] = turn
+                
+                if (lastMove >= 0) {
+                    foreColours[lastMove] = UIColor.black
+                    gomokuView.reloadItems(at: [IndexPath(item: lastMove, section: 0)])
+                }
+                
+                lastMove = move
+                foreColours[move] = UIColor.red
                 gomokuView.reloadItems(at: [IndexPath(item: move, section: 0)])
                 
                 if (turn == "B") {
