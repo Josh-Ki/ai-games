@@ -24,7 +24,12 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
     var b = b
     
     if ((depth == 0) || (gameState.state > -2)) {
-        return gameState.heuristics.0-gameState.heuristics.1 // advantage relative to the opponent
+        if (maxAgent) {
+            return gameState.heuristics.0-gameState.heuristics.1 // advantage relative to the opponent
+        } else {
+            return gameState.heuristics.1-gameState.heuristics.0
+        }
+        
     }
     
     if (maxAgent) {
@@ -60,7 +65,7 @@ func gomokuMinimaxBestMove(gameState: GomokuGameState, depth: Int) -> Int {
         // AI minimises man's utility score
         let s = gameState.move(pos: i)
         let eval = minimax(gameState: s, depth: depth, maxAgent: false, a: Int.min, b: Int.max)
-        print("at=\(i); move=\(s.you); heur=\(s.heuristics); d=\(s.heuristics.0-s.heuristics.1)")
+//        print("at=\(i); move=\(s.you); heur=\(s.heuristics); d=\(s.heuristics.0-s.heuristics.1)") // debug
         
         if (eval > v) {
             v = eval

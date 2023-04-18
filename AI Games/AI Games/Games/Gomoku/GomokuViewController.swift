@@ -7,7 +7,7 @@
 
 import UIKit
 
-var gomokuAILevel = 0 // difficulty of AI (easy, medium, invicible)
+var gomokuAILevel = 1 // difficulty of AI (easy, medium, hard)
 
 // https://stackoverflow.com/questions/31662155/how-to-change-uicollectionviewcell-size-programmatically-in-swift
 class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
