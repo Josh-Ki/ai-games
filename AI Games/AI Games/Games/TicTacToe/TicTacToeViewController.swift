@@ -282,15 +282,7 @@ class TicTacToeViewController: UIViewController {
                 writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID,total: tictactoe.totalHard)
             }
         } else if (boardIsFull()) {
-            tictactoe.easyDraw += 1
-            tictactoeEnd = TicTacToeEnd.draw
-            tictactoe.totalEasy += 1
-            writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
-
-            
-        }
-        
-    else if (boardIsFull()) {
+            resultAlert(title: "Draw")
             if selectedDifficulty == "Easy"{
                 tictactoe.easyDraw += 1
                 tictactoe.totalEasy += 1
@@ -309,8 +301,7 @@ class TicTacToeViewController: UIViewController {
                 tictactoeEnd = TicTacToeEnd.draw
                 writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
             }
-
-            resultAlert(title: "Draw")
+//            resultAlert(title: "Draw")
         }
         
         currentTurn = TicTacToeTurn.x
