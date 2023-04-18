@@ -29,7 +29,7 @@ struct GomokuGameState {
         }
         
         self.legalMoves = getLegalMoves()
-        self.heuristics = (heurScore(gameboard: self.gameboard, me: self.me, turn: self.me), heurScore(gameboard: self.gameboard, me: self.you, turn: self.me))
+        self.heuristics = (heurScore(gameboard: self.gameboard, me: self.you, turn: self.you), heurScore(gameboard: self.gameboard, me: self.me, turn: self.you))
         self.state = getState()
         if ((self.state == -1) || (self.state == 1)) {
             // https://www.marcosantadev.com/arrayslice-in-swift/
@@ -102,9 +102,9 @@ struct GomokuGameState {
     
     private func getState() -> Int {
         if (self.heuristics.0 >= winScore) {
-            return 1
-        } else if (self.heuristics.1 >= winScore) {
             return -1
+        } else if (self.heuristics.1 >= winScore) {
+            return 1
         } else if (legalMoves.isEmpty) {
             return 0 // draw if no legal moves left
         }

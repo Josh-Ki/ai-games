@@ -92,18 +92,28 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func AIPlays() {
-        let move = gomokuMinimaxBestMove(gameState: toGomokuGameState(), depth: gomokuAILevel)
-        gameboard[move] = turn
-        gomokuView.reloadItems(at: [IndexPath(item: move, section: 0)])
-        
-        if (turn == "B") {
-            turn = "W"
-        } else {
-            turn = "B"
+        gomokuView.isUserInteractionEnabled = false
+        manPlay.text = "AI playing \(bw(abbr: turn))"
+        DispatchQueue.global(qos: .userInitiated).async { [self] in
+            let move = gomokuMinimaxBestMove(gameState: toGomokuGameState(), depth: gomokuAILevel)
+            
+            DispatchQueue.main.async { [self] in
+                gameboard[move] = turn
+                gomokuView.reloadItems(at: [IndexPath(item: move, section: 0)])
+                
+                if (turn == "B") {
+                    turn = "W"
+                } else {
+                    turn = "B"
+                }
+                
+                let s = toGomokuGameState()
+                whatsNext(gameState: s)
+                
+                manPlay.text = "Man plays \(bw(abbr: turn))"
+                gomokuView.isUserInteractionEnabled = true
+            }
         }
-        
-        let s = toGomokuGameState()
-        whatsNext(gameState: s)
     }
     
     @IBOutlet weak var gomokuView: UICollectionView!
@@ -172,7 +182,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
                             
     func toGomokuGameState() -> GomokuGameState {
-        let isBlack = turn == "B" ? true : false
+        let isBlack = turn == "B"
         return GomokuGameState(gameboard: gameboard, isBlack: isBlack)
     }
 

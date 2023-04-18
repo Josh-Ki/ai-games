@@ -58,7 +58,9 @@ func gomokuMinimaxBestMove(gameState: GomokuGameState, depth: Int) -> Int {
     
     for i in gameState.legalMoves {
         // AI minimises man's utility score
-        let eval = minimax(gameState: gameState.move(pos: i), depth: depth, maxAgent: false, a: Int.min, b: Int.max)
+        let s = gameState.move(pos: i)
+        let eval = minimax(gameState: s, depth: depth, maxAgent: false, a: Int.min, b: Int.max)
+        print("at=\(i); move=\(s.you); heur=\(s.heuristics); d=\(s.heuristics.0-s.heuristics.1)")
         
         if (eval > v) {
             v = eval
