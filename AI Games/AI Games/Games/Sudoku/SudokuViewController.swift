@@ -17,7 +17,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var timer: UILabel!
     var time = Timer()
     var seconds = 0
-    
+    var toGenerate = true
     @IBOutlet weak var checkButton: UIButton!
     var grayedIndices: [Int] = []
     @IBOutlet weak var hintButton: UIButton!
@@ -80,8 +80,13 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         default:
             sudoku.maxCellsToFill = 30
         }
-        (sudoku.sudokuArray, sudoku.partialArray) = generateSudokuBoard()
-        sudoku.startingArray = sudoku.partialArray
+        if toGenerate == true {
+            (sudoku.sudokuArray, sudoku.partialArray) = generateSudokuBoard()
+            sudoku.startingArray = sudoku.partialArray
+        }
+        else if toGenerate == false {
+            print("false")
+        }
 
         
     }

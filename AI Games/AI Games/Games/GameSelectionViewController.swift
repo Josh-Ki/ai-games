@@ -131,7 +131,7 @@ class GameSelectionViewController: UIViewController {
         tictactoeButton.tintColor = UIColor.blue
         fourinarowButton.tintColor = UIColor.blue
         gomokuButton.tintColor = UIColor.blue
-        imageView.image = sudokuImage
+        
         sudokuBoardViewController.checkButton.isHidden = true
         sudokuBoardViewController.hintButton.isHidden = true
     }

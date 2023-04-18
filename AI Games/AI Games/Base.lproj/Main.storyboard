@@ -548,8 +548,9 @@
                                 <color key="textColor" systemColor="systemCyanColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="8lm-aF-1a7">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="8lm-aF-1a7">
                                 <rect key="frame" x="75" y="201" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hints Used:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kec-qg-KbG">
                                 <rect key="frame" x="109" y="472" width="206" height="26"/>
@@ -583,11 +584,7 @@
                         <viewLayoutGuide key="safeArea" id="vhI-FY-569"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vhI-FY-569" firstAttribute="trailing" secondItem="8lm-aF-1a7" secondAttribute="trailing" constant="75" id="1PO-TF-fDj"/>
-                            <constraint firstItem="vhI-FY-569" firstAttribute="bottom" secondItem="8lm-aF-1a7" secondAttribute="bottom" constant="369" id="J1x-5t-qhc"/>
-                            <constraint firstItem="8lm-aF-1a7" firstAttribute="top" secondItem="11l-82-oJr" secondAttribute="bottom" constant="90" id="KOP-ya-O0b"/>
                             <constraint firstItem="vhI-FY-569" firstAttribute="trailing" secondItem="11l-82-oJr" secondAttribute="trailing" id="OKL-yd-FdO"/>
-                            <constraint firstItem="8lm-aF-1a7" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" constant="75" id="Vtw-hf-Q2Z"/>
                             <constraint firstItem="11l-82-oJr" firstAttribute="top" secondItem="vhI-FY-569" secondAttribute="top" constant="26" id="kRu-nS-E7C"/>
                             <constraint firstItem="11l-82-oJr" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" id="vcK-b5-MWl"/>
                         </constraints>

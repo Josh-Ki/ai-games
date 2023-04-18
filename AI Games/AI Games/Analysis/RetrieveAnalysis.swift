@@ -19,6 +19,7 @@ struct SudokuGame {
     let mistakes: Int
     let mistakesCoordinates: [(Int, Int)]
     
+    
 }
 
 struct TicTacToeGame {

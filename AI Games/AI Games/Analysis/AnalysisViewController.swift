@@ -579,6 +579,7 @@ animateButton(button: tictactoeButton)
         detailVC.mistakes = game.mistakes
         detailVC.hints = game.hints
         detailVC.gameNumber = game.wins
+        detailVC.sudokuArray = game.board
 
             // Present the new view controller
         self.navigationController?.pushViewController(detailVC, animated: true)
