@@ -12,8 +12,21 @@ import FirebaseAuth
 import Firebase
 
 
-class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SudokuViewController: UIViewController {
     
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    @IBOutlet weak var label1: UILabel!
+    @IBOutlet weak var label2: UILabel!
+    @IBOutlet weak var label3: UILabel!
+    @IBOutlet weak var label4: UILabel!
+    @IBOutlet weak var label5: UILabel!
+    @IBOutlet weak var label6: UILabel!
+    @IBOutlet weak var label7: UILabel!
+    @IBOutlet weak var label8: UILabel!
+    @IBOutlet weak var label9: UILabel!
+    var labelTapValue: Int = 0
+    var selectedIndexPath: IndexPath?
     @IBOutlet weak var timer: UILabel!
     var time = Timer()
     var seconds = 0
@@ -28,20 +41,55 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     
     let database = Firestore.firestore()
+
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        // Register for keyboard notifications
-              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label1.isUserInteractionEnabled = true
+           label1.addGestureRecognizer(tapGesture1)
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label2.isUserInteractionEnabled = true
+           label2.addGestureRecognizer(tapGesture2)
+
+           let tapGesture3 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label3.isUserInteractionEnabled = true
+           label3.addGestureRecognizer(tapGesture3)
+        
+        let tapGesture4 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label4.isUserInteractionEnabled = true
+           label4.addGestureRecognizer(tapGesture4)
+
+           let tapGesture5 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label5.isUserInteractionEnabled = true
+           label5.addGestureRecognizer(tapGesture5)
+        let tapGesture6 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label6.isUserInteractionEnabled = true
+           label6.addGestureRecognizer(tapGesture6)
+
+           let tapGesture7 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label7.isUserInteractionEnabled = true
+           label7.addGestureRecognizer(tapGesture7)
+        let tapGesture8 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label8.isUserInteractionEnabled = true
+           label8.addGestureRecognizer(tapGesture8)
+
+           let tapGesture9 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+           label9.isUserInteractionEnabled = true
+           label9.addGestureRecognizer(tapGesture9)
+
+//        // Register for keyboard notifications
+//              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         time = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         collectionView.backgroundColor = view.backgroundColor
         //Looks for single or multiple taps.
-         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
+//         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+//        view.addGestureRecognizer(tap)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(checkButtonLongPressed(_:)))
             checkButton.addGestureRecognizer(longPressRecognizer)
@@ -87,6 +135,7 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         else if toGenerate == false {
             print("false")
         }
+        
 
         
     }
@@ -96,21 +145,21 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
         NotificationCenter.default.removeObserver(self)
     }
 
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-            return
-        }
-        
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
-        collectionView.contentInset = insets
-        collectionView.scrollIndicatorInsets = insets
-    }
-    
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        collectionView.contentInset = .zero
-        collectionView.scrollIndicatorInsets = .zero
-        
-    }
+//    @objc private func keyboardWillShow(_ notification: Notification) {
+//        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+//            return
+//        }
+//
+//        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+//        collectionView.contentInset = insets
+//        collectionView.scrollIndicatorInsets = insets
+//    }
+//
+//    @objc private func keyboardWillHide(_ notification: Notification) {
+//        collectionView.contentInset = .zero
+//        collectionView.scrollIndicatorInsets = .zero
+//
+//    }
     private func getHighestWinsForDifficulty(difficulty: String, userID: String, completion: @escaping (Int?) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
         
@@ -184,8 +233,18 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    
 
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: selectedIndexPath!) as! SudokuCell
+        let row = selectedIndexPath!.row / 9
+        let col = selectedIndexPath!.row % 9
 
+        sudoku.partialArray[row][col] = 0
+        collectionView.reloadData()
+    }
+    
     let itemsPerRow: CGFloat = 9
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
@@ -379,102 +438,41 @@ class SudokuViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     }
 
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-            let availableWidth = view.frame.width - paddingSpace
-            let widthPerItem = availableWidth / itemsPerRow
-
-            return CGSize(width: widthPerItem, height: widthPerItem)
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return sectionInsets
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return sectionInsets.left
-        }
-    
-
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 81
-    }
     
     
  
     @IBAction func change(_ textField: UITextField) {
+        print("WHen")
         let row = textField.tag / 9
         let col = textField.tag % 9
-        if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
-            sudoku.partialArray[row][col] = value
-            if sudoku.partialArray[row][col] != sudoku.sudokuArray[row][col]{
-                print("ITS WrONG")
-                sudoku.mistakesMade += 1
-                sudoku.mistakeCoordinates.append((row,col))
-                
-            }
-            
-            
-        }
-        else {
-            sudoku.partialArray[row][col] = 0
-            textField.text = ""
-        }
-    }
-    
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: indexPath) as! SudokuCell
-        let row = indexPath.row / 9
-        let col = indexPath.row % 9
-
-        cell.label.delegate = self
-        let value = sudoku.partialArray[row][col]
-        cell.label.text = "\(value == 0 ? "" : "\(value)")"
-        cell.label.textAlignment = .center // center the text
-        cell.label.tag = indexPath.row
-        cell.label.keyboardType = .numberPad
-        
-        
-        if sudoku.startingArray[row][col] != 0 {
-            cell.label.isUserInteractionEnabled = false
-        } else {
-            cell.label.isUserInteractionEnabled = true
-        }
-        
-        // Reset the background color of the cell
-        cell.label.backgroundColor = grayedIndices.contains(indexPath.row) ? UIColor.lightGray : UIColor.white
-
-        return cell
+//        if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
+//            sudoku.partialArray[row][col] = value
+//            if sudoku.partialArray[row][col] != sudoku.sudokuArray[row][col]{
+//                print("ITS WrONG")
+//                sudoku.mistakesMade += 1
+//                sudoku.mistakeCoordinates.append((row,col))
+//            }
+//
+//
+//        }
+//        else {
+//            sudoku.partialArray[row][col] = 0
+//            textField.text = "df"
+//        }
     }
 
-
-
-
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Get the selected cell
-        let cell = collectionView.cellForItem(at: indexPath) as! SudokuCell
-        
-        print("D:JSDL:KF")
-        // Change the background color of the text field for the selected cell
-        cell.label.backgroundColor = UIColor.green
-
-    }
 
 
 }
 extension SudokuViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        guard let cell = textField.superview?.superview as? SudokuCell else { return }
         
+        guard let cell = textField.superview?.superview as? SudokuCell else { return }
+        textField.inputAccessoryView = nil
         // Clear the array of grayed indices
         grayedIndices.removeAll()
-        
-        // Add the indices of the cells that should be grayed out to the array
         let indexPath = collectionView.indexPath(for: cell)!
+        selectedIndexPath = indexPath
         let row = indexPath.row / 9
         let col = indexPath.row % 9
         for i in 0..<9 {
@@ -518,6 +516,7 @@ extension SudokuViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
         grayedIndices.removeAll()
         collectionView.reloadData()
     

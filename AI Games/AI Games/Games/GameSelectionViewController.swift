@@ -19,11 +19,6 @@ enum Game {
 
 class GameSelectionViewController: UIViewController {
     
-    
-    
-    
-
-    
     var sudokuBoardViewController: SudokuViewController?
     
     @IBOutlet weak var infoButton: UIButton!

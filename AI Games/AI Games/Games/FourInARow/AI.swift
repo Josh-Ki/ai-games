@@ -16,32 +16,64 @@ func generateAIMoves() -> [Move] {
         }
     }
     
-    // Order moves by their score
-    moves.sort { move1, move2 in
-        let column1 = move1.column
-        guard var boardItem1 = getLowestEmpty(column1) else { return false }
-        boardItem1.tile = currentTurnTile()
-        updateBoard(boardItem1)
-        let score1 = evaluateBoard()
-        
-        let column2 = move2.column
-        guard var boardItem2 = getLowestEmpty(column2) else { return false }
-        boardItem2.tile = currentTurnTile()
-        updateBoard(boardItem2)
-        let score2 = evaluateBoard()
-        
-        // Reset the board
-        boardItem1.tile = .Empty
-        updateBoard(boardItem1)
-        
-        boardItem2.tile = .Empty
-        updateBoard(boardItem2)
-        
-        return score1 > score2
+    // Check for winning move
+    for move in moves {
+        var boardItem = getLowestEmpty(move.column)!
+        boardItem.tile = currentTurnTile()
+        updateBoard(boardItem)
+        if isWinningMove(boardItem) {
+            boardItem.tile = .Empty
+            updateBoard(boardItem)
+            return [move]
+        }
+        boardItem.tile = .Empty
+        updateBoard(boardItem)
     }
     
-    return moves
+    // Calculate score for each move and store it in a tuple
+    var scoredMoves = [(Move, Int)]()
+    for move in moves {
+        var boardItem = getLowestEmpty(move.column)!
+        boardItem.tile = currentTurnTile()
+        updateBoard(boardItem)
+        let score = evaluateBoard()
+        boardItem.tile = .Empty
+        updateBoard(boardItem)
+        scoredMoves.append((move, score))
+    }
+    
+    // Sort the moves based on their score
+    scoredMoves.sort { $0.1 > $1.1 }
+    
+    // Return the sorted moves
+    return scoredMoves.map { $0.0 }
 }
+
+
+
+func isWinningMove(_ boardItem: BoardItem) -> Bool {
+    let directions: [(rowStep: Int, colStep: Int)] = [(0, 1), (1, 0), (1, 1), (-1, 1)]
+    for direction in directions {
+        var count = 0
+        var row = boardItem.row
+        var col = boardItem.column
+        while row >= 0 && row < board.count && col >= 0 && col < board[row].count {
+            if board[row][col].tile == boardItem.tile {
+                count += 1
+            } else {
+                break
+            }
+            if count == 4 {
+                return true
+            }
+            row += direction.rowStep
+            col += direction.colStep
+        }
+    }
+    return false
+}
+
+
 
 func evaluateBoard() -> Int {
     let aiTile: Tile = .Red
@@ -49,96 +81,70 @@ func evaluateBoard() -> Int {
     var score = 0
     
     // Score center column
-    let centerArray = [board[0][3], board[1][3], board[2][3], board[3][3], board[4][3], board[5][3]]
-    let centerCount = centerArray.filter { $0.tile == aiTile }.count
+    let centerColumn = board.map { $0[3] }
+    let centerCount = centerColumn.filter { $0.tile == aiTile }.count
     score += centerCount * 6
     
-    // Score Horizontal
-    for row in 0..<board.count {
-        let rowArray = [board[row][0], board[row][1], board[row][2], board[row][3], board[row][4], board[row][5], board[row][6]]
-        for col in 0..<rowArray.count - 3 {
-            let window = Array(rowArray[col...col + 3])
-            score += evaluatewindow(window: window, aiTile: aiTile, humanTile: humanTile)
-        }
-    }
-    
-    // Score Vertical
-    for col in 0..<board[0].count {
-        let colArray = [board[0][col], board[1][col], board[2][col], board[3][col], board[4][col], board[5][col]]
-        for row in 0..<colArray.count - 3 {
-            let window = Array(colArray[row...row + 3])
-            score += evaluatewindow(window: window, aiTile: aiTile, humanTile: humanTile)
-        }
-    }
-    // Score positive diagonal
-    for row in 0..<board.count - 3 {
-        for col in 0..<board[row].count - 3 {
-            let window = [board[row][col], board[row + 1][col + 1],
-                          board[row + 2][col + 2], board[row + 3][col + 3]]
-            score += evaluatewindow(window: window, aiTile: aiTile, humanTile: humanTile)
-        }
-    }
-    
-    // Score negative diagonal
-    for row in 0..<board.count - 3 {
-        for col in 0..<board[row].count - 3 {
-            let window = [board[row + 3][col], board[row + 2][col + 1],
-                          board[row + 1][col + 2], board[row][col + 3]]
-            score += evaluatewindow(window: window, aiTile: aiTile, humanTile: humanTile)
+    // Score rows, columns, and diagonals
+    let directions: [(rowStep: Int, colStep: Int)] = [(0, 1), (1, 0), (1, 1), (-1, 1)]
+    for direction in directions {
+        for row in 0..<board.count {
+            for col in 0..<board[row].count {
+                var startRow = row
+                var startCol = col
+                var window: [Tile] = []
+                for _ in 0..<4 {
+                    if startRow < 0 || startRow >= board.count || startCol < 0 || startCol >= board[row].count {
+                        break
+                    }
+                    window.append(board[startRow][startCol].tile)
+                    startRow += direction.rowStep
+                    startCol += direction.colStep
+                }
+                if window.count == 4 {
+                    score += evaluateWindow(window: window, aiTile: aiTile, humanTile: humanTile)
+                }
+            }
         }
     }
     
     return score
 }
 
-func evaluatewindow(window: [BoardItem], aiTile: Tile, humanTile: Tile) -> Int {
-    var score = 0
-    let aiCount = window.filter { $0.tile == aiTile }.count
-    let humanCount = window.filter { $0.tile == humanTile }.count
-    let emptyCount = window.filter { $0.tile == .Empty }.count
-    
-    // Add these weights as constants or parameters
-    let centerWeight = 3 // increase this value to prioritize center column more
-    let edgeWeight = 2 // increase this value to prioritize edge rows more
-    let diagonalWeight = 4 // increase this value to prioritize diagonal alignments more
-    
-    if aiCount == 4{
-        score += 100000000
-    } else if aiCount == 3 && emptyCount == 1 {
-        score += 5000 * diagonalWeight // multiply by diagonal weight if window is diagonal
-    } else if aiCount == 2 && emptyCount == 2 {
-        score += 50 * centerWeight // multiply by center weight if window contains center column
-    } else if aiCount == 1 && emptyCount == 3 {
-        score += 5 * edgeWeight // multiply by edge weight if window contains edge row
+func evaluateWindow(window: [Tile], aiTile: Tile, humanTile: Tile) -> Int {
+    let aiCount = window.filter { $0 == aiTile }.count
+    let humanCount = window.filter { $0 == humanTile }.count
+    if humanCount == 4 {
+        return -100000
+    } else if aiCount == 4 {
+        return 100000
+    } else if humanCount == 3 && aiCount == 0 {
+        return -1000
+    } else if aiCount == 3 && humanCount == 0 {
+        return 1000
+    } else if humanCount == 2 && aiCount == 0 {
+        // Check for diagonal win
+        if window[0] == humanTile && window[1] == humanTile && window[2] == Tile.Empty && window[3] == humanTile {
+            
+            return -100
+        } else if window[0] == humanTile && window[1] == Tile.Empty && window[2] == humanTile && window[3] == humanTile {
+            
+            return -100
+        }
+        return -10
+    } else if aiCount == 2 && humanCount == 0 {
+        // Check for diagonal win
+        if window[0] == aiTile && window[1] == aiTile && window[2] == Tile.Empty && window[3] == aiTile {
+            
+            return 100
+        } else if window[0] == aiTile && window[1] == Tile.Empty && window[2] == aiTile && window[3] == aiTile {
+        
+            return 100
+        }
+        return 10
+    } else {
+        return 0
     }
-    
-    // Add these lines to prioritize blocking human player's moves
-    if humanCount == 3 && emptyCount == 1 {
-        score -= 80 * diagonalWeight // increase this value and multiply by diagonal weight to prioritize blocking more
-    } else if humanCount == 2 && emptyCount == 2 {
-        score -= 40 * centerWeight // increase this value and multiply by center weight to prioritize blocking more
-    }
-    
-    // Check for additional patterns
-   let pattern1: [Tile] = [humanTile, aiTile, aiTile, humanTile]
-   let pattern2: [Tile] = [humanTile, aiTile, humanTile, aiTile]
-   let pattern3: [Tile] = [aiTile, aiTile, humanTile, humanTile]
-   let pattern4: [Tile] = [humanTile, humanTile, aiTile, aiTile]
-   
-   if window.map({ $0.tile }) == pattern1 {
-       score -= (200 + (centerWeight + edgeWeight) / 2) * (diagonalWeight + centerWeight) / 2
-       // decrease this value and multiply by average of position weights
-   } else if window.map({ $0.tile }) == pattern2 {
-       score -= (150 + (centerWeight + edgeWeight) / 2) * (diagonalWeight + centerWeight) / 2
-       // decrease this value and multiply by average of position weights
-   } else if window.map({ $0.tile }) == pattern3 {
-       score += (150 + (centerWeight + edgeWeight) / 2) * (diagonalWeight + centerWeight) / 2
-       // increase this value and multiply by average of position weights
-   } else if window.map({ $0.tile }) == pattern4 {
-       score += (200 + (centerWeight + edgeWeight) / 2) * (diagonalWeight + centerWeight) / 2
-       // increase this value and multiply by average of position weights
-   }
-    return score
 }
 
 

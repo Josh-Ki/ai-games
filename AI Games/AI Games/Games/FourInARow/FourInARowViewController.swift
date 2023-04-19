@@ -258,13 +258,13 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
             // AI player's turn
             
             var bestMove: Move?
-            
+
             _  = minimax(depth: 0,
-                                maxdepth: 4,
+                                maxdepth: 5,
                          bestmove: &bestMove,
                                 alpha: Int.min + 1,
                                 beta: Int.max - 1)
-            
+
             if let bestMove = bestMove {
                 let column = bestMove.column
                 

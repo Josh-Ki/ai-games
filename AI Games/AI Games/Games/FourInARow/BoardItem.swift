@@ -19,6 +19,14 @@ struct BoardItem
     var indexPath: IndexPath!
     var tile: Tile!
     
+    var row: Int {
+        return indexPath.row
+    }
+    
+    var column: Int {
+        return indexPath.section
+    }
+    
     func yellowTile() -> Bool
     {
         return tile == Tile.Yellow

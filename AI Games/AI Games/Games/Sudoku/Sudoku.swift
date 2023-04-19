@@ -145,5 +145,34 @@ extension SudokuViewController {
         sudoku.hintsUsed = 0
         return (board, partialBoard)
     }
+    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else {
+            return
+        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: selectedIndexPath!) as! SudokuCell
+        let row = selectedIndexPath!.row / 9
+        let col = selectedIndexPath!.row % 9
+
+        cell.label.delegate = self
+        
+        let labelText = label.text
+        print(Int(labelText!)!)
+        sudoku.partialArray[row][col] = Int(labelText!)!
+                    if sudoku.partialArray[row][col] != sudoku.sudokuArray[row][col]{
+                        print("ITS WrONG")
+                        sudoku.mistakesMade += 1
+                        sudoku.mistakeCoordinates.append((row,col))
+                    }
+        collectionView.reloadData()
+
+        UIView.animate(withDuration: 0.2, animations: {
+            label.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.2, animations: {
+                label.transform = CGAffineTransform.identity
+            })
+        })
+    }
+
 
 }
