@@ -38,6 +38,7 @@ struct FourInARowGame {
     let draw: Int
     let total: Int
     let gameFinished: String
+    let board : [[BoardItem]]
 }
 
 extension AnalysisViewController {
@@ -60,8 +61,22 @@ extension AnalysisViewController {
                 let lose = data["losses"] as! Int
                 let draw = data["draw"] as! Int
                 let total = data["total"] as! Int
+                let boardData = data["board"] as! [[String: Any]]
                 
-                let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished)
+                var board = [[BoardItem]]()
+                       for row in boardData {
+                           var newRow = [BoardItem]()
+                           for (column, tileValue) in row {
+                               let indexPath = IndexPath(row: Int(column)!, section: 0)
+                               let tile = Tile(rawValue: tileValue as! String)!
+                               let boardItem = BoardItem(indexPath: indexPath, tile: tile)
+                               newRow.append(boardItem)
+                           }
+                           board.append(newRow)
+                       }
+
+
+                let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, board: board)
                 games.append(game)
             }
             

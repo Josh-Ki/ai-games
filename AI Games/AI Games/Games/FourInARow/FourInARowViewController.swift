@@ -30,7 +30,9 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         resetBoard()
+        print(board)
         setCellWidthHeight()
+        
         
         switch selectedDifficulty {
         case "Easy":
@@ -174,19 +176,19 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                     fourInARowData.easyWins += 1
                     fourInARowData.totalEasy += 1
                     fourInARowEnd = FourInARowEnd.win
-                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy)
+                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy, board: board)
                 }
                 else if selectedDifficulty == "Med"{
                     fourInARowData.medWins += 1
                     fourInARowData.totalMed += 1
                     fourInARowEnd = FourInARowEnd.win
-                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed)
+                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed, board: board)
                 }
                 else if selectedDifficulty == "Hard"{
                     fourInARowData.hardWins += 1
                     fourInARowData.totalHard += 1
                     fourInARowEnd = FourInARowEnd.win
-                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard)
+                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board)
                 }
             }
             else{
@@ -194,19 +196,19 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                     fourInARowData.easyLoss += 1
                     fourInARowEnd = FourInARowEnd.lose
                     fourInARowData.totalEasy += 1
-                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw,userID: userID,total: fourInARowData.totalEasy)
+                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw,userID: userID,total: fourInARowData.totalEasy, board: board)
                 }
                 else if selectedDifficulty == "Med"{
                     fourInARowData.medLoss += 1
                     fourInARowEnd = FourInARowEnd.lose
                     fourInARowData.totalMed += 1
-                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID,total: fourInARowData.totalMed)
+                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID,total: fourInARowData.totalMed, board: board)
                 }
                 else if selectedDifficulty == "Hard"{
                     fourInARowData.hardLoss += 1
                     fourInARowEnd = FourInARowEnd.lose
                     fourInARowData.totalHard += 1
-                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard)
+                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board)
                 }
                 redScore += 1
             }
@@ -220,19 +222,19 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                 fourInARowData.easyDraw += 1
                 fourInARowData.totalEasy += 1
                 fourInARowEnd = FourInARowEnd.draw
-                writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy)
+                writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy, board: board)
             }
             else if selectedDifficulty == "Med"{
                 fourInARowData.medDraw += 1
                 fourInARowData.totalMed += 1
                 fourInARowEnd = FourInARowEnd.draw
-                writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed)
+                writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed, board: board)
             }
             else if selectedDifficulty == "Hard"{
                 fourInARowData.hardDraw += 1
                 fourInARowData.totalHard += 1
                 fourInARowEnd = FourInARowEnd.draw
-                writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard)
+                writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board)
             }
         } else {
             toggleTurn(turnImage)
@@ -258,16 +260,21 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
             // AI player's turn
             
             var bestMove: Move?
+            
+            let gameState = GameState(board: board, redTurn: true)
+//            print(gameState.board)
+            let mctsAI = MCTSAI()
+//            _  = minimax(depth: 0,
+//                                maxdepth: 5,
+//                         bestmove: &bestMove,
+//                                alpha: Int.min + 1,
+//                                beta: Int.max - 1)
 
-            _  = minimax(depth: 0,
-                                maxdepth: 5,
-                         bestmove: &bestMove,
-                                alpha: Int.min + 1,
-                                beta: Int.max - 1)
-
-            if let bestMove = bestMove {
-                let column = bestMove.column
-                
+//            if let bestMove = bestMove {
+    
+//            let column = mctsAI.findBestMove(gameState: gameState).column
+            let column = 0
+                print(column)
                 guard var boardItem = getLowestEmpty(column),
                       let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else { return }
                 
@@ -278,6 +285,7 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                 updateBoard(boardItem)
                 
                 if victory() {
+                   
                     if yellowTurn {
                         yellowScore += 1
                     } else {
@@ -306,7 +314,7 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                     UIView.animate(withDuration: 0.5) {
                         cell.center = finalCenter
                     }
-                }
+//                }
             }
         }
     }

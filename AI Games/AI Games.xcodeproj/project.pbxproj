@@ -25,6 +25,7 @@
 		802F068329C83C6E0057CEE4 /* SudokuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802F068229C83C6E0057CEE4 /* SudokuCell.swift */; };
 		80419EF329EF22EF00911791 /* SudokuCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80419EF229EF22EF00911791 /* SudokuCollectionView.swift */; };
 		80419EF529F06BFC00911791 /* DetailedTTTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80419EF429F06BFC00911791 /* DetailedTTTViewController.swift */; };
+		8043605229F43C820089CABF /* DetailedC4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8043605129F43C820089CABF /* DetailedC4ViewController.swift */; };
 		8058296129A302D3000C76BE /* SudokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058296029A302D3000C76BE /* SudokuViewController.swift */; };
 		8058296329A302E1000C76BE /* TicTacToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058296229A302E1000C76BE /* TicTacToeViewController.swift */; };
 		80814CA929A55315001D53E6 /* FourInARowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80814CA829A55315001D53E6 /* FourInARowViewController.swift */; };
@@ -88,6 +89,7 @@
 		802F068229C83C6E0057CEE4 /* SudokuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCell.swift; sourceTree = "<group>"; };
 		80419EF229EF22EF00911791 /* SudokuCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCollectionView.swift; sourceTree = "<group>"; };
 		80419EF429F06BFC00911791 /* DetailedTTTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTTTViewController.swift; sourceTree = "<group>"; };
+		8043605129F43C820089CABF /* DetailedC4ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedC4ViewController.swift; sourceTree = "<group>"; };
 		8058296029A302D3000C76BE /* SudokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewController.swift; sourceTree = "<group>"; };
 		8058296229A302E1000C76BE /* TicTacToeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeViewController.swift; sourceTree = "<group>"; };
 		80814CA829A55315001D53E6 /* FourInARowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourInARowViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */,
 				80CB3D3B29EE1C9200D4A54A /* DetailedSudokuViewController.swift */,
 				80419EF429F06BFC00911791 /* DetailedTTTViewController.swift */,
+				8043605129F43C820089CABF /* DetailedC4ViewController.swift */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				E56184BA29906C39003E2B05 /* ViewController.swift in Sources */,
 				8058296129A302D3000C76BE /* SudokuViewController.swift in Sources */,
 				80814CAB29A5531F001D53E6 /* BoardCell.swift in Sources */,
+				8043605229F43C820089CABF /* DetailedC4ViewController.swift in Sources */,
 				802F068329C83C6E0057CEE4 /* SudokuCell.swift in Sources */,
 				80B4595B29AC09A200CD0EBE /* AuthenticationViewController.swift in Sources */,
 				E5A1F27A29C94BD400AE1834 /* GomokuCell.swift in Sources */,

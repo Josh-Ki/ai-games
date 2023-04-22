@@ -55,6 +55,7 @@ func boardIsFull() -> Bool {
 
 func victory()  -> Bool
 {
+
     return horizontalVictory() || verticalVictory() || diagonalVictory()
 }
 

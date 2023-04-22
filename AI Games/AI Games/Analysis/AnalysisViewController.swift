@@ -100,6 +100,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
         hardTableView.isHidden = false
         easyTableView.reloadData()
         medTableView.reloadData()
+        hardTableView.reloadData()
         
         
     }
@@ -570,19 +571,50 @@ animateButton(button: tictactoeButton)
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-
-            let game = easyGames[indexPath.row]
+        switch tableView {
+        case easyTableView:
+            if selectedGame == .sudoku {
+                let cell = tableView.cellForRow(at: indexPath)
+                let game = easyGames[indexPath.row]
+                let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedSudokuViewController") as! DetailedSudokuViewController
+                detailVC.mistakes = game.mistakes
+                detailVC.hints = game.hints
+                detailVC.gameNumber = game.wins
+                detailVC.sudokuArray = game.board
+                // Present the new view controller
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            }
+        case medTableView:
+            if selectedGame == .sudoku {
+                let cell = tableView.cellForRow(at: indexPath)
+                let game = medGames[indexPath.row]
+                let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedSudokuViewController") as! DetailedSudokuViewController
+                detailVC.mistakes = game.mistakes
+                detailVC.hints = game.hints
+                detailVC.gameNumber = game.wins
+                detailVC.sudokuArray = game.board
+                // Present the new view controller
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            }
+        case hardTableView:
+            if selectedGame == .sudoku {
+                let cell = tableView.cellForRow(at: indexPath)
+                let game = hardGames[indexPath.row]
+                let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedSudokuViewController") as! DetailedSudokuViewController
+                detailVC.mistakes = game.mistakes
+                detailVC.hints = game.hints
+                detailVC.gameNumber = game.wins
+                detailVC.sudokuArray = game.board
+                // Present the new view controller
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            }
         
-    
-        let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedSudokuViewController") as! DetailedSudokuViewController
-        detailVC.mistakes = game.mistakes
-        detailVC.hints = game.hints
-        detailVC.gameNumber = game.wins
-        detailVC.sudokuArray = game.board
+        default:
+            break
+        }
+        
 
-            // Present the new view controller
-        self.navigationController?.pushViewController(detailVC, animated: true)
+
     }
 
 

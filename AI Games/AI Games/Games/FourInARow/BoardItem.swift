@@ -7,17 +7,18 @@
 //MARK: Struct for a boarditem
 import Foundation
 import UIKit
-
-enum Tile{
-    case Red
-    case Yellow
-    case Empty
+enum Tile: String {
+    case Red = "R"
+    case Yellow = "Y"
+    case Empty = "E"
 }
+
 
 struct BoardItem
 {
     var indexPath: IndexPath!
     var tile: Tile!
+    
     
     var row: Int {
         return indexPath.row

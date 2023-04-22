@@ -10,32 +10,42 @@ import UIKit
 
 extension FourInARowViewController {
     
-     func writeFourInARowData(wins: Int, losses: Int, draws: Int, userID: String, total: Int) {
+    func writeFourInARowData(wins: Int, losses: Int, draws: Int, userID: String, total: Int, board: [[BoardItem]]) {
         var tempState = ""
         if fourInARowEnd == FourInARowEnd.win {
-             tempState = "Win"
+            tempState = "Win"
         }
         if fourInARowEnd == FourInARowEnd.draw {
-             tempState = "Draw"
+            tempState = "Draw"
         }
         if fourInARowEnd == FourInARowEnd.lose {
-             tempState = "Loss"
+            tempState = "Loss"
         }
             
         let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(selectedDifficulty!)")
         let newDocRef = collectionRef.document()
         
-            let data = [
-                "id": newDocRef.documentID,
-                "wins": wins,
-                "losses": losses,
-                "draw": draws,
-                "gameFinished": tempState,
-                "total": total
-            ] as [String : Any]
-            
-            newDocRef.setData(data)
+        // Convert board into an array of dictionaries
+        let boardDict = board.map { row in
+            row.reduce(into: [:]) { dict, item in
+                dict[String(item.column)] = item.tile.rawValue
+            }
         }
+        
+        let data = [
+            "id": newDocRef.documentID,
+            "wins": wins,
+            "losses": losses,
+            "draw": draws,
+            "gameFinished": tempState,
+            "total": total,
+            "board": boardDict
+        ] as [String : Any]
+            
+        newDocRef.setData(data)
+    }
+
+
      func c4GetHighestEasy(difficulty: String, userID: String, completion: @escaping (Int?, Int?, Int?, Int?) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(difficulty)")
         
