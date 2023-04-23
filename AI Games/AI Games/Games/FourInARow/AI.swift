@@ -53,11 +53,9 @@ class Node {
             return exploitationValue + explorationFactor * explorationValue
         }
         if uctValues.isEmpty {
-            // If not, return the move with the highest number of visits
             let mostVisitedMove = childNodes.max { $0.visitCount < $1.visitCount }
             return mostVisitedMove?.move ?? gameState.getPossibleMoves().randomElement()!
         }
-        // Choose the move with the highest UCT value
         let bestIndex = uctValues.indices.max { uctValues[$0] < uctValues[$1] }!
         return childNodes[bestIndex].move!
     }
@@ -91,7 +89,10 @@ class GameState {
            self.board = board
            self.redTurn = redTurn
        }
-       
+    func currentTurnTile() -> Tile {
+        return redTurn ? Tile.Red : Tile.Yellow
+    }
+    
        func makeMove(_ move: Move) -> GameState {
            // Create a new game state with the move applied
            var newBoard = board
@@ -114,9 +115,9 @@ class GameState {
 
     func isTerminal() -> Bool {
         // Check if the game is over
-        print("is win: \(win())")
+        print("is win: \(win(player: currentTurnTile()))")
         print("is full: \(boardFull())")
-        return win() || boardFull() || lose()
+        return win(player: currentTurnTile()) || boardFull() || lose()
     }
     func boardFull() -> Bool {
         // Check if all cells in the board are occupied
@@ -130,44 +131,32 @@ class GameState {
         return true
     }
 
-    func win() -> Bool {
-        // Check if there are four consecutive tiles in a row, column, or diagonal
-        for row in 0..<board.count {
-            for col in 0..<board[row].count {
-                let tile = board[row][col].tile
-                if tile == .Empty {
-                    continue
-                }
-                
-                if col + 3 < board[row].count &&
-                    tile == board[row][col+1].tile &&
-                    tile == board[row][col+2].tile &&
-                    tile == board[row][col+3].tile {
-                    
-                    return true // Horizontal win
-                }
-                if row + 3 < board.count {
-                    if tile == board[row+1][col].tile &&
-                        tile == board[row+2][col].tile &&
-                        tile == board[row+3][col].tile {
-                        return true // Vertical win
-                    }
-                    if col + 3 < board[row].count &&
-                        tile == board[row+1][col+1].tile &&
-                        tile == board[row+2][col+2].tile &&
-                        tile == board[row+3][col+3].tile {
-                        return true // Diagonal win (bottom-left to top-right)
-                    }
-                    if col - 3 >= 0 &&
-                        tile == board[row+1][col-1].tile &&
-                        tile == board[row+2][col-2].tile &&
-                        tile == board[row+3][col-3].tile {
-                        return true // Diagonal win (top-left to bottom-right)
-                    }
-                }
+
+    func win(player: Tile) -> Bool {
+      // Check if the given player has four consecutive tiles in a row, column, or diagonal
+      for row in 0..<board.count {
+        for col in 0..<board[row].count {
+          let tile = board[row][col].tile
+          if tile != player {
+            continue
+          }
+          if col + 3 < board[row].count && tile == board[row][col+1].tile && tile == board[row][col+2].tile && tile == board[row][col+3].tile {
+            return true // Horizontal win
+          }
+          if row + 3 < board.count {
+            if tile == board[row+1][col].tile && tile == board[row+2][col].tile && tile == board[row+3][col].tile {
+              return true // Vertical win
             }
+            if col + 3 < board[row].count && tile == board[row+1][col+1].tile && tile == board[row+2][col+2].tile && tile == board[row+3][col+3].tile {
+              return true // Diagonal win (bottom-left to top-right)
+            }
+            if col - 3 >= 0 && tile == board[row+1][col-1].tile && tile == board[row+2][col-2].tile && tile == board[row+3][col-3].tile {
+              return true // Diagonal win (top-left to bottom-right)
+            }
+          }
         }
-        return false
+      }
+      return false
     }
     
     func lose() -> Bool {
@@ -215,57 +204,49 @@ class GameState {
 }
 
 class MCTSAI {
-    let maxIterations = 10000 // Maximum number of iterations for MCTS algorithm
+    let maxIterations = 100 // Maximum number of iterations for MCTS algorithm
     let explorationFactor: Float = 1.7 // Exploration factor for UCT algorithm
-    let numThreads = 1 // Number of threads to use for parallelization
-        let queue = DispatchQueue(label: "com.example.mcts", attributes: .concurrent)
-        var transpositionTable: [String: Node] = [:] // Transposition table to store previously evaluated game states
-        
-        func findBestMove(gameState: GameState) -> Move {
-            // Create the root node of the search tree
-            let rootNode = getNode(for: gameState)
-            var bestMove: Move!
-            
-            // Run the MCTS algorithm in parallel
-            let group = DispatchGroup()
-            for _ in 0..<numThreads {
-                group.enter()
-                queue.async {
-                    for _ in 0..<self.maxIterations/self.numThreads {
-                        // Selection
-                        let nodeToExpand = self.select(node: rootNode)
-                        
-                        // Expansion
-                        let expandedNodes = self.expand(node: nodeToExpand)
-                        
-                        // Simulation
-                        let bestNode = self.simulate(nodes: expandedNodes)
-                        
-                        // Backpropagation
-                        self.backpropagate(node: bestNode)
-                    }
-                    group.leave()
+    var transpositionTable: [String: Node] = [:] // Transposition table to store previously evaluated game states
+    
+    func findBestMove(gameState: GameState) -> Move {
+        // Create the root node of the search tree
+        let rootNode = getNode(for: gameState)
+        var bestMove: Move!
+
+                for i in 0..<self.maxIterations {
+                    // Selection
+                    let nodeToExpand = self.select(node: rootNode)
+                    
+                    // Expansion
+                    let expandedNodes = self.expand(node: nodeToExpand)
+                    
+                    // Simulation
+                    let bestNode = self.simulate(nodes: expandedNodes)
+                    
+                    // Backpropagation
+                    self.backpropagate(node: bestNode)
+                    print("iteration \(i)")
                 }
-            }
-            group.wait()
-            
-            // Choose the best move based on the UCT value of the child nodes
-            bestMove = rootNode.getBestMove(explorationFactor: explorationFactor)
-            
-            return bestMove
-        }
+                
+
         
-        func getNode(for gameState: GameState) -> Node {
-            // Retrieve the node for the given game state from the transposition table, or create a new node if it doesn't exist
-            let key = gameState.hashValue.description
-            if let node = transpositionTable[key] {
-                return node
-            } else {
-                let node = Node(gameState: gameState)
-                transpositionTable[key] = node
-                return node
-            }
-        }
+        // Choose the best move based on the UCT value of the child nodes
+        bestMove = rootNode.getBestMove(explorationFactor: explorationFactor)
+        
+        return bestMove
+    }
+
+    func getNode(for gameState: GameState) -> Node {
+      // Retrieve the node for the given game state from the transposition table, or create a new node if it doesn't exist
+      let key = gameState.board.description // Use the board as the key
+      if let node = transpositionTable[key] {
+        return node
+      } else {
+        let node = Node(gameState: gameState)
+        transpositionTable[key] = node
+        return node
+      }
+    }
     
     func select(node: Node) -> Node {
 //        print("Number of child nodes: \(node.childNodes.count)")
@@ -288,51 +269,90 @@ class MCTSAI {
         // Recursively select a child node
         return select(node: selectedChild)
     }
-
     func expand(node: Node) -> [Node] {
-        // Create child nodes for all possible moves from the current game state
-        let possibleMoves = node.gameState.getPossibleMoves()
-        var childNodes: [Node] = []
+      // Create child nodes for the top k possible moves from the current game state
+      print("Expanding")
+      let possibleMoves = node.gameState.getPossibleMoves()
+      var childNodes: [Node] = []
+      
+      if !possibleMoves.isEmpty {
         
-        if !possibleMoves.isEmpty {
-
-            for move in possibleMoves {
-
-                let childState = node.gameState.makeMove(move)
-                let childNode = Node(gameState: childState, move: move, parent: node)
-                childNodes.append(childNode)
-//                print("Expanded node with move: \(move.column), childNodes count: \(childNodes.count)")
-
-            }
+        // Score each possible move using a heuristic function
+        let scoredMoves = possibleMoves.map { move in
+          print("WE IN ")
+          let nextState = node.gameState.makeMove(move)
+          let score = evaluateState(nextState)
+          print("SCORED MOVE \(score)")
+          return (move, score)
         }
-        return childNodes
+        
+        // Sort the moves by score in descending order
+        let sortedMoves = scoredMoves.sorted { $0.1 > $1.1 }
+        print("SORTED MOVES \(sortedMoves)")
+        
+        // Choose the top k moves,ax
+        let k = 6// You can change this value
+        let bestMoves = sortedMoves.prefix(k)
+        
+        // Use a lock to protect the childNodes array from concurrent access
+        let lock = NSLock()
+        
+        // Use DispatchQueue.concurrentPerform to create child nodes in parallel
+        DispatchQueue.concurrentPerform(iterations: bestMoves.count) { i in
+          let (move, _) = bestMoves[i]
+          let childState = node.gameState.makeMove(move)
+          let childNode = Node(gameState: childState, move: move, parent: node)
+            print(Thread.current)
+          
+          // Acquire the lock before appending to the array
+          lock.lock()
+          childNodes.append(childNode)
+          lock.unlock()
+          
+          // print(“Expanded node with move: (move.column), childNodes count: (childNodes.count)”)
+        }
+      }
+      return childNodes
     }
 
-    
+
     func simulate(nodes: [Node]) -> Node {
-        // Choose a random child node and run a simulation from that state
-        let randomIndex = Int.random(in: 0..<nodes.count)
-        let randomNode = nodes[randomIndex]
-        
-        if randomNode.value == -1.0 || randomNode.value == 1.0 {
-            // Early stop if the node has already been simulated and has a clear win/loss result
-            return randomNode
-        }
-        
-        let simulationResult = simulateRandomPlay(gameState: randomNode.gameState)
-        randomNode.updateValue(result: simulationResult)
-        
-        if randomNode.value == -1.0 || randomNode.value == 1.0 {
-            // Early stop and propagate the result if the simulation result gives a clear win/loss result
-            return randomNode
-        }
-        
+      // Choose a random child node and run a simulation from that state
+      let randomIndex = Int.random(in: 0..<nodes.count)
+      let randomNode = nodes[randomIndex]
+      
+      if randomNode.value == -1.0 || randomNode.value == 1.0 {
+        // Early stop if the node has already been simulated and has a clear win/loss result
         return randomNode
+      }
+      print(randomNode.value)
+      
+      // Use a semaphore to synchronize the access to the simulation result
+      let semaphore = DispatchSemaphore(value: 0)
+      var simulationResult: Float!
+      
+      // Use DispatchQueue.global to run the simulation on a background queue
+      DispatchQueue.global().async {
+        simulationResult = self.simulateRandomPlay(gameState: randomNode.gameState, maxDepth: 15)
+        randomNode.updateValue(result: simulationResult)
+        semaphore.signal()
+      }
+      
+      // Wait for the simulation to finish
+      semaphore.wait()
+      
+      if randomNode.value == -1.0 || randomNode.value == 1.0 {
+        // Early stop and propagate the result if the simulation result gives a clear win/loss result
+        return randomNode
+      }
+      
+      return randomNode
     }
 
-    
+
     func backpropagate(node: Node) {
         // Update the value and visit count of all nodes in the path from the selected node to the root
+        print("BackPropgating")
         var currentNode = node
         while let parent = currentNode.parent {
             parent.updateValue(result: currentNode.value)
@@ -341,62 +361,288 @@ class MCTSAI {
         }
     }
 
-    
-    func simulateRandomPlay(gameState: GameState) -> Float {
-        // Simulate a game by playing moves based on a heuristic until the game is over
-        var currentState = gameState
 
-        while !currentState.isTerminal() {
-            let possibleMoves = currentState.getPossibleMoves()
+    func simulateRandomPlay(gameState: GameState, maxDepth: Int) -> Float {
+      // Simulate a game by playing moves based on a heuristic until the game is over or the max depth is reached
+      var currentState = gameState
+      var currentDepth = 0
+      var aiTurn = true // Keep track of whose turn it is
 
-            // Evaluate the desirability of each possible move using a scoring function
-            let scoredMoves = possibleMoves.map { move in
-                let nextState = currentState.makeMove(move)
-                let score = evaluateState(nextState)
-                return (move, score)
-            }
+      while !currentState.isTerminal() && currentDepth < maxDepth {
+        let possibleMoves = currentState.getPossibleMoves()
 
-            // Sort the moves by score in descending order
-            let sortedMoves = scoredMoves.sorted { $0.1 > $1.1 }
-
-            // Choose the move with the highest score
-            let bestMove = sortedMoves.first!.0
-            currentState = currentState.makeMove(bestMove)
+        // Evaluate the desirability of each possible move using a scoring function
+        let scoredMoves = possibleMoves.map { move in
+          let nextState = currentState.makeMove(move)
+          let score = aiTurn ? evaluateState(nextState) : -evaluateState(nextState) // Use different scoring functions for AI and opponent
+          return (move, score)
         }
 
-        if currentState.win() {
-            print("WON")
-            return 1.0
-        } else if currentState.lose() {
-            print("LOSE")
-            return -1.0
-        } else {
-            return 0.0
-        }
+        // Sort the moves by score in descending order
+        let sortedMoves = scoredMoves.sorted { $0.1 > $1.1 }
+
+        // Choose the move with the highest score
+        let bestMove = sortedMoves.first!.0
+        currentState = currentState.makeMove(bestMove)
+
+        // Increment the depth counter
+        currentDepth += 1
+
+        // Switch the turn
+        aiTurn = !aiTurn
+      }
+
+      if currentState.win(player: currentState.currentTurnTile()) {
+          print("WIN")
+        return 1.0 // AI has won
+      } else if currentState.win(player: opposite(tile: currentState.currentTurnTile())) {
+          print("LOSE")
+        return -1.0 // User has won
+      } else {
+        // Use the evaluation function to estimate the value of non-terminal state
+        return evaluateState(currentState)
+      }
     }
-    func evaluateState(_ state: GameState) -> Float {
-            // Retrieve the value of the given game state from the transposition table, or evaluate it if it hasn't been seen before
-            let key = state.hashValue.description
-            if let node = transpositionTable[key] {
-                return node.value
-            } else {
-                let value = evaluateStateWithoutTranspositionTable(state)
-                let node = getNode(for: state)
-                node.updateValue(result: value)
-                return value
-            }
-        }
-        
-        func evaluateStateWithoutTranspositionTable(_ state: GameState) -> Float {
-            // Evaluate the desirability of a game state using a scoring function
-            // Same as before
-            return Float.random(in: 0...1)
-        }
-
-        
     
+    func opposite(tile: Tile) -> Tile {
+      // Return the opposite tile of the given tile
+      if tile == .Red {
+        return .Yellow
+      } else if tile == .Yellow {
+        return .Red
+      } else {
+        return .Empty
+      }
+    }
+    
+    func evaluateState(_ state: GameState) -> Float {
+      // Retrieve the value of the given game state from the transposition table, or evaluate it if it hasn't been seen before
+      let key = state.hashValue.description
+      if let node = transpositionTable[key] {
+        return node.value
+      } else {
+        let value = evaluateStateWithoutTranspositionTable(state)
+        let node = getNode(for: state)
+        node.updateValue(result: value)
+        return value
+      }
+    }
 
+    func evaluateStateWithoutTranspositionTable(_ state: GameState) -> Float {
+      // Evaluate the game state based on the number of possible four-in-a-rows, open-ended four-in-a-rows, and threats for each player
+      // A four-in-a-row is a sequence of four consecutive tiles in a row, column, or diagonal
+      // A possible four-in-a-row is a four-in-a-row that has at least one empty tile and no opponent tiles
+      // An open-ended four-in-a-row is a possible four-in-a-row that has two empty tiles on both ends
+      // A threat is a possible four-in-a-row that has three tiles of the same color and one empty tile
+      // The more possible four-in-a-rows, open-ended four-in-a-rows, and threats a player has, the higher their chance of winning
+      // The value of a possible four-in-a-row depends on how many tiles of the same color it has
+      // For example, a possible four-in-a-row with three red tiles and one empty tile has a higher value than one with two red tiles and two empty tiles
+      // The value of an open-ended four-in-a-row is higher than the value of a regular possible four-in-a-row
+      // The value of a threat is higher than the value of an open-ended four-in-a-row
+      // The value of a game state is the sum of the values of all possible four-in-a-rows, open-ended four-in-a-rows, and threats for the AI player minus the sum of the values of all possible four-in-a-rows, open-ended four-in-a-rows, and threats for the opponent player
+      // The value ranges from -1.0 (opponent has won) to 1.0 (AI has won)
 
+      let board = state.board
+      let aiTile = state.currentTurnTile()
+      let opponentTile = opposite(tile: aiTile)
 
+      var aiValue = 0.0 // The value for the AI player
+      var opponentValue = 0.0 // The value for the opponent player
 
-}
+      // Loop through all rows, columns, and diagonals and count the number of possible four-in-a-rows, open-ended four-in-a-rows, and threats for each player
+      for row in 0..<board.count {
+        for col in 0..<board[row].count {
+          let tile = board[row][col].tile
+
+          // Check horizontal four-in-a-rows
+          if col + 3 < board[row].count {
+            var aiCount = 0 // The number of AI tiles in the four-in-a-row
+            var opponentCount = 0 // The number of opponent tiles in the four-in-a-row
+            var emptyCount = 0 // The number of empty tiles in the four-in-a-row
+
+            for i in col..<(col + 4) {
+              let t = board[row][i].tile
+              if t == aiTile {
+                aiCount += 1
+              } else if t == opponentTile {
+                opponentCount += 1
+              } else {
+                emptyCount += 1
+              }
+            }
+
+            if emptyCount > 0 && opponentCount == 0 {
+              // This is a possible four-in-a-row for the AI player
+              if col > 0 && col + 4 < board[row].count && board[row][col - 1].tile == .Empty && board[row][col + 4].tile == .Empty {
+                // This is an open-ended four-in-a-row for the AI player
+                aiValue += pow(100.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+              } else if aiCount == 3 && emptyCount == 1 {
+                // This is a threat for the AI player
+                aiValue += pow(1000.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+              } else {
+                // This is a regular possible four-in-a-row for the AI player
+                aiValue += pow(10.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+              }
+            } else if emptyCount > 0 && aiCount == 0 {
+              // This is a possible four-in-a-row for the opponent player
+              if col > 0 && col + 4 < board[row].count && board[row][col - 1].tile == .Empty && board[row][col + 4].tile == .Empty {
+                // This is an open-ended four-in-a-row for the opponent player
+                opponentValue += pow(100.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+              } else if opponentCount == 3 && emptyCount == 1 {
+                // This is a threat for the opponent player
+                opponentValue += pow(1000.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+              } else {
+                // This is a regular possible four-in-a-row for the opponent player
+                opponentValue += pow(10.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+              }
+            }
+          }
+
+          // Check vertical four-in-a-rows
+          if row + 3 < board.count {
+            var aiCount = 0 // The number of AI tiles in the four-in-a-row
+            var opponentCount = 0 // The number of opponent tiles in the four-in-a-row
+            var emptyCount = 0 // The number of empty tiles in the four-in-a-row
+
+            for i in row..<(row + 4) {
+              let t = board[i][col].tile
+              if t == aiTile {
+                aiCount += 1
+              } else if t == opponentTile {
+                opponentCount += 1
+              } else {
+                emptyCount += 1
+              }
+            }
+
+            if emptyCount > 0 && opponentCount == 0 {
+              // This is a possible four-in-a-row for the AI player
+              if row > 0 && row + 4 < board.count && board[row - 1][col].tile == .Empty && board[row + 4][col].tile == .Empty {
+                // This is an open-ended four-in-a-row for the AI player
+                aiValue += pow(100.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+              } else if aiCount == 3 && emptyCount == 1 {
+                // This is a threat for the AI player
+                aiValue += pow(1000.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+              } else {
+                // This is a regular possible four-in-a-row for the AI player
+                aiValue += pow(10.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+              }
+            } else if emptyCount > 0 && aiCount == 0 {
+              // This is a possible four-in-a-row for the opponent player
+              if row > 0 && row + 4 < board.count && board[row - 1][col].tile == .Empty && board[row + 4][col].tile == .Empty {
+                // This is an open-ended four-in-a-row for the opponent player
+                opponentValue += pow(100.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+              } else if opponentCount == 3 && emptyCount == 1 {
+                         // This is a threat for the opponent player
+                         opponentValue += pow(1000.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       } else {
+                         // This is a regular possible four-in-a-row for the opponent player
+                         opponentValue += pow(10.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       }
+                     }
+                   }
+
+                   // Check diagonal four-in-a-rows (bottom-left to top-right)
+                   if row + 3 < board.count && col + 3 < board[row].count {
+                     var aiCount = 0 // The number of AI tiles in the four-in-a-row
+                     var opponentCount = 0 // The number of opponent tiles in the four-in-a-row
+                     var emptyCount = 0 // The number of empty tiles in the four-in-a-row
+
+                     for i in 0..<4 {
+                       let t = board[row + i][col + i].tile
+                       if t == aiTile {
+                         aiCount += 1
+                       } else if t == opponentTile {
+                         opponentCount += 1
+                       } else {
+                         emptyCount += 1
+                       }
+                     }
+
+                     if emptyCount > 0 && opponentCount == 0 {
+                       // This is a possible four-in-a-row for the AI player
+                       if row > 0 && col > 0 && row + 4 < board.count && col + 4 < board[row].count && board[row - 1][col - 1].tile == .Empty && board[row + 4][col + 4].tile == .Empty {
+                         // This is an open-ended four-in-a-row for the AI player
+                         aiValue += pow(100.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+                       } else if aiCount == 3 && emptyCount == 1 {
+                         // This is a threat for the AI player
+                         aiValue += pow(1000.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+                       } else {
+                         // This is a regular possible four-in-a-row for the AI player
+                         aiValue += pow(10.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+                       }
+                     } else if emptyCount > 0 && aiCount == 0 {
+                       // This is a possible four-in-a-row for the opponent player
+                       if row > 0 && col > 0 && row + 4 < board.count && col + 4 < board[row].count && board[row - 1][col - 1].tile == .Empty && board[row + 4][col + 4].tile == .Empty {
+                         // This is an open-ended four-in-a-row for the opponent player
+                         opponentValue += pow(100.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       } else if opponentCount == 3 && emptyCount == 1 {
+                         // This is a threat for the opponent player
+                         opponentValue += pow(1000.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       } else {
+                         // This is a regular possible four-in-a-row for the opponent player
+                         opponentValue += pow(10.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       }
+                     }
+                   }
+
+                   // Check diagonal four-in-a-rows (top-left to bottom-right)
+                   if row + 3 < board.count && col - 3 >= 0 {
+                     var aiCount = 0 // The number of AI tiles in the four-in-a-row
+                     var opponentCount = 0 // The number of opponent tiles in the four-in-a-row
+                     var emptyCount = 0 // The number of empty tiles in the four-in-a-row
+
+                     for i in 0..<4 {
+                       let t = board[row + i][col - i].tile
+                       if t == aiTile {
+                         aiCount += 1
+                       } else if t == opponentTile {
+                         opponentCount += 1
+                       } else {
+                         emptyCount += 1
+                       }
+                     }
+
+                     if emptyCount > 0 && opponentCount == 0 {
+                       // This is a possible four-in-a-row for the AI player
+                       if row > 0 && col + 3 < board[row].count && row + 4 < board.count && col - 4 >= 0 && board[row - 1][col + 1].tile == .Empty && board[row + 4][col - 4].tile == .Empty {
+                         // This is an open-ended four-in-a-row for the AI player
+                         aiValue += pow(100.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+                       } else if aiCount == 3 && emptyCount == 1 {
+                         // This is a threat for the AI player
+                         aiValue += pow(1000.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+                       } else {
+                         // This is a regular possible four-in-a-row for the AI player
+                         aiValue += pow(10.0, Double(aiCount)) / pow(10.0, Double(emptyCount)) // The value increases with more AI tiles and decreases with more empty tiles
+                       }
+                     } else if emptyCount > 0 && aiCount == 0 {
+                       // This is a possible four-in-a-row for the opponent player
+                       if row > 0 && col + 3 < board[row].count && row + 4 < board.count && col - 4 >= 0 && board[row - 1][col + 1].tile == .Empty && board[row + 4][col - 4].tile == .Empty {
+                         // This is an open-ended four-in-a-row for the opponent player
+                         opponentValue += pow(100.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       } else if opponentCount == 3 && emptyCount == 1 {
+                         // This is a threat for the opponent player
+                         opponentValue += pow(1000.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       } else {
+                         // This is a regular possible four-in-a-row for the opponent player
+                         opponentValue += pow(10.0, Double(opponentCount)) / pow(10.0, Double(emptyCount)) // The value increases with more opponent tiles and decreases with more empty tiles
+                       }
+                     }
+                   }
+                 }
+               }
+
+               let totalValue = aiValue - opponentValue // The total value of the game state
+
+               print("Total Value: \(totalValue)")
+
+               if totalValue >= pow(10.0, Double(4)) {
+                 return 1.0 // AI has a guaranteed win
+               } else if totalValue <= -pow(10.0, Double(4)) {
+                 return -1.0 // Opponent has a guaranteed win
+               } else {
+                 return Float(totalValue) / Float(pow(10.0, Double(4))) // Normalize the value to be between -1 and 1
+               }
+             }
+
+         }

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 extension FourInARowViewController {
     
     func writeFourInARowData(wins: Int, losses: Int, draws: Int, userID: String, total: Int, board: [[BoardItem]]) {
@@ -24,13 +25,9 @@ extension FourInARowViewController {
             
         let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(selectedDifficulty!)")
         let newDocRef = collectionRef.document()
-        
-        // Convert board into an array of dictionaries
         let boardDict = board.map { row in
-            row.reduce(into: [:]) { dict, item in
-                dict[String(item.column)] = item.tile.rawValue
-            }
-        }
+             ["row": row.map { item in item.toDictionary() }]
+         }
         
         let data = [
             "id": newDocRef.documentID,

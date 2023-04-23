@@ -234,9 +234,9 @@
 			children = (
 				80B4596129AC304400CD0EBE /* AnalysisViewController.swift */,
 				80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */,
+				8043605129F43C820089CABF /* DetailedC4ViewController.swift */,
 				80CB3D3B29EE1C9200D4A54A /* DetailedSudokuViewController.swift */,
 				80419EF429F06BFC00911791 /* DetailedTTTViewController.swift */,
-				8043605129F43C820089CABF /* DetailedC4ViewController.swift */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";

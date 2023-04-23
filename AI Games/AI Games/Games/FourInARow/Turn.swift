@@ -18,8 +18,12 @@ func toggleTurn(_ turnImage: UIImageView)
 
 func currentTurnTile() -> Tile
 {
+    
     return yellowTurn ? Tile.Yellow : Tile.Red
+    
 }
+
+
 
 func currentTurnColor() -> UIColor
 {

@@ -42,9 +42,24 @@ struct FourInARowGame {
 }
 
 extension AnalysisViewController {
+    
+    func boardItem(from dictionary: [String: Any]) -> BoardItem? {
+        guard let indexPathRow = dictionary["indexPathRow"] as? Int,
+              let indexPathSection = dictionary["indexPathSection"] as? Int,
+              let tileRawValue = dictionary["tile"] as? String,
+              let tile = Tile(rawValue: tileRawValue) else {
+            return nil
+        }
+        
+        var boardItem = BoardItem()
+        boardItem.indexPath = IndexPath(row: indexPathRow, section: indexPathSection)
+        boardItem.tile = tile
+        return boardItem
+    }
+    
     func fetchConnect4GamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([FourInARowGame]) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(difficulty)")
-        collectionRef.order(by: "total", descending: false).getDocuments { snapshot, error in
+        collectionRef.order(by: "total", descending: false).getDocuments { [self] snapshot, error in
             if let error = error {
                 print("Error fetching Tic Tac Toe games for wins: \(error)")
                 completionHandler([])
@@ -62,20 +77,11 @@ extension AnalysisViewController {
                 let draw = data["draw"] as! Int
                 let total = data["total"] as! Int
                 let boardData = data["board"] as! [[String: Any]]
-                
-                var board = [[BoardItem]]()
-                       for row in boardData {
-                           var newRow = [BoardItem]()
-                           for (column, tileValue) in row {
-                               let indexPath = IndexPath(row: Int(column)!, section: 0)
-                               let tile = Tile(rawValue: tileValue as! String)!
-                               let boardItem = BoardItem(indexPath: indexPath, tile: tile)
-                               newRow.append(boardItem)
-                           }
-                           board.append(newRow)
-                       }
-
-
+                let board = boardData.compactMap { rowDict in
+                                    (rowDict["row"] as? [[String: Any]])?.compactMap { itemDict in
+                                        boardItem(from: itemDict)
+                                    }
+                                }
                 let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, board: board)
                 games.append(game)
             }

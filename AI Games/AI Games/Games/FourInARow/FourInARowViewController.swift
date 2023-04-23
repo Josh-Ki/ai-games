@@ -272,8 +272,8 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
 
 //            if let bestMove = bestMove {
     
-//            let column = mctsAI.findBestMove(gameState: gameState).column
-            let column = 0
+            let column = mctsAI.findBestMove(gameState: gameState).column
+//            let column = 0
                 print(column)
                 guard var boardItem = getLowestEmpty(column),
                       let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else { return }
