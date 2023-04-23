@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseCore
+import FirebaseAuth
+import Firebase
 
 // https://stackoverflow.com/questions/31662155/how-to-change-uicollectionviewcell-size-programmatically-in-swift
 class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -18,7 +22,9 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     var selectedDifficulty: String?
     var gomokuAILevel = 0 // difficulty of AI (easy, medium, hard)
     var lastMove = -1
-    
+    let database = Firestore.firestore()
+    var gomokuData = GomokuData()
+    var gomokuEnd = GomokuEnd.draw
     // https://stackoverflow.com/questions/53768438/collectionview-cell-width-not-changing-for-different-nib
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 100
@@ -46,6 +52,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
             foreColours[lastMove] = UIColor.black
             gomokuView.reloadItems(at: [IndexPath(item: lastMove, section: 0)])
         }
+
         
         if (!gameOver) {
             let i = indexPath.row
@@ -64,11 +71,33 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 let s = toGomokuGameState()
                 whatsNext(gameState: s)
+                if gameOver {
+                    if selectedDifficulty == "Easy"{
+                        gomokuData.easyWins += 1
+                        gomokuData.totalEasy += 1
+                        gomokuEnd = GomokuEnd.win
+                        writeGomokuData(wins: gomokuData.easyWins, losses: gomokuData.easyLoss, draws: gomokuData.easyDraw, userID: userID, total: gomokuData.totalEasy)
+                    }
+                    else if selectedDifficulty == "Med"{
+                        gomokuData.medWins += 1
+                        gomokuData.totalMed += 1
+                        gomokuEnd = GomokuEnd.win
+                        writeGomokuData(wins: gomokuData.medWins, losses: gomokuData.medLoss, draws: gomokuData.medDraw, userID: userID, total: gomokuData.totalMed)
+                    }
+                    else if selectedDifficulty == "Hard"{
+                        gomokuData.hardWins += 1
+                        gomokuData.totalHard += 1
+                        gomokuEnd = GomokuEnd.win
+                        writeGomokuData(wins: gomokuData.hardWins, losses: gomokuData.hardLoss, draws: gomokuData.hardDraw, userID: userID, total: gomokuData.totalHard)
+                    }
+                    
+                }
                 if (s.state == -2) {
                     AIPlays()
                 }
             }
         }
+
     }
     
     func whatsNext(gameState: GomokuGameState) {
@@ -77,6 +106,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         } else {
             var msg = ""
             if (gameState.state == 1) {
+                print("USER WINS")
                 msg = "\(bw(abbr: gameState.me)) WINS"
             } else if (gameState.state == -1) {
                 msg = "\(bw(abbr: gameState.you)) WINS"
@@ -130,7 +160,26 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 let s = toGomokuGameState()
                 whatsNext(gameState: s)
-                
+                if gameOver {
+                    if selectedDifficulty == "Easy"{
+                        gomokuData.easyLoss += 1
+                        gomokuData.totalEasy += 1
+                        gomokuEnd = GomokuEnd.lose
+                        writeGomokuData(wins: gomokuData.easyWins, losses: gomokuData.easyLoss, draws: gomokuData.easyDraw, userID: userID, total: gomokuData.totalEasy)
+                    }
+                    else if selectedDifficulty == "Med"{
+                        gomokuData.medLoss += 1
+                        gomokuData.totalMed += 1
+                        gomokuEnd = GomokuEnd.lose
+                        writeGomokuData(wins: gomokuData.medWins, losses: gomokuData.medLoss, draws: gomokuData.medDraw, userID: userID, total: gomokuData.totalMed)
+                    }
+                    else if selectedDifficulty == "Hard"{
+                        gomokuData.hardLoss += 1
+                        gomokuData.totalHard += 1
+                        gomokuEnd = GomokuEnd.lose
+                        writeGomokuData(wins: gomokuData.hardWins, losses: gomokuData.hardLoss, draws: gomokuData.hardDraw, userID: userID, total: gomokuData.totalHard)
+                    }
+                }
                 manPlay.text = "Man plays \(bw(abbr: turn))"
                 gomokuView.isUserInteractionEnabled = true
             }
@@ -152,8 +201,98 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
-
+        
+        switch selectedDifficulty {
+        case "Easy":
+            
+            gomokuGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.gomokuData.easyWins = highestWins
+                    print("Highest number of wins for easy for gomoku: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for easy for gomoku")
+                }
+                if let highestDraw = highestDraw {
+                    self.gomokuData.easyDraw = highestDraw
+                    print("Highest number of draw for easy: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for easy")
+                }
+                if let highestLoss = highestLoss {
+                    self.gomokuData.easyLoss = highestLoss
+                    print("Highest number of loss for easy for gomoku: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of loss for easy for gomoku")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.gomokuData.totalEasy = highestTotal
+                    print("total number of games is for gomoku \(highestTotal)")
+                }
+                
+            }
+        case "Med":
+            
+            gomokuGetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.gomokuData.medWins = highestWins
+                    print("Highest number of wins for easy for gomoku: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for med for gomoku")
+                }
+                if let highestDraw = highestDraw {
+                    self.gomokuData.medDraw = highestDraw
+                    print("Highest number of draws for med for gomoku: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for med for gomoku")
+                }
+                if let highestLoss = highestLoss {
+                    self.gomokuData.medLoss = highestLoss
+                    print("Highest number of loss for med for gomoku: \(highestLoss)")
+                } else {
+                    print("Failed to get highest number of wins for med")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.gomokuData.totalMed = highestTotal
+                    print("total number of games is \(highestTotal) for gomoku")
+                }
+                
+            }
+        case "Hard":
+            
+            gomokuGetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                if let highestWins = highestWins {
+                    self.gomokuData.hardWins = highestWins
+                    print("Highest number of wins for hard for gomoku: \(highestWins)")
+                } else {
+                    print("Failed to get highest number of wins for hard")
+                }
+                if let highestDraw = highestDraw {
+                    self.gomokuData.hardDraw = highestDraw
+                    print("Highest number of draws for hard for gomoku: \(highestDraw)")
+                } else {
+                    print("Failed to get highest number of draw for hard")
+                }
+                if let highestLoss = highestLoss {
+                    self.gomokuData.hardLoss = highestLoss
+                    print("Highest number of loss for hard: \(highestLoss) for gomoku")
+                } else {
+                    print("Failed to get highest number of loss for hard for gomoku")
+                }
+                
+                if let highestTotal = highestTotal {
+                    self.gomokuData.totalHard = highestTotal
+                    print("total number of games is \(highestTotal) for gomoku")
+                }
+                
+            }
+        default:
+            print("Defaulted")
+            
+        }
         // Do any additional setup after loading the view.
         layout()
         

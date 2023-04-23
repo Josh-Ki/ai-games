@@ -129,6 +129,7 @@ class GameSelectionViewController: UIViewController {
         
         sudokuBoardViewController.checkButton.isHidden = true
         sudokuBoardViewController.hintButton.isHidden = true
+        sudokuBoardViewController.deleteButton.isHidden = true
     }
     
     

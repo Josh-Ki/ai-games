@@ -38,6 +38,9 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     var c4EasyGames: [FourInARowGame] = []
     var c4MedGames: [FourInARowGame] = []
     var c4HardGames: [FourInARowGame] = []
+    var gomokuEasyGames: [GomokuGame] = []
+    var gomokuMedGames: [GomokuGame] = []
+    var gomokuHardGames: [GomokuGame] = []
     
     func animateButton(button: UIButton){
         UIView.animate(withDuration: 0.4, animations: {
@@ -64,6 +67,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
         hardTableView.isHidden = false
         easyTableView.reloadData()
         medTableView.reloadData()
+        hardTableView.reloadData()
     }
     @IBAction func gomokuButtonPressed(_ sender: Any) {
         selectedGame = .gomoku
@@ -80,6 +84,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
         hardTableView.isHidden = false
         easyTableView.reloadData()
         medTableView.reloadData()
+        hardTableView.reloadData()
     }
     
     
@@ -121,43 +126,35 @@ animateButton(button: tictactoeButton)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tableView {
-        case easyTableView:
-            if selectedGame == .sudoku {
-                return easyGames.count
-            }
-            if selectedGame == .ttt {
-                return tttEasyGames.count
-            }
-            if selectedGame == .c4 {
-                return c4EasyGames.count
-            }
+        switch (selectedGame, tableView) {
+        case (.sudoku, easyTableView):
             return easyGames.count
-        case medTableView:
-            if selectedGame == .sudoku {
-                return medGames.count
-            }
-            if selectedGame == .ttt {
-                return tttMedGames.count
-            }
-            if selectedGame == .c4 {
-                return c4MedGames.count
-            }
+        case (.sudoku, medTableView):
             return medGames.count
-        case hardTableView:
-            if selectedGame == .sudoku {
-                return hardGames.count
-            }
-            if selectedGame == .ttt {
-                return tttHardGames.count
-            }
-            if selectedGame == .c4 {
-                return c4HardGames.count
-            }
+        case (.sudoku, hardTableView):
             return hardGames.count
+        case (.ttt, easyTableView):
+            return tttEasyGames.count
+        case (.ttt, medTableView):
+            return tttMedGames.count
+        case (.ttt, hardTableView):
+            return tttHardGames.count
+        case (.c4, easyTableView):
+            return c4EasyGames.count
+        case (.c4, medTableView):
+            return c4MedGames.count
+        case (.c4, hardTableView):
+            return c4HardGames.count
+        case (.gomoku, easyTableView):
+            return gomokuEasyGames.count
+        case (.gomoku, medTableView):
+            return gomokuMedGames.count
+        case (.gomoku, hardTableView):
+            return gomokuHardGames.count
         default:
             return 0
         }
+
     }
     private func customizeButton(_ button: UIButton) {
         button.layer.cornerRadius = 20.0
@@ -262,6 +259,49 @@ animateButton(button: tictactoeButton)
             }
             else if selectedGame == .c4 {
                 let game = c4EasyGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.total)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
+                let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                if game.gameFinished == "Win"{
+                    stackView.addArrangedSubview(checkmarkImageView)
+                }
+                if game.gameFinished == "Loss" {
+                    stackView.addArrangedSubview(xImageView)
+                }
+                if game.gameFinished == "Draw"{
+                    stackView.addArrangedSubview(catImageView)
+                }
+                
+                
+
+                
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+                
+            }
+            else if selectedGame == .gomoku {
+                let game = gomokuEasyGames[indexPath.row]
                 let stackView = UIStackView()
                 stackView.axis = .horizontal
                 stackView.alignment = .center
@@ -433,6 +473,49 @@ animateButton(button: tictactoeButton)
                 ])
                 
             }
+            else if selectedGame == .gomoku {
+                let game = gomokuMedGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.total)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
+                let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                if game.gameFinished == "Win"{
+                    stackView.addArrangedSubview(checkmarkImageView)
+                }
+                if game.gameFinished == "Loss" {
+                    stackView.addArrangedSubview(xImageView)
+                }
+                if game.gameFinished == "Draw"{
+                    stackView.addArrangedSubview(catImageView)
+                }
+                
+                
+
+                
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+                
+            }
         case hardTableView:
             for view in cell.contentView.subviews {
                 view.removeFromSuperview()
@@ -548,6 +631,49 @@ animateButton(button: tictactoeButton)
                 }
                 
 
+                // Configure cell with stack view
+                cell.contentView.addSubview(stackView)
+                stackView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    stackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 8),
+                    stackView.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -8),
+                ])
+                
+            }
+            else if selectedGame == .gomoku {
+                let game = gomokuHardGames[indexPath.row]
+                let stackView = UIStackView()
+                stackView.axis = .horizontal
+                stackView.alignment = .center
+                stackView.distribution = .equalCentering
+                stackView.spacing = 8
+                
+                // Add game number label to stack view
+                let gameNumberLabel = UILabel()
+                gameNumberLabel.font = UIFont(name: "Chalkduster", size: 20)
+                gameNumberLabel.text = "Game \(game.total)"
+                stackView.addArrangedSubview(gameNumberLabel)
+                
+                // Add checkmark to stack view
+                let xImageView = UIImageView(image: UIImage(systemName: "xmark"))
+                let catImageView = UIImageView(image: UIImage(systemName: "cat"))
+                let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+                checkmarkImageView.tintColor = .green
+                if game.gameFinished == "Win"{
+                    stackView.addArrangedSubview(checkmarkImageView)
+                }
+                if game.gameFinished == "Loss" {
+                    stackView.addArrangedSubview(xImageView)
+                }
+                if game.gameFinished == "Draw"{
+                    stackView.addArrangedSubview(catImageView)
+                }
+                
+                
+
+                
                 // Configure cell with stack view
                 cell.contentView.addSubview(stackView)
                 stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -727,6 +853,27 @@ animateButton(button: tictactoeButton)
                     self.c4HardGames = games
                     DispatchQueue.main.async {
                         self.hardTableView.reloadData()
+                    }
+                }
+                fetchGomokuGamesForWins(userID: userID!, difficulty: "Easy") { games in
+                    self.gomokuEasyGames = games
+                    
+                    DispatchQueue.main.async {
+                        self.easyTableView.reloadData()
+                    }
+                }
+                fetchGomokuGamesForWins(userID: userID!, difficulty: "Med") { games in
+                    self.gomokuMedGames = games
+                    
+                    DispatchQueue.main.async {
+                        self.easyTableView.reloadData()
+                    }
+                }
+                fetchGomokuGamesForWins(userID: userID!, difficulty: "Hard") { games in
+                    self.gomokuHardGames = games
+                    
+                    DispatchQueue.main.async {
+                        self.easyTableView.reloadData()
                     }
                 }
                 

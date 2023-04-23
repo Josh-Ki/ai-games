@@ -21,9 +21,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>CFBundleIdentifier</key>
-	<string></string>
-	<key>NSCameraUsageDescription</key>
-	<string>Access</string>
 </dict>
 </plist>

@@ -41,7 +41,45 @@ struct FourInARowGame {
     let board : [[BoardItem]]
 }
 
+struct GomokuGame {
+    let id: String
+    let wins: Int
+    let lose: Int
+    let draw: Int
+    let total: Int
+    let gameFinished: String
+}
+
+
 extension AnalysisViewController {
+    
+    func fetchGomokuGamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([GomokuGame]) -> Void) {
+        let collectionRef = database.collection("/users/\(userID)/gomoku/difficulty/\(difficulty)")
+        collectionRef.order(by: "total", descending: false).getDocuments { [self] snapshot, error in
+            if let error = error {
+                print("Error fetching gomoku games for wins: \(error)")
+                completionHandler([])
+                return
+            }
+            
+            var games: [GomokuGame] = []
+            
+            for doc in snapshot!.documents {
+                let data = doc.data()
+                let id = data["id"] as! String
+                
+                let wins = data["wins"] as! Int
+                let lose = data["losses"] as! Int
+                let draw = data["draw"] as! Int
+                let total = data["total"] as! Int
+                let gameFinished = data["gameFinished"] as! String
+                let game = GomokuGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished)
+                games.append(game)
+            }
+            
+            completionHandler(games)
+        }
+    }
     
     func boardItem(from dictionary: [String: Any]) -> BoardItem? {
         guard let indexPathRow = dictionary["indexPathRow"] as? Int,

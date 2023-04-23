@@ -16,7 +16,6 @@ struct GomokuGameState {
     var heuristics: (Int, Int) = (0, 0) // «my» & «your» heuristic scores
     var state: Int = -2 // standardised states: win (1), draw (0), lose (-1) & incomplete (-2)
     var winSeq: [Int] = []
-    
     init(gameboard: [String], isBlack: Bool) {
         self.gameboard = gameboard
         
