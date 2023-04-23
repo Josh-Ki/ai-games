@@ -71,7 +71,7 @@ class GameSelectionViewController: UIViewController {
     @IBAction func infoButtonPressed(_ sender: Any) {
         // Create the alert controller
         print("pressed")
-        let alertController = UIAlertController(title: "Welcome to boredAI games", message: "Our app lets you play a variety of board games against an AI opponent. To get started, simply click on the game you want to play and choose a difficulty level (Easy, Medium, or Hard). Once you've made your selection, hit play to begin the game. To track your progress and see how you're improving, make sure to sign up and check out the Analysis tab. Here, you can view your statistics and see how you're doing over time. Don't forget to sign up first so that your progress can be saved! Thanks for playing boredAI games - we hope you have a great time!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Welcome to boredAI games", message: "Our app lets you play a variety of board games against an AI opponent. To get started, simply click on the game you want to play and choose a difficulty level (Easy, Medium, or Hard). Once you've made your selection, hit play to begin the game. To track your progress and see how you're improving, make sure to sign up and check out the Analysis tab. Here, you can view your statistics and see how you're doing over time. Don't forget to head over to the analysis tab to sign up first so that your progress can be saved", preferredStyle: .alert)
         
         // Add the close action
         let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
@@ -130,6 +130,16 @@ class GameSelectionViewController: UIViewController {
         sudokuBoardViewController.checkButton.isHidden = true
         sudokuBoardViewController.hintButton.isHidden = true
         sudokuBoardViewController.deleteButton.isHidden = true
+        sudokuBoardViewController.label1.isHidden = true
+        sudokuBoardViewController.label2.isHidden = true
+        sudokuBoardViewController.label3.isHidden = true
+        sudokuBoardViewController.label4.isHidden = true
+        sudokuBoardViewController.label5.isHidden = true
+        sudokuBoardViewController.label6.isHidden = true
+        sudokuBoardViewController.label7.isHidden = true
+        sudokuBoardViewController.label8.isHidden = true
+        sudokuBoardViewController.label9.isHidden = true
+        sudokuBoardViewController.infoButton.isHidden = true
     }
     
     

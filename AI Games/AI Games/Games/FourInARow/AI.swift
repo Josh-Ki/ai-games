@@ -162,7 +162,7 @@ class GameState {
     func lose() -> Bool {
         // Check if the opponent has won
         
-        let opponentTile = redTurn ? Tile.Yellow : Tile.Red
+//        let opponentTile = redTurn ? Tile.Yellow : Tile.Red
         for row in 0..<board.count {
             for col in 0..<board[row].count {
                 let tile = board[row][col].tile
@@ -204,11 +204,12 @@ class GameState {
 }
 
 class MCTSAI {
-    let maxIterations = 100 // Maximum number of iterations for MCTS algorithm
+    var maxIterations = 100 // Maximum number of iterations for MCTS algorithm
     let explorationFactor: Float = 1.7 // Exploration factor for UCT algorithm
     var transpositionTable: [String: Node] = [:] // Transposition table to store previously evaluated game states
-    
+    var maxDepth = 3
     func findBestMove(gameState: GameState) -> Move {
+        print(maxDepth)
         // Create the root node of the search tree
         let rootNode = getNode(for: gameState)
         var bestMove: Move!
@@ -262,7 +263,7 @@ class MCTSAI {
         
         if selectedChild.isLeaf() {
             // Expand the selected child node
-            expand(node: selectedChild)
+            _ = expand(node: selectedChild)
             return selectedChild
         }
         
@@ -333,7 +334,7 @@ class MCTSAI {
       
       // Use DispatchQueue.global to run the simulation on a background queue
       DispatchQueue.global().async {
-        simulationResult = self.simulateRandomPlay(gameState: randomNode.gameState, maxDepth: 15)
+          simulationResult = self.simulateRandomPlay(gameState: randomNode.gameState, maxDepth: self.maxDepth)
         randomNode.updateValue(result: simulationResult)
         semaphore.signal()
       }
@@ -452,7 +453,6 @@ class MCTSAI {
       // Loop through all rows, columns, and diagonals and count the number of possible four-in-a-rows, open-ended four-in-a-rows, and threats for each player
       for row in 0..<board.count {
         for col in 0..<board[row].count {
-          let tile = board[row][col].tile
 
           // Check horizontal four-in-a-rows
           if col + 3 < board[row].count {

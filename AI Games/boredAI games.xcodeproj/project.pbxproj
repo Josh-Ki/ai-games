@@ -52,7 +52,6 @@
 		E56184BA29906C39003E2B05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B929906C39003E2B05 /* ViewController.swift */; };
 		E56184BD29906C39003E2B05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E56184BB29906C39003E2B05 /* Main.storyboard */; };
 		E56184BF29906C3B003E2B05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56184BE29906C3B003E2B05 /* Assets.xcassets */; };
-		E56184C229906C3B003E2B05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E56184C029906C3B003E2B05 /* LaunchScreen.storyboard */; };
 		E56184CD29906C3C003E2B05 /* AI_GamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */; };
 		E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */; };
 		E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */; };
@@ -113,17 +112,16 @@
 		80E6B09129F5A4D500772542 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		80E7047E29F5959D00AAF07B /* GomokuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuExtension.swift; sourceTree = "<group>"; };
 		80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAnalysis.swift; sourceTree = "<group>"; };
-		E56184B229906C39003E2B05 /* AI Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AI Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56184B229906C39003E2B05 /* boredAI games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "boredAI games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184B529906C39003E2B05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E56184B729906C39003E2B05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E56184B929906C39003E2B05 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E56184BC29906C39003E2B05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E56184BE29906C3B003E2B05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E56184C129906C3B003E2B05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E56184C329906C3B003E2B05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E56184C829906C3C003E2B05 /* AI GamesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI GamesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56184C829906C3C003E2B05 /* boredAI gamesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "boredAI gamesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesTests.swift; sourceTree = "<group>"; };
-		E56184D229906C3C003E2B05 /* AI GamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AI GamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56184D229906C3C003E2B05 /* boredAI gamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "boredAI gamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITests.swift; sourceTree = "<group>"; };
 		E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E59F7E9B29C8B325002F4C1E /* GomokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuViewController.swift; sourceTree = "<group>"; };
@@ -267,9 +265,9 @@
 		E56184B329906C39003E2B05 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E56184B229906C39003E2B05 /* AI Games.app */,
-				E56184C829906C3C003E2B05 /* AI GamesTests.xctest */,
-				E56184D229906C3C003E2B05 /* AI GamesUITests.xctest */,
+				E56184B229906C39003E2B05 /* boredAI games.app */,
+				E56184C829906C3C003E2B05 /* boredAI gamesTests.xctest */,
+				E56184D229906C3C003E2B05 /* boredAI gamesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -290,7 +288,6 @@
 				E56184BB29906C39003E2B05 /* Main.storyboard */,
 				80E6B09129F5A4D500772542 /* Launch Screen.storyboard */,
 				E56184BE29906C3B003E2B05 /* Assets.xcassets */,
-				E56184C029906C3B003E2B05 /* LaunchScreen.storyboard */,
 				E56184C329906C3B003E2B05 /* Info.plist */,
 			);
 			path = "AI Games";
@@ -341,9 +338,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E56184B129906C39003E2B05 /* AI Games */ = {
+		E56184B129906C39003E2B05 /* boredAI games */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E56184DC29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "AI Games" */;
+			buildConfigurationList = E56184DC29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI games" */;
 			buildPhases = (
 				E56184AE29906C39003E2B05 /* Sources */,
 				E56184AF29906C39003E2B05 /* Frameworks */,
@@ -353,7 +350,7 @@
 			);
 			dependencies = (
 			);
-			name = "AI Games";
+			name = "boredAI games";
 			packageProductDependencies = (
 				80179F8929DA8F89006C58B8 /* FirebaseAuth */,
 				80179F8B29DA8F89006C58B8 /* FirebaseDatabase */,
@@ -367,12 +364,12 @@
 				80179F9B29DA8F89006C58B8 /* FirebaseStorage */,
 			);
 			productName = "AI Games";
-			productReference = E56184B229906C39003E2B05 /* AI Games.app */;
+			productReference = E56184B229906C39003E2B05 /* boredAI games.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E56184C729906C3C003E2B05 /* AI GamesTests */ = {
+		E56184C729906C3C003E2B05 /* boredAI gamesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E56184DF29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "AI GamesTests" */;
+			buildConfigurationList = E56184DF29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI gamesTests" */;
 			buildPhases = (
 				E56184C429906C3C003E2B05 /* Sources */,
 				E56184C529906C3C003E2B05 /* Frameworks */,
@@ -383,14 +380,14 @@
 			dependencies = (
 				E56184CA29906C3C003E2B05 /* PBXTargetDependency */,
 			);
-			name = "AI GamesTests";
+			name = "boredAI gamesTests";
 			productName = "AI GamesTests";
-			productReference = E56184C829906C3C003E2B05 /* AI GamesTests.xctest */;
+			productReference = E56184C829906C3C003E2B05 /* boredAI gamesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E56184D129906C3C003E2B05 /* AI GamesUITests */ = {
+		E56184D129906C3C003E2B05 /* boredAI gamesUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E56184E229906C3C003E2B05 /* Build configuration list for PBXNativeTarget "AI GamesUITests" */;
+			buildConfigurationList = E56184E229906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI gamesUITests" */;
 			buildPhases = (
 				E56184CE29906C3C003E2B05 /* Sources */,
 				E56184CF29906C3C003E2B05 /* Frameworks */,
@@ -401,9 +398,9 @@
 			dependencies = (
 				E56184D429906C3C003E2B05 /* PBXTargetDependency */,
 			);
-			name = "AI GamesUITests";
+			name = "boredAI gamesUITests";
 			productName = "AI GamesUITests";
-			productReference = E56184D229906C3C003E2B05 /* AI GamesUITests.xctest */;
+			productReference = E56184D229906C3C003E2B05 /* boredAI gamesUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -429,7 +426,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E56184AD29906C39003E2B05 /* Build configuration list for PBXProject "AI Games" */;
+			buildConfigurationList = E56184AD29906C39003E2B05 /* Build configuration list for PBXProject "boredAI games" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -445,9 +442,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E56184B129906C39003E2B05 /* AI Games */,
-				E56184C729906C3C003E2B05 /* AI GamesTests */,
-				E56184D129906C3C003E2B05 /* AI GamesUITests */,
+				E56184B129906C39003E2B05 /* boredAI games */,
+				E56184C729906C3C003E2B05 /* boredAI gamesTests */,
+				E56184D129906C3C003E2B05 /* boredAI gamesUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -458,7 +455,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				80BC469D29D16A38001B89CB /* tictactoe.jpeg in Resources */,
-				E56184C229906C3B003E2B05 /* LaunchScreen.storyboard in Resources */,
 				80BC469B29D1597C001B89CB /* sudokuimage.jpeg in Resources */,
 				80B4595F29AC148700CD0EBE /* GoogleService-Info.plist in Resources */,
 				E56184BF29906C3B003E2B05 /* Assets.xcassets in Resources */,
@@ -549,12 +545,12 @@
 /* Begin PBXTargetDependency section */
 		E56184CA29906C3C003E2B05 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E56184B129906C39003E2B05 /* AI Games */;
+			target = E56184B129906C39003E2B05 /* boredAI games */;
 			targetProxy = E56184C929906C3C003E2B05 /* PBXContainerItemProxy */;
 		};
 		E56184D429906C3C003E2B05 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E56184B129906C39003E2B05 /* AI Games */;
+			target = E56184B129906C39003E2B05 /* boredAI games */;
 			targetProxy = E56184D329906C3C003E2B05 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -566,14 +562,6 @@
 				E56184BC29906C39003E2B05 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E56184C029906C3B003E2B05 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E56184C129906C3B003E2B05 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -770,7 +758,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AI Games.app/AI Games";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/boredAI games.app/boredAI games";
 			};
 			name = Debug;
 		};
@@ -789,7 +777,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AI Games.app/AI Games";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/boredAI games.app/boredAI games";
 			};
 			name = Release;
 		};
@@ -830,7 +818,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E56184AD29906C39003E2B05 /* Build configuration list for PBXProject "AI Games" */ = {
+		E56184AD29906C39003E2B05 /* Build configuration list for PBXProject "boredAI games" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E56184DA29906C3C003E2B05 /* Debug */,
@@ -839,7 +827,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E56184DC29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "AI Games" */ = {
+		E56184DC29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI games" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E56184DD29906C3C003E2B05 /* Debug */,
@@ -848,7 +836,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E56184DF29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "AI GamesTests" */ = {
+		E56184DF29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI gamesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E56184E029906C3C003E2B05 /* Debug */,
@@ -857,7 +845,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E56184E229906C3C003E2B05 /* Build configuration list for PBXNativeTarget "AI GamesUITests" */ = {
+		E56184E229906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI gamesUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E56184E329906C3C003E2B05 /* Debug */,

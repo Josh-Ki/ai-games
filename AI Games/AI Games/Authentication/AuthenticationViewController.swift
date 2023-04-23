@@ -72,7 +72,7 @@ class AuthenticationViewController: UIViewController, UINavigationBarDelegate {
         }
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] (result, error) in
-            guard let strongSelf = self else {
+            guard self != nil else {
                 return
             }
             

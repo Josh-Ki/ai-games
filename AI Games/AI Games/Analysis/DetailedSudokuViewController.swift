@@ -46,7 +46,17 @@ class DetailedSudokuViewController: UIViewController {
         
         sudokuBoardViewController.checkButton.isHidden = true
         sudokuBoardViewController.hintButton.isHidden = true
-        
+        sudokuBoardViewController.label1.isHidden = true
+        sudokuBoardViewController.label2.isHidden = true
+        sudokuBoardViewController.label3.isHidden = true
+        sudokuBoardViewController.label4.isHidden = true
+        sudokuBoardViewController.label5.isHidden = true
+        sudokuBoardViewController.label6.isHidden = true
+        sudokuBoardViewController.label7.isHidden = true
+        sudokuBoardViewController.label8.isHidden = true
+        sudokuBoardViewController.label9.isHidden = true
+        sudokuBoardViewController.infoButton.isHidden = true
+        sudokuBoardViewController.deleteButton.isHidden = true
         
     }
     
@@ -137,7 +147,7 @@ class DetailedSudokuViewController: UIViewController {
         }
         
         // Fill the board starting from the top-left corner
-        fillBoard(0, 0)
+        _ = fillBoard(0, 0)
         
         return board
     }

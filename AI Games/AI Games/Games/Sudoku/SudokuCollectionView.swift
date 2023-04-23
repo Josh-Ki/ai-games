@@ -42,7 +42,7 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
 
         cell.label.delegate = self
         let value = sudoku.partialArray[row][col]
-        
+        cell.label.textColor = UIColor.black
         cell.label.text = "\(value == 0 ? "" : "\(value)")"
         cell.label.textAlignment = .center // center the text
         cell.label.tag = indexPath.row
@@ -68,7 +68,7 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Get the selected cell
-        let cell = collectionView.cellForItem(at: indexPath) as! SudokuCell
+//        let cell = collectionView.cellForItem(at: indexPath) as! SudokuCell
         
 
     }

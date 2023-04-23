@@ -124,14 +124,14 @@ extension SudokuViewController {
         }
         
         // Fill the board starting from the top-left corner
-        fillBoard(0, 0)
+        _ = fillBoard(0, 0)
         
         // Create a copy of the board for partially filled board
         var partialBoard = board.map { $0.map { $0 } }
         
         
         // Randomly remove cells from the board to create a partially filled board
-        var cellsToFill = sudoku.maxCellsToFill
+        let cellsToFill = sudoku.maxCellsToFill
         var cellsToBlank = 81 - cellsToFill
         
         while cellsToBlank > 0 {
@@ -149,9 +149,23 @@ extension SudokuViewController {
         guard let label = sender.view as? UILabel else {
             return
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: selectedIndexPath!) as! SudokuCell
-        let row = selectedIndexPath!.row / 9
-        let col = selectedIndexPath!.row % 9
+        guard let selectedIndexPath = selectedIndexPath else {
+            // User has not selected a cell yet
+            let alert = UIAlertController(title: "No Square Selected", message: "Please select a square before choosing a value", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            // Customize the appearance of the alert
+            alert.view.tintColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
+            alert.view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+            alert.view.layer.cornerRadius = 10
+            
+            // Present the alert controller
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: selectedIndexPath) as! SudokuCell
+        let row = selectedIndexPath.row / 9
+        let col = selectedIndexPath.row % 9
 
         cell.label.delegate = self
         

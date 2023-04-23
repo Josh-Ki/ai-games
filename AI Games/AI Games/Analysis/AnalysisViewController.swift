@@ -53,6 +53,22 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
+    @IBAction func helpButton(_ sender: Any) {
+        // Create a new alert controller with a title and message
+        let alertController = UIAlertController(title: "analysis", message: "Here you can see all the games you have played for each difficulty in Sudoku, Tic Tac Toe, Gomoku, and Connect 4. Simply click on the game button to see how it ended. For Sudoku, you can also access an additional view controller to review your game statistics and replay the game. Now you can easily track your progress and improve your gameplay.", preferredStyle: .alert)
+        
+        // Add a "Dismiss" button to the alert
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        
+        // Customize the appearance of the alert
+        alertController.view.tintColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
+        alertController.view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        alertController.view.layer.cornerRadius = 10
+        
+        // Present the alert controller
+        present(alertController, animated: true, completion: nil)
+    }
+
     @IBAction func c4Pressed(_ sender: Any) {
         selectedGame = .c4
         animateButton(button: connect4Button)
@@ -752,6 +768,7 @@ animateButton(button: tictactoeButton)
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        sudokuButtonPressed(sudokuButton ?? 0)
         customizeButton(sudokuButton)
         customizeButton(gomokuButton)
         customizeButton(tictactoeButton)
@@ -771,9 +788,6 @@ animateButton(button: tictactoeButton)
         medTableView.showsVerticalScrollIndicator = false
         hardTableView.showsVerticalScrollIndicator = false
         
-        easyTableView.isHidden = true
-        medTableView.isHidden = true
-        hardTableView.isHidden = true
         
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         

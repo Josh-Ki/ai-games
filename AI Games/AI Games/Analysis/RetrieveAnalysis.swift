@@ -55,7 +55,7 @@ extension AnalysisViewController {
     
     func fetchGomokuGamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([GomokuGame]) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/gomoku/difficulty/\(difficulty)")
-        collectionRef.order(by: "total", descending: false).getDocuments { [self] snapshot, error in
+        collectionRef.order(by: "total", descending: false).getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching gomoku games for wins: \(error)")
                 completionHandler([])

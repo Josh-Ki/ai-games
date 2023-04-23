@@ -74,7 +74,6 @@ extension FourInARowViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST c4 IS \(highestTotal)")
                         highestTotal = total
                     }
                 }
@@ -115,7 +114,6 @@ extension FourInARowViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST c4 IS \(highestTotal)")
                         highestTotal = total
                     }
                 }
@@ -157,7 +155,6 @@ extension FourInARowViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST for c4 IS \(highestTotal)")
                         highestTotal = total
                     }
                 }

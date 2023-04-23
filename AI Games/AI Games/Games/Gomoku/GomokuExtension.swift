@@ -91,7 +91,6 @@ extension GomokuViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST Gomoku IS \(highestTotal)")
                         highestTotal = total
                     }
                 }
@@ -132,7 +131,7 @@ extension GomokuViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST GOMOKU IS \(highestTotal)")
+                        
                         highestTotal = total
                     }
                 }
@@ -174,7 +173,6 @@ extension GomokuViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST for gomoku IS \(highestTotal)")
                         highestTotal = total
                     }
                 }

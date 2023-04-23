@@ -195,6 +195,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         let w = self.view.frame.size.width
         
         gomokuView.frame = CGRect(x: 10, y: 44, width: w-20, height: w+24)
+        gomokuView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         turnLabel.frame = CGRect(x: 16, y: 76+w, width: w-32, height: 30)
         manPlay.frame = CGRect(x: 16, y: 114+w, width: w-32, height: 23)
     }

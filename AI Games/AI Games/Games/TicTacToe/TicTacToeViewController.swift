@@ -475,7 +475,6 @@ extension TicTacToeViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST TIC TAC TOE IS \(highestTotal)")
                         highestTotal = total
                     }
                 }
@@ -516,7 +515,6 @@ extension TicTacToeViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST TIC TAC TOE IS \(highestTotal)")
                         highestTotal = total
                     }
                 }
@@ -558,7 +556,6 @@ extension TicTacToeViewController {
                     }
                     
                     if highestTotal == nil || total > highestTotal! {
-                        print("HIGHEST TIC TAC TOE IS \(highestTotal)")
                         highestTotal = total
                     }
                 }

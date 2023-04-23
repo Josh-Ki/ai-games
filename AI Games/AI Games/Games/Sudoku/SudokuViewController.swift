@@ -37,12 +37,27 @@ class SudokuViewController: UIViewController {
     var sudoku = Sudoku()
     var selectedDifficulty: String?
 
+    @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
 
     
     let database = Firestore.firestore()
 
 
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "sudoku", message: "Before you start, please note that you need to click on a square before choosing a number to input. To remove a value, simply click on the square and press the delete button.  If you need help, you can click the hint button to receive a value on the board. To check your solution, click the check board button. If your solution is correct, an alert will appear letting you know. If not, the board will flash red.  If you want to see which squares are correct, hold down the check board button. This will change the squares that are correct to green, and the wrong squares to red.", preferredStyle: .alert)
+        
+        // Add a "Dismiss" button to the alert
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        
+        // Customize the appearance of the alert
+        alertController.view.tintColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
+        alertController.view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        alertController.view.layer.cornerRadius = 10
+        
+        // Present the alert controller
+        present(alertController, animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -237,13 +252,22 @@ class SudokuViewController: UIViewController {
     
 
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SudokuCell", for: selectedIndexPath!) as! SudokuCell
-        let row = selectedIndexPath!.row / 9
-        let col = selectedIndexPath!.row % 9
-
+        guard let selectedIndexPath = selectedIndexPath else {
+            // User has not selected a cell yet
+            let alert = UIAlertController(title: "No Square Selected", message: "Please select a square before deleting", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        
+        let row = selectedIndexPath.row / 9
+        let col = selectedIndexPath.row % 9
+        
         sudoku.partialArray[row][col] = 0
         collectionView.reloadData()
     }
+
     
     let itemsPerRow: CGFloat = 9
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -443,8 +467,8 @@ class SudokuViewController: UIViewController {
  
     @IBAction func change(_ textField: UITextField) {
         print("WHen")
-        let row = textField.tag / 9
-        let col = textField.tag % 9
+        _ = textField.tag / 9
+        _ = textField.tag % 9
 //        if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
 //            sudoku.partialArray[row][col] = value
 //            if sudoku.partialArray[row][col] != sudoku.sudokuArray[row][col]{
@@ -458,7 +482,6 @@ class SudokuViewController: UIViewController {
 //        else {
 //            sudoku.partialArray[row][col] = 0
 //            textField.text = "df"
-//        }
     }
 
 

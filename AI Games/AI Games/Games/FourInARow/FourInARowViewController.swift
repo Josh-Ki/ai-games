@@ -24,7 +24,8 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
     var fourInARowEnd = FourInARowEnd.draw
     let database = Firestore.firestore()
     var selectedDifficulty: String?
-    
+    var maxDepth: Int = 1
+    var maxIterations: Int = 50
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -32,11 +33,12 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         resetBoard()
         print(board)
         setCellWidthHeight()
-        
+
         
         switch selectedDifficulty {
         case "Easy":
-            
+            maxDepth = 3
+            maxIterations = 50
             c4GetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                 if let highestWins = highestWins {
                     self.fourInARowData.easyWins = highestWins
@@ -64,7 +66,8 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                 
             }
         case "Med":
-            
+            maxDepth = 4
+            maxIterations = 100
             c4GetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                 if let highestWins = highestWins {
                     self.fourInARowData.medWins = highestWins
@@ -92,7 +95,8 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                 
             }
         case "Hard":
-            
+            maxDepth = 5
+            maxIterations = 400
             c4GetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                 if let highestWins = highestWins {
                     self.fourInARowData.hardWins = highestWins
@@ -259,11 +263,11 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
             
             // AI player's turn
             
-            var bestMove: Move?
-            
             let gameState = GameState(board: board, redTurn: true)
 //            print(gameState.board)
             let mctsAI = MCTSAI()
+            mctsAI.maxIterations = maxIterations
+            mctsAI.maxDepth = maxDepth
 //            _  = minimax(depth: 0,
 //                                maxdepth: 5,
 //                         bestmove: &bestMove,

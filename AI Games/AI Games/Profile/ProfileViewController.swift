@@ -8,17 +8,70 @@
 import Foundation
 import UIKit
 import FirebaseAuth
+import FirebaseStorage
+import FirebaseFirestore
+import FirebaseDatabase
+
+class ImageCache {
+    private let cache = NSCache<NSString, UIImage>()
+    private var dictionary = [String: NSString]()
+    
+    func setImage(_ image: UIImage, forKey key: String) {
+        cache.setObject(image, forKey: key as NSString)
+        dictionary[key] = key as NSString
+    }
+    
+    func image(forKey key: String) -> UIImage? {
+        if let image = cache.object(forKey: key as NSString) {
+            return image
+        } else if let path = dictionary[key], let image = UIImage(contentsOfFile: path as String) {
+            cache.setObject(image, forKey: key as NSString)
+            return image
+        }
+        return nil
+    }
+}
+
+
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UITextFieldDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var logoutButton: UIButton!
     
     @IBOutlet weak var nameTextField: UITextField!
-    
+    var profile : Profile?
+    private let imageCache = ImageCache()
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+
+
+        if let imageData = UserDefaults.standard.data(forKey: "profileImage") {
+            let image = UIImage(data: imageData)
+            imageView.image = image
+        } else {
+            // If the image is not cached, download it from Firebase
+            let storageRef = Storage.storage().reference().child("profileImages/\(userID).jpg")
+
+            storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print("Error downloading profile image: \(error.localizedDescription)")
+                } else if let imageData = data {
+                    let image = UIImage(data: imageData)
+                    // Cache the image
+                    UserDefaults.standard.set(imageData, forKey: "profileImage")
+                    // Set the image view's image
+                    self.imageView.image = image
+                }
+            }
+        }
+
         nameTextField.delegate = self
-        nameTextField.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
-        
+        nameTextField.borderStyle = .line
+        nameTextField.layer.borderWidth = 1.0
+        let placeholderText = "Enter your name here!"
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        nameTextField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
+        nameTextField.layer.borderColor = UIColor.black.cgColor
+        nameTextField.textColor = UIColor.black
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         
         // Set the image view's content mode to scaleAspectFill
@@ -47,6 +100,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                // Save the text to a property of your view controller
                print(text)
                nameTextField.borderStyle = .none
+               nameTextField.layer.borderWidth = 0.0
            }
        }
        
@@ -85,7 +139,25 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // Delegate method called when the user selects an image
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            guard let imageData = image.jpegData(compressionQuality: 0.75) else {
+                print("Failed to convert image to Data.")
+                return
+            }
+            let storageRef = Storage.storage().reference().child("profileImages/\(userID).jpg")
+            storageRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error uploading profile image: \(error.localizedDescription)")
+                } else {
+                    print("Profile image uploaded successfully!")
+                }
+            }
+
+            
+
+
+
             imageView.image = image
+            
         }
         
         self.dismiss(animated: true, completion: nil)
