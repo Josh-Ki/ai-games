@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AI_Games
+@testable import boredAI_games
 
 class AI_GamesTests: XCTestCase {
     
