@@ -1,13 +1,13 @@
 //
-//  AI_GamesUITestsLaunchTests.swift
-//  AI GamesUITests
+//  boredAI_gamesUITestsLaunchTests.swift
+//  boredAI gamesUITests
 //
-//  Created by Tony Ngok on 05/02/2023.
+//  Created by Joshua Ki on 4/24/23.
 //
 
 import XCTest
 
-class AI_GamesUITestsLaunchTests: XCTestCase {
+final class boredAI_gamesUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

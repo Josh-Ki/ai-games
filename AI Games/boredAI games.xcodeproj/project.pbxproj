@@ -38,6 +38,8 @@
 		80B4595B29AC09A200CD0EBE /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */; };
 		80B4595F29AC148700CD0EBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */; };
 		80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4596129AC304400CD0EBE /* AnalysisViewController.swift */; };
+		80B91B8129F734730072B78B /* boredAI_gamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B91B8029F734730072B78B /* boredAI_gamesUITests.swift */; };
+		80B91B8329F734730072B78B /* boredAI_gamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B91B8229F734730072B78B /* boredAI_gamesUITestsLaunchTests.swift */; };
 		80BC469B29D1597C001B89CB /* sudokuimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 80BC469A29D1597C001B89CB /* sudokuimage.jpeg */; };
 		80BC469D29D16A38001B89CB /* tictactoe.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 80BC469C29D16A38001B89CB /* tictactoe.jpeg */; };
 		80C3BB4929C7CEB300A38C02 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C3BB4829C7CEB300A38C02 /* AI.swift */; };
@@ -53,8 +55,6 @@
 		E56184BD29906C39003E2B05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E56184BB29906C39003E2B05 /* Main.storyboard */; };
 		E56184BF29906C3B003E2B05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56184BE29906C3B003E2B05 /* Assets.xcassets */; };
 		E56184CD29906C3C003E2B05 /* AI_GamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */; };
-		E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */; };
-		E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */; };
 		E59F7E9C29C8B325002F4C1E /* GomokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59F7E9B29C8B325002F4C1E /* GomokuViewController.swift */; };
 		E59F8D0229EDAC3700B92812 /* GomokuHeuristics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59F8D0129EDAC3700B92812 /* GomokuHeuristics.swift */; };
 		E5A1F27A29C94BD400AE1834 /* GomokuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A1F27929C94BD400AE1834 /* GomokuCell.swift */; };
@@ -65,14 +65,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E56184C929906C3C003E2B05 /* PBXContainerItemProxy */ = {
+		80B91B8429F734730072B78B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E56184AA29906C39003E2B05 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E56184B129906C39003E2B05;
-			remoteInfo = "AI Games";
+			remoteInfo = "boredAI games";
 		};
-		E56184D329906C3C003E2B05 /* PBXContainerItemProxy */ = {
+		E56184C929906C3C003E2B05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E56184AA29906C39003E2B05 /* Project object */;
 			proxyType = 1;
@@ -103,6 +103,9 @@
 		80B4595A29AC09A200CD0EBE /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		80B4595E29AC148700CD0EBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80B4596129AC304400CD0EBE /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
+		80B91B7E29F734730072B78B /* boredAI gamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "boredAI gamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		80B91B8029F734730072B78B /* boredAI_gamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boredAI_gamesUITests.swift; sourceTree = "<group>"; };
+		80B91B8229F734730072B78B /* boredAI_gamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boredAI_gamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		80BC469A29D1597C001B89CB /* sudokuimage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sudokuimage.jpeg; sourceTree = "<group>"; };
 		80BC469C29D16A38001B89CB /* tictactoe.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tictactoe.jpeg; sourceTree = "<group>"; };
 		80C3BB4829C7CEB300A38C02 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
@@ -121,9 +124,6 @@
 		E56184C329906C3B003E2B05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E56184C829906C3C003E2B05 /* boredAI gamesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "boredAI gamesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesTests.swift; sourceTree = "<group>"; };
-		E56184D229906C3C003E2B05 /* boredAI gamesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "boredAI gamesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITests.swift; sourceTree = "<group>"; };
-		E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_GamesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E59F7E9B29C8B325002F4C1E /* GomokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuViewController.swift; sourceTree = "<group>"; };
 		E59F8D0129EDAC3700B92812 /* GomokuHeuristics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuHeuristics.swift; sourceTree = "<group>"; };
 		E5A1F27929C94BD400AE1834 /* GomokuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuCell.swift; sourceTree = "<group>"; };
@@ -134,6 +134,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		80B91B7B29F734730072B78B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E56184AF29906C39003E2B05 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,13 +159,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E56184C529906C3C003E2B05 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E56184CF29906C3C003E2B05 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,6 +243,15 @@
 			path = Analysis;
 			sourceTree = "<group>";
 		};
+		80B91B7F29F734730072B78B /* boredAI gamesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				80B91B8029F734730072B78B /* boredAI_gamesUITests.swift */,
+				80B91B8229F734730072B78B /* boredAI_gamesUITestsLaunchTests.swift */,
+			);
+			path = "boredAI gamesUITests";
+			sourceTree = "<group>";
+		};
 		80BC469929D15972001B89CB /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,7 +266,7 @@
 			children = (
 				E56184B429906C39003E2B05 /* boredAI games */,
 				E56184CB29906C3C003E2B05 /* boredAI gamesTests */,
-				E56184D529906C3C003E2B05 /* AI GamesUITests */,
+				80B91B7F29F734730072B78B /* boredAI gamesUITests */,
 				E56184B329906C39003E2B05 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -267,7 +276,7 @@
 			children = (
 				E56184B229906C39003E2B05 /* boredAI games.app */,
 				E56184C829906C3C003E2B05 /* boredAI gamesTests.xctest */,
-				E56184D229906C3C003E2B05 /* boredAI gamesUITests.xctest */,
+				80B91B7E29F734730072B78B /* boredAI gamesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -301,15 +310,6 @@
 			path = "boredAI gamesTests";
 			sourceTree = "<group>";
 		};
-		E56184D529906C3C003E2B05 /* AI GamesUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E56184D629906C3C003E2B05 /* AI_GamesUITests.swift */,
-				E56184D829906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift */,
-			);
-			path = "AI GamesUITests";
-			sourceTree = "<group>";
-		};
 		E5A6400A29C8572000276B68 /* Gomoku */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +338,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		80B91B7D29F734730072B78B /* boredAI gamesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80B91B8629F734730072B78B /* Build configuration list for PBXNativeTarget "boredAI gamesUITests" */;
+			buildPhases = (
+				80B91B7A29F734730072B78B /* Sources */,
+				80B91B7B29F734730072B78B /* Frameworks */,
+				80B91B7C29F734730072B78B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80B91B8529F734730072B78B /* PBXTargetDependency */,
+			);
+			name = "boredAI gamesUITests";
+			productName = "boredAI gamesUITests";
+			productReference = 80B91B7E29F734730072B78B /* boredAI gamesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		E56184B129906C39003E2B05 /* boredAI games */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E56184DC29906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI games" */;
@@ -385,24 +403,6 @@
 			productReference = E56184C829906C3C003E2B05 /* boredAI gamesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E56184D129906C3C003E2B05 /* boredAI gamesUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E56184E229906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI gamesUITests" */;
-			buildPhases = (
-				E56184CE29906C3C003E2B05 /* Sources */,
-				E56184CF29906C3C003E2B05 /* Frameworks */,
-				E56184D029906C3C003E2B05 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E56184D429906C3C003E2B05 /* PBXTargetDependency */,
-			);
-			name = "boredAI gamesUITests";
-			productName = "AI GamesUITests";
-			productReference = E56184D229906C3C003E2B05 /* boredAI gamesUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -410,17 +410,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
+					80B91B7D29F734730072B78B = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = E56184B129906C39003E2B05;
+					};
 					E56184B129906C39003E2B05 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 					E56184C729906C3C003E2B05 = {
-						CreatedOnToolsVersion = 13.4.1;
-						TestTargetID = E56184B129906C39003E2B05;
-					};
-					E56184D129906C3C003E2B05 = {
 						CreatedOnToolsVersion = 13.4.1;
 						TestTargetID = E56184B129906C39003E2B05;
 					};
@@ -444,12 +444,19 @@
 			targets = (
 				E56184B129906C39003E2B05 /* boredAI games */,
 				E56184C729906C3C003E2B05 /* boredAI gamesTests */,
-				E56184D129906C3C003E2B05 /* boredAI gamesUITests */,
+				80B91B7D29F734730072B78B /* boredAI gamesUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		80B91B7C29F734730072B78B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E56184B029906C39003E2B05 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -470,16 +477,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E56184D029906C3C003E2B05 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		80B91B7A29F734730072B78B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80B91B8129F734730072B78B /* boredAI_gamesUITests.swift in Sources */,
+				80B91B8329F734730072B78B /* boredAI_gamesUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E56184AE29906C39003E2B05 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -531,27 +540,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E56184CE29906C3C003E2B05 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E56184D929906C3C003E2B05 /* AI_GamesUITestsLaunchTests.swift in Sources */,
-				E56184D729906C3C003E2B05 /* AI_GamesUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		80B91B8529F734730072B78B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E56184B129906C39003E2B05 /* boredAI games */;
+			targetProxy = 80B91B8429F734730072B78B /* PBXContainerItemProxy */;
+		};
 		E56184CA29906C3C003E2B05 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E56184B129906C39003E2B05 /* boredAI games */;
 			targetProxy = E56184C929906C3C003E2B05 /* PBXContainerItemProxy */;
-		};
-		E56184D429906C3C003E2B05 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E56184B129906C39003E2B05 /* boredAI games */;
-			targetProxy = E56184D329906C3C003E2B05 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -567,6 +567,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		80B91B8729F734730072B78B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5H45M94LR2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "boredAI-gamesTests.boredAI-gamesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "boredAI games";
+			};
+			name = Debug;
+		};
+		80B91B8829F734730072B78B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5H45M94LR2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "boredAI-gamesTests.boredAI-gamesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "boredAI games";
+			};
+			name = Release;
+		};
 		E56184DA29906C3C003E2B05 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -783,43 +821,18 @@
 			};
 			name = Release;
 		};
-		E56184E329906C3C003E2B05 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "wustl.AI-GamesUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "AI Games";
-			};
-			name = Debug;
-		};
-		E56184E429906C3C003E2B05 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "wustl.AI-GamesUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "AI Games";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		80B91B8629F734730072B78B /* Build configuration list for PBXNativeTarget "boredAI gamesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80B91B8729F734730072B78B /* Debug */,
+				80B91B8829F734730072B78B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E56184AD29906C39003E2B05 /* Build configuration list for PBXProject "boredAI games" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -843,15 +856,6 @@
 			buildConfigurations = (
 				E56184E029906C3C003E2B05 /* Debug */,
 				E56184E129906C3C003E2B05 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E56184E229906C3C003E2B05 /* Build configuration list for PBXNativeTarget "boredAI gamesUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E56184E329906C3C003E2B05 /* Debug */,
-				E56184E429906C3C003E2B05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,17 +1,13 @@
 //
-//  AI_GamesUITests.swift
-//  AI GamesUITests
+//  boredAI_gamesUITests.swift
+//  boredAI gamesUITests
 //
-//  Created by Tony Ngok on 05/02/2023.
+//  Created by Joshua Ki on 4/24/23.
 //
 
 import XCTest
-@testable import boredAI_games
 
-class AI_GamesUITests: XCTestCase {
-    
-
-
+final class boredAI_gamesUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -42,6 +38,4 @@ class AI_GamesUITests: XCTestCase {
             }
         }
     }
-    
-    
 }

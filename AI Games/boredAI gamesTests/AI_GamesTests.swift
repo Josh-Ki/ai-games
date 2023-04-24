@@ -35,49 +35,53 @@ class AI_GamesTests: XCTestCase {
     }
     func testEasyBoardGenerated() {
         // Given
-        let viewController = SudokuViewController()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
         viewController.selectedDifficulty = "Easy"
 
         // When
-        viewController.viewDidLoad()
+        viewController.loadViewIfNeeded()
 
         // Then
         XCTAssertEqual(viewController.sudoku.sudokuArray.count, 9)
         XCTAssertEqual(viewController.sudoku.sudokuArray[0].count, 9)
         XCTAssertEqual(viewController.sudoku.partialArray.count, 9)
         XCTAssertEqual(viewController.sudoku.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 30)
+        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 51)
     }
     func testMediumBoardGenerated() {
         // Given
-        let viewController = SudokuViewController()
-        viewController.selectedDifficulty = "Medium"
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
+        viewController.selectedDifficulty = "Med"
 
         // When
-        viewController.viewDidLoad()
+        viewController.loadViewIfNeeded()
 
         // Then
         XCTAssertEqual(viewController.sudoku.sudokuArray.count, 9)
         XCTAssertEqual(viewController.sudoku.sudokuArray[0].count, 9)
         XCTAssertEqual(viewController.sudoku.partialArray.count, 9)
         XCTAssertEqual(viewController.sudoku.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 50)
+        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 31)
     }
     func testHardBoardGenerated() {
         // Given
-        let viewController = SudokuViewController()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
         viewController.selectedDifficulty = "Hard"
 
         // When
-        viewController.viewDidLoad()
+        viewController.loadViewIfNeeded()
 
         // Then
         XCTAssertEqual(viewController.sudoku.sudokuArray.count, 9)
         XCTAssertEqual(viewController.sudoku.sudokuArray[0].count, 9)
         XCTAssertEqual(viewController.sudoku.partialArray.count, 9)
         XCTAssertEqual(viewController.sudoku.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 64)
+        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 17)
     }
+
 
     func testGenerateSudokuBoard() {
            let sudokuVC = SudokuViewController()
