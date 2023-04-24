@@ -255,7 +255,7 @@
 		E56184A929906C39003E2B05 = {
 			isa = PBXGroup;
 			children = (
-				E56184B429906C39003E2B05 /* AI Games */,
+				E56184B429906C39003E2B05 /* boredAI games */,
 				E56184CB29906C3C003E2B05 /* AI GamesTests */,
 				E56184D529906C3C003E2B05 /* AI GamesUITests */,
 				E56184B329906C39003E2B05 /* Products */,
@@ -272,7 +272,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E56184B429906C39003E2B05 /* AI Games */ = {
+		E56184B429906C39003E2B05 /* boredAI games */ = {
 			isa = PBXGroup;
 			children = (
 				801CD9D629ED9CF500DD081F /* Profile */,
@@ -290,7 +290,7 @@
 				E56184BE29906C3B003E2B05 /* Assets.xcassets */,
 				E56184C329906C3B003E2B05 /* Info.plist */,
 			);
-			path = "AI Games";
+			path = "boredAI games";
 			sourceTree = "<group>";
 		};
 		E56184CB29906C3C003E2B05 /* AI GamesTests */ = {
