@@ -42,11 +42,11 @@ class AI_GamesTests: XCTestCase {
         viewController.viewDidLoad()
 
         // Then
-        XCTAssertEqual(viewController.sudokuArray.count, 9)
-        XCTAssertEqual(viewController.sudokuArray[0].count, 9)
-        XCTAssertEqual(viewController.partialArray.count, 9)
-        XCTAssertEqual(viewController.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.maxCellsToFill, 30)
+        XCTAssertEqual(viewController.sudoku.sudokuArray.count, 9)
+        XCTAssertEqual(viewController.sudoku.sudokuArray[0].count, 9)
+        XCTAssertEqual(viewController.sudoku.partialArray.count, 9)
+        XCTAssertEqual(viewController.sudoku.partialArray[0].count, 9)
+        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 30)
     }
     func testMediumBoardGenerated() {
         // Given
@@ -57,11 +57,11 @@ class AI_GamesTests: XCTestCase {
         viewController.viewDidLoad()
 
         // Then
-        XCTAssertEqual(viewController.sudokuArray.count, 9)
-        XCTAssertEqual(viewController.sudokuArray[0].count, 9)
-        XCTAssertEqual(viewController.partialArray.count, 9)
-        XCTAssertEqual(viewController.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.maxCellsToFill, 50)
+        XCTAssertEqual(viewController.sudoku.sudokuArray.count, 9)
+        XCTAssertEqual(viewController.sudoku.sudokuArray[0].count, 9)
+        XCTAssertEqual(viewController.sudoku.partialArray.count, 9)
+        XCTAssertEqual(viewController.sudoku.partialArray[0].count, 9)
+        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 50)
     }
     func testHardBoardGenerated() {
         // Given
@@ -72,11 +72,11 @@ class AI_GamesTests: XCTestCase {
         viewController.viewDidLoad()
 
         // Then
-        XCTAssertEqual(viewController.sudokuArray.count, 9)
-        XCTAssertEqual(viewController.sudokuArray[0].count, 9)
-        XCTAssertEqual(viewController.partialArray.count, 9)
-        XCTAssertEqual(viewController.partialArray[0].count, 9)
-        XCTAssertEqual(viewController.maxCellsToFill, 64)
+        XCTAssertEqual(viewController.sudoku.sudokuArray.count, 9)
+        XCTAssertEqual(viewController.sudoku.sudokuArray[0].count, 9)
+        XCTAssertEqual(viewController.sudoku.partialArray.count, 9)
+        XCTAssertEqual(viewController.sudoku.partialArray[0].count, 9)
+        XCTAssertEqual(viewController.sudoku.maxCellsToFill, 64)
     }
 
     func testGenerateSudokuBoard() {
@@ -96,7 +96,7 @@ class AI_GamesTests: XCTestCase {
 
            // Test that the partial board has the same number of filled cells as expected
            let expectedFilledCells = (board.flatMap { $0 }.count - partialBoard.flatMap { $0 }.count)
-           XCTAssertEqual(expectedFilledCells, sudokuVC.maxCellsToFill)
+        XCTAssertEqual(expectedFilledCells, sudokuVC.sudoku.maxCellsToFill)
 
            // Test that each filled cell in the partial board corresponds to a non-zero cell in the board
            for row in 0..<9 {

@@ -256,7 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				E56184B429906C39003E2B05 /* boredAI games */,
-				E56184CB29906C3C003E2B05 /* AI GamesTests */,
+				E56184CB29906C3C003E2B05 /* boredAI gamesTests */,
 				E56184D529906C3C003E2B05 /* AI GamesUITests */,
 				E56184B329906C39003E2B05 /* Products */,
 			);
@@ -293,12 +293,12 @@
 			path = "boredAI games";
 			sourceTree = "<group>";
 		};
-		E56184CB29906C3C003E2B05 /* AI GamesTests */ = {
+		E56184CB29906C3C003E2B05 /* boredAI gamesTests */ = {
 			isa = PBXGroup;
 			children = (
 				E56184CC29906C3C003E2B05 /* AI_GamesTests.swift */,
 			);
-			path = "AI GamesTests";
+			path = "boredAI gamesTests";
 			sourceTree = "<group>";
 		};
 		E56184D529906C3C003E2B05 /* AI GamesUITests */ = {
