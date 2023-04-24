@@ -7,13 +7,13 @@
 
 import Foundation
 
-let winScore = 100000
+let winScore = 10000000
 
 // https://github.com/malikusha/Gomoku/blob/master/gomokuCollection.py
 // heuristic scores for streak of n (0-4) patterns
 // position 0 of subarray n: open pattern score
 // position 1 of subarray n: 1-side blocked pattern score
-let patternScores = [[0, 0], [1, 1], [4, 2], [18, 9], [100, 50]]
+let patternScores = [[0, 0], [0, 0], [4, 2], [18, 9], [30, 15]]
 
 func calcPos(y: Int, x: Int) -> Int {
     return y*10+x

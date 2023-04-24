@@ -262,64 +262,71 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             
             // AI player's turn
-            
-            let gameState = GameState(board: board, redTurn: true)
-//            print(gameState.board)
-            let mctsAI = MCTSAI()
-            mctsAI.maxIterations = maxIterations
-            mctsAI.maxDepth = maxDepth
-//            _  = minimax(depth: 0,
-//                                maxdepth: 5,
-//                         bestmove: &bestMove,
-//                                alpha: Int.min + 1,
-//                                beta: Int.max - 1)
+            DispatchQueue.global(qos: .userInitiated).async { [self] in
+                let gameState = GameState(board: board, redTurn: true)
+    //            print(gameState.board)
+                
+                let mctsAI = MCTSAI()
+                mctsAI.maxIterations = maxIterations
+                mctsAI.maxDepth = maxDepth
+    //            _  = minimax(depth: 0,
+    //                                maxdepth: 5,
+    //                         bestmove: &bestMove,
+    //                                alpha: Int.min + 1,
+    //                                beta: Int.max - 1)
 
-//            if let bestMove = bestMove {
-    
-            let column = mctsAI.findBestMove(gameState: gameState).column
-//            let column = 0
-                print(column)
-                guard var boardItem = getLowestEmpty(column),
-                      let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else { return }
+    //            if let bestMove = bestMove {
+        
+                let column = mctsAI.findBestMove(gameState: gameState).column
+    //            let column = 0
                 
-                cell.image.tintColor = currentTurnColor()
-                
-                boardItem.tile = currentTurnTile()
-                
-                updateBoard(boardItem)
-                
-                if victory() {
-                   
-                    if yellowTurn {
-                        yellowScore += 1
+                DispatchQueue.main.async { [self] in
+                    print(column)
+                    guard var boardItem = getLowestEmpty(column),
+                          let cell = collectionView.cellForItem(at: boardItem.indexPath) as? BoardCell else { return }
+                    
+                    cell.image.tintColor = currentTurnColor()
+                    
+                    boardItem.tile = currentTurnTile()
+                    
+                    updateBoard(boardItem)
+                    
+                    if victory() {
+                       
+                        if yellowTurn {
+                            yellowScore += 1
+                        } else {
+                            redScore += 1
+                        }
+                        resultAlert(currentTurnVictoryMessage())
+                    } else if boardIsFull() {
+                        resultAlert("Draw")
                     } else {
-                        redScore += 1
+                        toggleTurn(turnImage)
+                        
+                        // Animate piece's movement
+                        
+                        let row = boardItem.indexPath.section
+                        let newIndexPath = IndexPath(item: column, section: row)
+                        
+                        let cellAttributes = collectionView.layoutAttributesForItem(at: newIndexPath)
+                        
+                        let finalCenter = cellAttributes?.center ?? .zero
+                        
+                        let startCenter = CGPoint(x: finalCenter.x,
+                                                  y: finalCenter.y - collectionView.bounds.height)
+                        
+                        cell.center = startCenter
+                        
+                        UIView.animate(withDuration: 0.5) {
+                            cell.center = finalCenter
+                        }
+    //                }
                     }
-                    resultAlert(currentTurnVictoryMessage())
-                } else if boardIsFull() {
-                    resultAlert("Draw")
-                } else {
-                    toggleTurn(turnImage)
-                    
-                    // Animate piece's movement
-                    
-                    let row = boardItem.indexPath.section
-                    let newIndexPath = IndexPath(item: column, section: row)
-                    
-                    let cellAttributes = collectionView.layoutAttributesForItem(at: newIndexPath)
-                    
-                    let finalCenter = cellAttributes?.center ?? .zero
-                    
-                    let startCenter = CGPoint(x: finalCenter.x,
-                                              y: finalCenter.y - collectionView.bounds.height)
-                    
-                    cell.center = startCenter
-                    
-                    UIView.animate(withDuration: 0.5) {
-                        cell.center = finalCenter
-                    }
-//                }
+                }
             }
+            
+
         }
     }
 
