@@ -327,7 +327,14 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         
     func resultAlert(_ title: String) {
         let message = "\nRed: \(redScore)\n\nYellow: \(yellowScore)"
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        var alert: UIAlertController = UIAlertController()
+        
+        if (UIDevice.current.userInterfaceIdiom == .phone) {
+            alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        } else if (UIDevice.current.userInterfaceIdiom == .pad) {
+            alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        }
+        
         alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { [weak self] _ in
             resetBoard()
             self?.resetCells()

@@ -47,7 +47,7 @@ class Node {
         // Choose the move that leads to the child node with the highest UCT value
 
         // Compute the UCT values for all child nodes
-        let uctValues = childNodes.map { node in
+        let uctValues = childNodes.map { node -> Float in
             let exploitationValue = node.value / Float(node.visitCount)
             let explorationValue = sqrt(log(Float(self.visitCount)) / Float(node.visitCount))
             return exploitationValue + explorationFactor * explorationValue
@@ -279,7 +279,7 @@ class MCTSAI {
       if !possibleMoves.isEmpty {
         
         // Score each possible move using a heuristic function
-        let scoredMoves = possibleMoves.map { move in
+        let scoredMoves = possibleMoves.map { move -> (Move, Float) in
           print("WE IN ")
           let nextState = node.gameState.makeMove(move)
           let score = evaluateState(nextState)
@@ -373,7 +373,7 @@ class MCTSAI {
         let possibleMoves = currentState.getPossibleMoves()
 
         // Evaluate the desirability of each possible move using a scoring function
-        let scoredMoves = possibleMoves.map { move in
+        let scoredMoves = possibleMoves.map { move -> (Move, Float) in
           let nextState = currentState.makeMove(move)
           let score = aiTurn ? evaluateState(nextState) : -evaluateState(nextState) // Use different scoring functions for AI and opponent
           return (move, score)

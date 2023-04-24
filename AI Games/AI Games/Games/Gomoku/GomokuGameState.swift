@@ -7,32 +7,39 @@
 
 import Foundation
 
-struct GomokuGameState {
+class GomokuGameState {
     
-    let gameboard: [String] // 10x10 gameboard (100 positions)
-    let me: String
-    let you: String
+    var gameboard: [String] = [] // 10x10 gameboard (100 positions)
+    var me: String = "B"
+    var you: String = "W"
     var legalMoves: [Int] = []
     var heuristics: (Int, Int) = (0, 0) // «my» & «your» heuristic scores
     var state: Int = -2 // standardised states: win (1), draw (0), lose (-1) & incomplete (-2)
     var winSeq: [Int] = []
+    
     init(gameboard: [String], isBlack: Bool) {
         self.gameboard = gameboard
-        
+        self.backForth(isBlack: isBlack)
+    }
+    
+    // called after making or undoing one move (for AI analysis)
+    private func backForth(isBlack: Bool) {
+        // switch turn
         if (isBlack) { // black plays first
-            self.me = "B"
-            self.you = "W"
-        } else {
             self.me = "W"
             self.you = "B"
+        } else {
+            self.me = "B"
+            self.you = "W"
         }
         
         self.legalMoves = getLegalMoves()
         self.heuristics = (heurScore(gameboard: self.gameboard, piece: self.me), heurScore(gameboard: self.gameboard, piece: self.you))
         self.state = getState()
         if ((self.state == -1) || (self.state == 1)) {
-            // https://www.marcosantadev.com/arrayslice-in-swift/
             self.winSeq = getWinSeq() // winning sequence
+        } else {
+            self.winSeq = []
         }
     }
     
@@ -111,11 +118,14 @@ struct GomokuGameState {
         return -2
     }
     
-    func move(pos: Int) -> GomokuGameState {
-        var newGameboard = gameboard
-        newGameboard[pos] = me
-        let nextBlack = me == "B" ? false : true
-        return GomokuGameState(gameboard: newGameboard, isBlack: nextBlack)
+    func move(pos: Int) {
+        self.gameboard[pos] = me
+        self.backForth(isBlack: self.me != "B")
+    }
+    
+    func backMove(pos: Int) {
+        self.gameboard[pos] = ""
+        self.backForth(isBlack: self.me != "B")
     }
     
 }

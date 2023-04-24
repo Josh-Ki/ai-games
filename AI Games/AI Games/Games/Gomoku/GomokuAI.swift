@@ -22,6 +22,7 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
     // https://stackoverflow.com/questions/24451959/mutate-function-parameters-in-swift
     var a = a
     var b = b
+    let legalMoves = gameState.legalMoves
     
     if ((depth == 0) || (gameState.state > -2)) {
         if (maxAgent) {
@@ -32,12 +33,14 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
         
     }
     
+    // https://github.com/malikusha/Gomoku/blob/master/agent.py
     if (maxAgent) {
         var v = Int.min
-        for i in gameState.legalMoves {
-            let successor = gameState.move(pos: i)
-            v = max(v, minimax(gameState: successor, depth: depth-1, maxAgent: false, a: a, b: b))
+        for i in legalMoves {
+            gameState.move(pos: i)
+            v = max(v, minimax(gameState: gameState, depth: depth-1, maxAgent: false, a: a, b: b))
             a = max(a, v)
+            gameState.backMove(pos: i)
             if (a >= b) {
                 return v
             }
@@ -45,10 +48,11 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
         return v
     } else {
         var v = Int.max
-        for i in gameState.legalMoves {
-            let successor = gameState.move(pos: i)
-            v = min(v, minimax(gameState: successor, depth: depth-1, maxAgent: true, a: a, b: b))
+        for i in legalMoves {
+            gameState.move(pos: i)
+            v = min(v, minimax(gameState: gameState, depth: depth-1, maxAgent: true, a: a, b: b))
             b = min(b, v)
+            gameState.backMove(pos: i)
             if (a >= b) {
                 return v
             }
@@ -60,11 +64,12 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
 func gomokuMinimaxBestMove(gameState: GomokuGameState, depth: Int) -> Int {
     var v = Int.min
     var bests: [Int] = []
+    let legalMoves = gameState.legalMoves
     
-    for i in gameState.legalMoves {
+    for i in legalMoves {
         // AI minimises man's utility score
-        let s = gameState.move(pos: i)
-        let eval = minimax(gameState: s, depth: depth, maxAgent: false, a: Int.min, b: Int.max)
+        gameState.move(pos: i)
+        let eval = minimax(gameState: gameState, depth: depth, maxAgent: false, a: Int.min, b: Int.max)
 //        print("at=\(i); move=\(s.you); heur=\(s.heuristics); d=\(s.heuristics.0-s.heuristics.1)") // debug
         
         if (eval > v) {
@@ -74,6 +79,7 @@ func gomokuMinimaxBestMove(gameState: GomokuGameState, depth: Int) -> Int {
         } else if (eval == v) {
             bests.append(i)
         }
+        gameState.backMove(pos: i)
     }
     
     // https://stackoverflow.com/questions/24003191/pick-a-random-element-from-an-array
