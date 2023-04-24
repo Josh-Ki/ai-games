@@ -25,12 +25,7 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
     let legalMoves = gameState.legalMoves
     
     if ((depth == 0) || (gameState.state > -2)) {
-        if (maxAgent) {
-            return gameState.heuristics.0-gameState.heuristics.1 // advantage relative to the opponent
-        } else {
-            return gameState.heuristics.1-gameState.heuristics.0
-        }
-        
+        return gameState.heuristics.1-gameState.heuristics.0
     }
     
     // https://github.com/malikusha/Gomoku/blob/master/agent.py

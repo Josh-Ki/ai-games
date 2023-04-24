@@ -10,8 +10,9 @@ import Foundation
 class GomokuGameState {
     
     var gameboard: [String] = [] // 10x10 gameboard (100 positions)
-    var me: String = "B"
-    var you: String = "W"
+    var ai: String = "" // AI
+    var man: String = "" // man
+    var turn: String = ""
     var legalMoves: [Int] = []
     var heuristics: (Int, Int) = (0, 0) // «my» & «your» heuristic scores
     var state: Int = -2 // standardised states: win (1), draw (0), lose (-1) & incomplete (-2)
@@ -19,22 +20,23 @@ class GomokuGameState {
     
     init(gameboard: [String], isBlack: Bool) {
         self.gameboard = gameboard
-        self.backForth(isBlack: isBlack)
+        
+        if (isBlack) { // black plays AI
+            self.ai = "B"
+            self.man = "W"
+        } else {
+            self.ai = "W"
+            self.man = "B"
+        }
+        self.turn = self.ai
+        
+        self.refresh()
     }
     
     // called after making or undoing one move (for AI analysis)
-    private func backForth(isBlack: Bool) {
-        // switch turn
-        if (isBlack) { // black plays first
-            self.me = "W"
-            self.you = "B"
-        } else {
-            self.me = "B"
-            self.you = "W"
-        }
-        
+    private func refresh() {
         self.legalMoves = getLegalMoves()
-        self.heuristics = (heurScore(gameboard: self.gameboard, piece: self.me), heurScore(gameboard: self.gameboard, piece: self.you))
+        self.heuristics = (heurScore(gameboard: self.gameboard, piece: self.man), heurScore(gameboard: self.gameboard, piece: self.ai))
         self.state = getState()
         if ((self.state == -1) || (self.state == 1)) {
             self.winSeq = getWinSeq() // winning sequence
@@ -55,10 +57,10 @@ class GomokuGameState {
         for y in 0...9 {
             for x in 0...5 {
                 let pos = calcPos(y: y, x: x)
-                if ((gameboard[pos] == me) && (gameboard[pos+1] == me) && (gameboard[pos+2] == me) && (gameboard[pos+3] == me) && (gameboard[pos+4] == me)) {
+                if ((gameboard[pos] == ai) && (gameboard[pos+1] == ai) && (gameboard[pos+2] == ai) && (gameboard[pos+3] == ai) && (gameboard[pos+4] == ai)) {
                     return [pos, pos+1, pos+2, pos+3, pos+4]
                 }
-                if ((gameboard[pos] == you) && (gameboard[pos+1] == you) && (gameboard[pos+2] == you) && (gameboard[pos+3] == you) && (gameboard[pos+4] == you)) {
+                if ((gameboard[pos] == man) && (gameboard[pos+1] == man) && (gameboard[pos+2] == man) && (gameboard[pos+3] == man) && (gameboard[pos+4] == man)) {
                     return [pos, pos+1, pos+2, pos+3, pos+4]
                 }
             }
@@ -68,10 +70,10 @@ class GomokuGameState {
         for y in 0...5 {
             for x in 0...9 {
                 let pos = calcPos(y: y, x: x)
-                if ((gameboard[pos] == me) && (gameboard[pos+10] == me) && (gameboard[pos+20] == me) && (gameboard[pos+30] == me) && (gameboard[pos+40] == me)) {
+                if ((gameboard[pos] == ai) && (gameboard[pos+10] == ai) && (gameboard[pos+20] == ai) && (gameboard[pos+30] == ai) && (gameboard[pos+40] == ai)) {
                     return [pos, pos+10, pos+20, pos+30, pos+40]
                 }
-                if ((gameboard[pos] == you) && (gameboard[pos+10] == you) && (gameboard[pos+20] == you) && (gameboard[pos+30] == you) && (gameboard[pos+40] == you)) {
+                if ((gameboard[pos] == man) && (gameboard[pos+10] == man) && (gameboard[pos+20] == man) && (gameboard[pos+30] == man) && (gameboard[pos+40] == man)) {
                     return [pos, pos+10, pos+20, pos+30, pos+40]
                 }
             }
@@ -81,10 +83,10 @@ class GomokuGameState {
         for y in 0...5 {
             for x in 0...5 {
                 let pos = calcPos(y: y, x: x)
-                if ((gameboard[pos] == me) && (gameboard[pos+11] == me) && (gameboard[pos+22] == me) && (gameboard[pos+33] == me) && (gameboard[pos+44] == me)) {
+                if ((gameboard[pos] == ai) && (gameboard[pos+11] == ai) && (gameboard[pos+22] == ai) && (gameboard[pos+33] == ai) && (gameboard[pos+44] == ai)) {
                     return [pos, pos+11, pos+22, pos+33, pos+44]
                 }
-                if ((gameboard[pos] == you) && (gameboard[pos+11] == you) && (gameboard[pos+22] == you) && (gameboard[pos+33] == you) && (gameboard[pos+44] == you)) {
+                if ((gameboard[pos] == man) && (gameboard[pos+11] == man) && (gameboard[pos+22] == man) && (gameboard[pos+33] == man) && (gameboard[pos+44] == man)) {
                     return [pos, pos+11, pos+22, pos+33, pos+44]
                 }
             }
@@ -94,10 +96,10 @@ class GomokuGameState {
         for y in 4...9 {
             for x in 0...5 {
                 let pos = calcPos(y: y, x: x)
-                if ((gameboard[pos] == me) && (gameboard[pos-9] == me) && (gameboard[pos-18] == me) && (gameboard[pos-27] == me) && (gameboard[pos-36] == me)) {
+                if ((gameboard[pos] == ai) && (gameboard[pos-9] == ai) && (gameboard[pos-18] == ai) && (gameboard[pos-27] == ai) && (gameboard[pos-36] == ai)) {
                     return [pos, pos-9, pos-18, pos-27, pos-36]
                 }
-                if ((gameboard[pos] == you) && (gameboard[pos-9] == you) && (gameboard[pos-18] == you) && (gameboard[pos-27] == you) && (gameboard[pos-36] == you)) {
+                if ((gameboard[pos] == man) && (gameboard[pos-9] == man) && (gameboard[pos-18] == man) && (gameboard[pos-27] == man) && (gameboard[pos-36] == man)) {
                     return [pos, pos-9, pos-18, pos-27, pos-36]
                 }
             }
@@ -108,9 +110,9 @@ class GomokuGameState {
     
     private func getState() -> Int {
         if (self.heuristics.0 >= winScore) {
-            return 1
-        } else if (self.heuristics.1 >= winScore) {
             return -1
+        } else if (self.heuristics.1 >= winScore) {
+            return 1
         } else if (legalMoves.isEmpty) {
             return 0 // draw if no legal moves left
         }
@@ -119,13 +121,15 @@ class GomokuGameState {
     }
     
     func move(pos: Int) {
-        self.gameboard[pos] = me
-        self.backForth(isBlack: self.me != "B")
+        self.gameboard[pos] = self.turn
+        self.turn = self.turn == self.ai ? self.man : self.ai
+        self.refresh()
     }
     
     func backMove(pos: Int) {
         self.gameboard[pos] = ""
-        self.backForth(isBlack: self.me != "B")
+        self.turn = self.turn == self.ai ? self.man : self.ai
+        self.refresh()
     }
     
 }

@@ -18,6 +18,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     var backColours: [UIColor] = [] // background colours of gameboard cells
     var foreColours: [UIColor] = Array.init(repeating: UIColor.black, count: 100) // display colours of pieces (only become white when marked in winning sequence)
     var turn = "B" // black moves first
+    var manTurn = "B"
     var gameOver = false
     var selectedDifficulty: String?
     var gomokuAILevel = 0 // difficulty of AI (easy, medium, hard)
@@ -106,10 +107,10 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         } else {
             var msg = ""
             if (gameState.state == 1) {
-                print("USER WINS")
-                msg = "\(bw(abbr: gameState.me)) WINS"
+                msg = "\(bw(abbr: gameState.ai)) WINS"
             } else if (gameState.state == -1) {
-                msg = "\(bw(abbr: gameState.you)) WINS"
+                print("USER WINS")
+                msg = "\(bw(abbr: gameState.man)) WINS"
             } else if (gameState.state == 0) {
                 msg = "DRAW"
             }
@@ -328,6 +329,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         
         let man: String = ["BLACK", "WHITE"].randomElement()!
+        manTurn = man == "BLACK" ? "B" : "W"
         manPlay.text = "Man plays \(man)"
         if (man == "WHITE") {
             AIPlays() // randomly let AI or human start first
@@ -354,7 +356,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
                             
     func toGomokuGameState() -> GomokuGameState {
-        let isBlack = turn == "B"
+        let isBlack = manTurn != "B"
         return GomokuGameState(gameboard: gameboard, isBlack: isBlack)
     }
 
