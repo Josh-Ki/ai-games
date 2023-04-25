@@ -142,7 +142,7 @@ class GameSelectionViewController: UIViewController {
         sudokuBoardViewController.infoButton.isHidden = true
     }
     
-    
+
     @IBAction func tttPressed(_ sender: Any) {
         
         // Instantiate the Sudoku board view controller

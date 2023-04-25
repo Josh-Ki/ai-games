@@ -61,6 +61,61 @@ class SudokuViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        collectionView.contentInset.bottom = 0
+
+        
+        let line1CenterX = UIScreen.main.bounds.width / 3
+        let line2CenterX = line1CenterX * 2
+
+        let line3CenterY = line1CenterX
+        let line4CenterY = line2CenterX
+
+        let line1 = UIView()
+        line1.backgroundColor = .black
+        line1.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(line1)
+        NSLayoutConstraint.activate([
+            line1.widthAnchor.constraint(equalToConstant: 5),
+            line1.heightAnchor.constraint(equalTo: collectionView.heightAnchor),
+            line1.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            line1.centerXAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: line1CenterX)
+        ])
+
+        let line2 = UIView()
+        line2.backgroundColor = .black
+        line2.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(line2)
+        NSLayoutConstraint.activate([
+            line2.widthAnchor.constraint(equalToConstant: 5),
+            line2.heightAnchor.constraint(equalTo: collectionView.heightAnchor),
+            line2.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            line2.centerXAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: line2CenterX)
+        ])
+        
+
+
+
+        let line3 = UIView()
+        line3.backgroundColor = .black
+        line3.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(line3)
+        NSLayoutConstraint.activate([
+            line3.widthAnchor.constraint(equalTo: collectionView.widthAnchor),
+            line3.heightAnchor.constraint(equalToConstant: 5),
+            line3.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            line3.centerYAnchor.constraint(equalTo: collectionView.topAnchor, constant: line3CenterY)
+        ])
+
+        let line4 = UIView()
+        line4.backgroundColor = .black
+        line4.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(line4)
+        NSLayoutConstraint.activate([
+            line4.widthAnchor.constraint(equalTo: collectionView.widthAnchor),
+            line4.heightAnchor.constraint(equalToConstant: 5),
+            line4.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            line4.centerYAnchor.constraint(equalTo: collectionView.topAnchor, constant: line4CenterY)
+        ])
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
            label1.isUserInteractionEnabled = true
