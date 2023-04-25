@@ -31,97 +31,104 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         resetBoard()
-        print(board)
-        setCellWidthHeight()
-
+        
+        let user = Auth.auth().currentUser
         
         switch selectedDifficulty {
         case "Easy":
             maxDepth = 3
             maxIterations = 50
-            c4GetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.fourInARowData.easyWins = highestWins
-                    print("Highest number of wins for easy: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for easy")
-                }
-                if let highestDraw = highestDraw {
-                    self.fourInARowData.easyDraw = highestDraw
-                    print("Highest number of draw for easy: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for easy")
-                }
-                if let highestLoss = highestLoss {
-                    self.fourInARowData.easyLoss = highestLoss
-                    print("Highest number of loss for easy: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for easy")
-                }
+            
                 
-                if let highestTotal = highestTotal {
-                    self.fourInARowData.totalEasy = highestTotal
-                    print("total number of games is \(highestTotal)")
-                }
+                
+
+                    if user != nil {
+                        c4GetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                            if let highestWins = highestWins {
+                                self.fourInARowData.easyWins = highestWins
+                                print("Highest number of wins for easy: \(highestWins)")
+                            } else {
+                                print("Failed to get highest number of wins for easy")
+                            }
+                            if let highestDraw = highestDraw {
+                                self.fourInARowData.easyDraw = highestDraw
+                                print("Highest number of draw for easy: \(highestDraw)")
+                            } else {
+                                print("Failed to get highest number of draw for easy")
+                            }
+                            if let highestLoss = highestLoss {
+                                self.fourInARowData.easyLoss = highestLoss
+                                print("Highest number of loss for easy: \(highestLoss)")
+                            } else {
+                                print("Failed to get highest number of wins for easy")
+                            }
+                            
+                            if let highestTotal = highestTotal {
+                                self.fourInARowData.totalEasy = highestTotal
+                                print("total number of games is \(highestTotal)")
+                            }
+                        }
                 
             }
         case "Med":
             maxDepth = 4
             maxIterations = 100
-            c4GetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.fourInARowData.medWins = highestWins
-                    print("Highest number of wins for easy: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for med")
+            if user != nil {
+                c4GetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.fourInARowData.medWins = highestWins
+                        print("Highest number of wins for easy: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.fourInARowData.medDraw = highestDraw
+                        print("Highest number of draws for med: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for med")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.fourInARowData.medLoss = highestLoss
+                        print("Highest number of loss for med: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.fourInARowData.totalMed = highestTotal
+                        print("total number of games is \(highestTotal)")
+                    }
                 }
-                if let highestDraw = highestDraw {
-                    self.fourInARowData.medDraw = highestDraw
-                    print("Highest number of draws for med: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for med")
-                }
-                if let highestLoss = highestLoss {
-                    self.fourInARowData.medLoss = highestLoss
-                    print("Highest number of loss for med: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for med")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.fourInARowData.totalMed = highestTotal
-                    print("total number of games is \(highestTotal)")
-                }
-                
             }
         case "Hard":
             maxDepth = 5
             maxIterations = 400
-            c4GetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.fourInARowData.hardWins = highestWins
-                    print("Highest number of wins for hard: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for hard")
+            if user != nil {
+                c4GetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.fourInARowData.hardWins = highestWins
+                        print("Highest number of wins for hard: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for hard")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.fourInARowData.hardDraw = highestDraw
+                        print("Highest number of draws for hard: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for hard")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.fourInARowData.hardLoss = highestLoss
+                        print("Highest number of loss for hard: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of wins for hard")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.fourInARowData.totalHard = highestTotal
+                        print("total number of games is \(highestTotal)")
+                    }
                 }
-                if let highestDraw = highestDraw {
-                    self.fourInARowData.hardDraw = highestDraw
-                    print("Highest number of draws for hard: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for hard")
-                }
-                if let highestLoss = highestLoss {
-                    self.fourInARowData.hardLoss = highestLoss
-                    print("Highest number of loss for hard: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for hard")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.fourInARowData.totalHard = highestTotal
-                    print("total number of games is \(highestTotal)")
-                }
-                
             }
         default:
             print("Defaulted")
@@ -129,16 +136,21 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        setCellWidthHeight()
+    }
     
     
-    func setCellWidthHeight()
-    {
-        let width = collectionView.frame.size.width / 9
-        let height = collectionView.frame.size.height / 6
+    func setCellWidthHeight() {
+        let collectionViewWidth = collectionView.frame.size.width
+        let collectionViewHeight = collectionView.frame.size.height
+        let width = collectionViewWidth / 9
+        let height = collectionViewHeight / 6
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.itemSize = CGSize(width: width, height: height)
     }
-    
     
     func numberOfSections(in cv: UICollectionView) -> Int
         {
@@ -149,6 +161,7 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                 
             let boardItem = getBoardItem(indexPath)
             cell.image.tintColor = boardItem.tileColor()
+        
             return cell
     }
     func collectionView(_ cv: UICollectionView, numberOfItemsInSection section: Int) -> Int {
