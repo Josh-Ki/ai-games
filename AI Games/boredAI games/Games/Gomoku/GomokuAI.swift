@@ -24,18 +24,24 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
     var b = b
     let legalMoves = gameState.legalMoves
     
-    if ((depth == 0) || (gameState.state > -2)) {
-        return gameState.heuristics.1-gameState.heuristics.0
+    if ((depth == 0) || (gameState.state.0 > -2)) {
+        return gameState.aiAvant
     }
     
     // https://github.com/malikusha/Gomoku/blob/master/agent.py
+    // https://en.wikipedia.org/wiki/Alpha–beta_pruning#Pseudocode
     if (maxAgent) {
         var v = Int.min
         for i in legalMoves {
             gameState.move(pos: i)
             v = max(v, minimax(gameState: gameState, depth: depth-1, maxAgent: false, a: a, b: b))
-            a = max(a, v)
             gameState.backMove(pos: i)
+            
+            if (v > b) {
+                return v // beta cutoff
+            }
+            
+            a = max(a, v)
             if (a >= b) {
                 return v
             }
@@ -46,8 +52,13 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
         for i in legalMoves {
             gameState.move(pos: i)
             v = min(v, minimax(gameState: gameState, depth: depth-1, maxAgent: true, a: a, b: b))
-            b = min(b, v)
             gameState.backMove(pos: i)
+            
+            if (v < a) {
+                return v // alpha cutoff
+            }
+            
+            b = min(b, v)
             if (a >= b) {
                 return v
             }
@@ -62,7 +73,7 @@ func gomokuMinimaxBestMove(gameState: GomokuGameState, depth: Int) -> Int {
     let legalMoves = gameState.legalMoves
     
     for i in legalMoves {
-        // AI minimises man's utility score
+        // AI minimises man's utility score & maximises its own
         gameState.move(pos: i)
         let eval = minimax(gameState: gameState, depth: depth, maxAgent: false, a: Int.min, b: Int.max)
 //        print("at=\(i); move=\(s.you); heur=\(s.heuristics); d=\(s.heuristics.0-s.heuristics.1)") // debug

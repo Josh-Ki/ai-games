@@ -93,7 +93,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                     }
                     
                 }
-                if (s.state == -2) {
+                if (s.state.0 == -2) {
                     AIPlays()
                 }
             }
@@ -102,23 +102,23 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func whatsNext(gameState: GomokuGameState) {
-        if (gameState.state == -2) {
+        if (gameState.state.0 == -2) {
             turnLabel.text = "Turn: \(turn)"
         } else {
             var msg = ""
-            if (gameState.state == 1) {
+            if (gameState.state.0 == 1) {
                 msg = "\(bw(abbr: gameState.ai)) WINS"
-            } else if (gameState.state == -1) {
+            } else if (gameState.state.0 == -1) {
                 print("USER WINS")
                 msg = "\(bw(abbr: gameState.man)) WINS"
-            } else if (gameState.state == 0) {
+            } else if (gameState.state.0 == 0) {
                 msg = "DRAW"
             }
             resultAlert(title: msg)
             turnLabel.text = msg
             
             // mark winning sequence on gameboard
-            for i in gameState.winSeq {
+            for i in gameState.state.1 {
                 if (i == lastMove) {
                     backColours[i] = UIColor.red
                 } else {
