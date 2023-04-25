@@ -24,8 +24,8 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
     var b = b
     let legalMoves = gameState.legalMoves
     
-    if ((depth == 0) || (gameState.state > -2)) {
-        return gameState.heuristics.1-gameState.heuristics.0
+    if ((depth == 0) || (gameState.state.0 > -2)) {
+        return gameState.aiAvant
     }
     
     // https://github.com/malikusha/Gomoku/blob/master/agent.py
@@ -73,7 +73,7 @@ func gomokuMinimaxBestMove(gameState: GomokuGameState, depth: Int) -> Int {
     let legalMoves = gameState.legalMoves
     
     for i in legalMoves {
-        // AI minimises man's utility score
+        // AI minimises man's utility score & maximises its own
         gameState.move(pos: i)
         let eval = minimax(gameState: gameState, depth: depth, maxAgent: false, a: Int.min, b: Int.max)
 //        print("at=\(i); move=\(s.you); heur=\(s.heuristics); d=\(s.heuristics.0-s.heuristics.1)") // debug
