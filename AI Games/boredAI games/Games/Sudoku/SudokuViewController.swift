@@ -117,6 +117,12 @@ class SudokuViewController: UIViewController {
             line4.centerYAnchor.constraint(equalTo: collectionView.topAnchor, constant: line4CenterY)
         ])
         
+        //For UI Testing
+        line1.accessibilityIdentifier = "line1"
+        line2.accessibilityIdentifier = "line2"
+        line3.accessibilityIdentifier = "line3"
+        line4.accessibilityIdentifier = "line4"
+        
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
            label1.isUserInteractionEnabled = true
            label1.addGestureRecognizer(tapGesture1)
