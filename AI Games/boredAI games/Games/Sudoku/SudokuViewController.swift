@@ -16,6 +16,7 @@ class SudokuViewController: UIViewController {
     
     @IBOutlet weak var deleteButton: UIButton!
     
+    @IBOutlet weak var sudokuLabel: UILabel!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var label3: UILabel!
@@ -36,7 +37,10 @@ class SudokuViewController: UIViewController {
     @IBOutlet weak var hintButton: UIButton!
     var sudoku = Sudoku()
     var selectedDifficulty: String?
-
+    let line1 = UIView()
+    let line2 = UIView()
+    let line3 = UIView()
+    let line4 = UIView()
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -70,7 +74,7 @@ class SudokuViewController: UIViewController {
         let line3CenterY = line1CenterX
         let line4CenterY = line2CenterX
 
-        let line1 = UIView()
+        
         line1.backgroundColor = .black
         line1.translatesAutoresizingMaskIntoConstraints = false
         collectionView.addSubview(line1)
@@ -81,7 +85,7 @@ class SudokuViewController: UIViewController {
             line1.centerXAnchor.constraint(equalTo: collectionView.leadingAnchor, constant: line1CenterX)
         ])
 
-        let line2 = UIView()
+        
         line2.backgroundColor = .black
         line2.translatesAutoresizingMaskIntoConstraints = false
         collectionView.addSubview(line2)
@@ -93,9 +97,6 @@ class SudokuViewController: UIViewController {
         ])
         
 
-
-
-        let line3 = UIView()
         line3.backgroundColor = .black
         line3.translatesAutoresizingMaskIntoConstraints = false
         collectionView.addSubview(line3)
@@ -106,7 +107,7 @@ class SudokuViewController: UIViewController {
             line3.centerYAnchor.constraint(equalTo: collectionView.topAnchor, constant: line3CenterY)
         ])
 
-        let line4 = UIView()
+       
         line4.backgroundColor = .black
         line4.translatesAutoresizingMaskIntoConstraints = false
         collectionView.addSubview(line4)
@@ -273,7 +274,8 @@ class SudokuViewController: UIViewController {
             "board": board.flatMap { $0 },
             "hints": hints,
             "mistakes": mistakes,
-            "mistakesCoordinates": mistakesCoordinates.map { ["row": $0.0, "column": $0.1] }
+            "mistakesCoordinates": mistakesCoordinates.map { ["row": $0.0, "column": $0.1] },
+            "date": Date()
         ] as [String : Any]
         
         newDocRef.setData(winData)

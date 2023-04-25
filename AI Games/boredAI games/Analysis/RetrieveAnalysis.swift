@@ -18,6 +18,7 @@ struct SudokuGame {
     let hints: Int
     let mistakes: Int
     let mistakesCoordinates: [(Int, Int)]
+    let date: String
     
     
 }
@@ -39,6 +40,7 @@ struct FourInARowGame {
     let total: Int
     let gameFinished: String
     let board : [[BoardItem]]
+    
 }
 
 struct GomokuGame {
@@ -120,6 +122,7 @@ extension AnalysisViewController {
                                         boardItem(from: itemDict)
                                     }
                                 }
+                
                 let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, board: board)
                 games.append(game)
             }
@@ -155,9 +158,9 @@ extension AnalysisViewController {
             completionHandler(games)
         }
     }
-
     func fetchGamesAndHints(userID: String, difficulty: String, completion: @escaping ([SudokuGame]) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/sudoku/difficulty/\(difficulty)")
+        
         var games = [SudokuGame]()
         
         collectionRef.order(by: "wins", descending: false).getDocuments() { (querySnapshot, err) in
@@ -173,12 +176,25 @@ extension AnalysisViewController {
                     let id = data["id"] as? String ?? ""
                     let mistakes = data["mistakes"] as? Int ?? 0
                     let mistakesCoordinates = data["mistakesCoordinates"] as? [[String: Int]] ?? []
-                    
+                    // Retrieve the date from Firestore
+                    let date = data["date"] as? Timestamp
+                    let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "MM/dd"
+                    var finalDate = ""
+                    if let timestamp = data["date"] as? Timestamp {
+                        let date = timestamp.dateValue()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "MM/dd"
+                        let dateInMonthDayFormat = dateFormatter.string(from: date)
+                        finalDate = dateInMonthDayFormat
+                        // Use the formatted date here
+                    }
                     // Create a Game object from the retrieved data
                     let unflattenedBoard = stride(from: 0, to: board.count, by: 9).map {
                         Array(board[$0..<min($0 + 9, board.count)])
                     }
-                    let game = SudokuGame(id: id, wins: wins, time: time, board: unflattenedBoard, hints: hints, mistakes: mistakes, mistakesCoordinates: mistakesCoordinates.map { ($0["row"]!, $0["column"]!) })
+                    
+                    let game = SudokuGame(id: id, wins: wins, time: time, board: unflattenedBoard, hints: hints, mistakes: mistakes, mistakesCoordinates: mistakesCoordinates.map { ($0["row"]!, $0["column"]!) }, date: finalDate)
                     
                     // Add the game to your array of games
                     games.append(game)

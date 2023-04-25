@@ -140,6 +140,11 @@ class GameSelectionViewController: UIViewController {
         sudokuBoardViewController.label8.isHidden = true
         sudokuBoardViewController.label9.isHidden = true
         sudokuBoardViewController.infoButton.isHidden = true
+        sudokuBoardViewController.sudokuLabel.isHidden = true
+        sudokuBoardViewController.line1.isHidden = true
+        sudokuBoardViewController.line2.isHidden = true
+        sudokuBoardViewController.line3.isHidden = true
+        sudokuBoardViewController.line4.isHidden = true
     }
     
 

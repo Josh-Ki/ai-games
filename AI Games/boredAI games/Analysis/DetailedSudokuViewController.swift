@@ -16,10 +16,12 @@ class DetailedSudokuViewController: UIViewController {
     @IBOutlet weak var hintsLabel: UILabel!
     @IBOutlet weak var mistakesLabel: UILabel!
 
+    @IBOutlet weak var datePlayedLabel: UILabel!
     
     var gameNumber : Int?
     var hints : Int?
     var mistakes : Int?
+    var date: String?
     
     var sudokuArray: [[Int]] = []
     var startingArray:[[Int]] = []
@@ -31,6 +33,7 @@ class DetailedSudokuViewController: UIViewController {
         gameLabel.text = "Game \(gameNumber!) Analysis"
         hintsLabel.text = "Hints Used: \(hints!)"
         mistakesLabel.text = "Mistakes Made: \(mistakes!)"
+        datePlayedLabel.text = "Date Played: \(date!)"
         print(sudokuArray)
         let sudokuBoardViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SudokuViewController") as! SudokuViewController
         sudokuBoardViewController.sudoku.startingArray = sudokuArray
@@ -40,6 +43,11 @@ class DetailedSudokuViewController: UIViewController {
        
         addChild(sudokuBoardViewController)
         sudokuBoardViewController.view.frame = imageView.bounds
+        sudokuBoardViewController.sudokuLabel.isHidden = true
+        sudokuBoardViewController.line1.isHidden = true
+        sudokuBoardViewController.line2.isHidden = true
+        sudokuBoardViewController.line4.isHidden = true
+        sudokuBoardViewController.line3.isHidden = true
         imageView.addSubview(sudokuBoardViewController.view)
         sudokuBoardViewController.didMove(toParent: self)
         
