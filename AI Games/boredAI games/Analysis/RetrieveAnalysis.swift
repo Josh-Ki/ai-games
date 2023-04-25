@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseStorage
 struct SudokuGame {
     let id: String
     let wins: Int
@@ -30,6 +31,8 @@ struct TicTacToeGame {
     let draw: Int
     let total: Int
     let gameFinished: String
+    let image: UIImage
+    let date: String
 }
 
 struct FourInARowGame {
@@ -40,6 +43,8 @@ struct FourInARowGame {
     let total: Int
     let gameFinished: String
     let board : [[BoardItem]]
+    let image: UIImage
+    let date: String
     
 }
 
@@ -98,40 +103,86 @@ extension AnalysisViewController {
     }
     
     func fetchConnect4GamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([FourInARowGame]) -> Void) {
-        let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(difficulty)")
-        collectionRef.order(by: "total", descending: false).getDocuments { [self] snapshot, error in
-            if let error = error {
-                print("Error fetching Tic Tac Toe games for wins: \(error)")
-                completionHandler([])
-                return
-            }
             
-            var games: [FourInARowGame] = []
-            
-            for doc in snapshot!.documents {
-                let data = doc.data()
-                let id = data["id"] as! String
-                let gameFinished = data["gameFinished"] as! String
-                let wins = data["wins"] as! Int
-                let lose = data["losses"] as! Int
-                let draw = data["draw"] as! Int
-                let total = data["total"] as! Int
-                let boardData = data["board"] as! [[String: Any]]
-                let board = boardData.compactMap { rowDict in
-                                    (rowDict["row"] as? [[String: Any]])?.compactMap { itemDict in
-                                        boardItem(from: itemDict)
+            let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(difficulty)")
+            collectionRef.order(by: "total", descending: false).getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching Connect 4 games for wins: \(error)")
+                    completionHandler([])
+                    return
+                }
+
+                let documents = snapshot!.documents
+                var games: [FourInARowGame] = []
+                var imagesDownloaded = 0
+
+                for doc in documents {
+                    let data = doc.data()
+                    let id = data["id"] as! String
+                    let gameFinished = data["gameFinished"] as! String
+                    let wins = data["wins"] as! Int
+                    let lose = data["losses"] as! Int
+                    let draw = data["draw"] as! Int
+                    let total = data["total"] as! Int
+                    let boardData = data["board"] as! [[String: Any]]
+                    let board = boardData.compactMap { rowDict in
+                                        (rowDict["row"] as? [[String: Any]])?.compactMap { itemDict in
+                                            self.boardItem(from: itemDict)
+                                        }
                                     }
-                                }
-                
-                let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, board: board)
-                games.append(game)
+                    let date = data["date"] as? Timestamp
+                    let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "MM/dd"
+                    var finalDate = ""
+                    if let timestamp = data["date"] as? Timestamp {
+                        let date = timestamp.dateValue()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "MM/dd"
+                        let dateInMonthDayFormat = dateFormatter.string(from: date)
+                        finalDate = dateInMonthDayFormat
+                        // Use the formatted date here
+                    }
+                    let imageId = data["imageID"]
+                    if let user = Auth.auth().currentUser {
+                        let uid = user.uid
+
+                        let storage = Storage.storage()
+                        let storageRef = storage.reference()
+                        let imageRef = storageRef.child("images/connect4/\(uid)/\(imageId ?? "").png")
+
+                        imageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+                            if let error = error {
+                                print("Error downloading image: \(error.localizedDescription)")
+                            } else if let data = data {
+                                let image = UIImage(data: data)
+
+                                // Create a FourInARowGame object with the downloaded image
+                                let game = FourInARowGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, board: board, image: image!, date: finalDate)
+                                games.append(game)
+                            }
+
+                            // Increment the number of images downloaded
+                            imagesDownloaded += 1
+
+                            // Check if all images have been downloaded
+                            if imagesDownloaded == documents.count {
+                                // All images have been downloaded, call the completion handler with the final array of games
+                                completionHandler(games)
+                            }
+                        }
+                    }
+                }
             }
-            
-            completionHandler(games)
         }
-    }
+
     
     func fetchTicTacToeGamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([TicTacToeGame]) -> Void) {
+        
+
+        let storage = Storage.storage()
+            let storageRef = storage.reference()
+            
+        
         let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(difficulty)")
         collectionRef.order(by: "total", descending: false).getDocuments { snapshot, error in
             if let error = error {
@@ -139,10 +190,12 @@ extension AnalysisViewController {
                 completionHandler([])
                 return
             }
-            
+
+            let documents = snapshot!.documents
             var games: [TicTacToeGame] = []
-            
-            for doc in snapshot!.documents {
+            var imagesDownloaded = 0
+
+            for doc in documents {
                 let data = doc.data()
                 let id = data["id"] as! String
                 let gameFinished = data["gameFinished"] as! String
@@ -150,12 +203,48 @@ extension AnalysisViewController {
                 let lose = data["losses"] as! Int
                 let draw = data["draw"] as! Int
                 let total = data["total"] as! Int
-                
-                let game = TicTacToeGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished)
-                games.append(game)
+                let imageId = data["imageID"]
+                let date = data["date"] as? Timestamp
+                let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "MM/dd"
+                var finalDate = ""
+                if let timestamp = data["date"] as? Timestamp {
+                    let date = timestamp.dateValue()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM/dd"
+                    let dateInMonthDayFormat = dateFormatter.string(from: date)
+                    finalDate = dateInMonthDayFormat
+                    // Use the formatted date here
+                }
+                if let user = Auth.auth().currentUser {
+                    let uid = user.uid
+
+                    let storage = Storage.storage()
+                    let storageRef = storage.reference()
+                    let imageRef = storageRef.child("images/tictactoe/\(uid)/\(imageId ?? "").png")
+
+                    imageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+                        if let error = error {
+                            print("Error downloading image: \(error.localizedDescription)")
+                        } else if let data = data {
+                            let image = UIImage(data: data)
+
+                            // Create a TicTacToeGame object with the downloaded image
+                            let game = TicTacToeGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, image: image!, date: finalDate)
+                            games.append(game)
+                        }
+
+                        // Increment the number of images downloaded
+                        imagesDownloaded += 1
+
+                        // Check if all images have been downloaded
+                        if imagesDownloaded == documents.count {
+                            // All images have been downloaded, call the completion handler with the final array of games
+                            completionHandler(games)
+                        }
+                    }
+                }
             }
-            
-            completionHandler(games)
         }
     }
     func fetchGamesAndHints(userID: String, difficulty: String, completion: @escaping ([SudokuGame]) -> Void) {

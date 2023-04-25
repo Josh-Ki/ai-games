@@ -118,8 +118,10 @@ func tttMinimaxBestMove(gameState: TicTocToeGameState) -> Int {
     }
     
     // https://stackoverflow.com/questions/24003191/pick-a-random-element-from-an-array
-    if let r = bests.randomElement() { // pick one among multiple best moves
+    if let r = bests.randomElement() {
+        print(r)// pick one among multiple best moves
         return r
+        
     }
     return -1
 }

@@ -34,6 +34,9 @@ class ImageCache {
 
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UITextFieldDelegate, UINavigationControllerDelegate {
+    
+    @IBOutlet weak var dataView: UIView!
+    
     @IBOutlet weak var logoutButton: UIButton!
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -42,8 +45,94 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        let games = ["connect4", "sudoku", "gomoku", "tictactoe"]
+        let difficulties = ["Easy", "Med", "Hard"]
 
+        var highestTotals: [String: [String: Int]] = [:]
+        let database = Firestore.firestore()
 
+        // Create a dispatch group to keep track of when all queries have completed
+        let group = DispatchGroup()
+        
+        // Create the indicator
+        let indicator = UIActivityIndicatorView(style: .gray)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        self.dataView.addSubview(indicator)
+
+        // Center the indicator in the dataView
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: self.dataView.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: self.dataView.centerYAnchor)
+        ])
+
+        // Start animating the indicator
+        indicator.startAnimating()
+
+        for game in games {
+            highestTotals[game] = [:]
+            for difficulty in difficulties {
+                let collectionRef = database.collection("/users/\(userID)/\(game)/difficulty/\(difficulty)")
+
+                // Enter the dispatch group before performing the query
+                group.enter()
+
+                // Check if the current game is "sudoku" and use the field "wins" instead of "total"
+                let field = game == "sudoku" ? "wins" : "total"
+                collectionRef.order(by: field, descending: true).limit(to: 1).getDocuments { snapshot, error in
+                    if let error = error {
+                        print("Error fetching highest total for \(game) \(difficulty): \(error)")
+                    } else if let document = snapshot?.documents.first {
+                        let total = document.data()[field] as? Int
+                        highestTotals[game]?[difficulty] = total
+                    }
+
+                    // Leave the dispatch group after the query has completed
+                    group.leave()
+                }
+            }
+        }
+
+        // Wait for all queries to complete before using the highestTotals dictionary
+        group.notify(queue: .main) {
+            print(highestTotals)
+        }
+        
+        // Wait for all queries to complete before using the highestTotals dictionary
+        group.notify(queue: .main) {
+            indicator.stopAnimating()
+            let games = ["connect4", "sudoku", "gomoku", "tictactoe"]
+            let difficulties = ["Easy", "Med", "Hard"]
+            let textColor = UIColor.systemCyan
+            let font = UIFont(name: "Chalkduster", size: 17)!
+            var yOffset: CGFloat = 0
+            let labelHeight: CGFloat = self.dataView.frame.height / CGFloat(games.count + 1) // Calculate the height of each label based on the number of games and the height of the view
+            let titleLabel = UILabel(frame: CGRect(x: 0, y: yOffset, width: self.dataView.frame.width, height: labelHeight))
+            titleLabel.text = "Total Games"
+            titleLabel.textColor = textColor
+            titleLabel.textAlignment = .center
+            titleLabel.font = font
+            self.dataView.addSubview(titleLabel)
+            yOffset += labelHeight
+            for game in games {
+                var total = 0
+                for difficulty in difficulties {
+                    total += highestTotals[game]?[difficulty] ?? 0
+                    
+                }
+                let label = UILabel(frame: CGRect(x: 0, y: yOffset, width: self.dataView.frame.width, height: labelHeight))
+                label.text = "\(game): \(total)"
+                label.textColor = textColor
+                label.textAlignment = .center
+                label.font = font
+                self.dataView.addSubview(label)
+                yOffset += labelHeight
+                
+            }
+            
+        }
+
+        print(highestTotals)
         if let imageData = UserDefaults.standard.data(forKey: "profileImage") {
             let image = UIImage(data: imageData)
             imageView.image = image

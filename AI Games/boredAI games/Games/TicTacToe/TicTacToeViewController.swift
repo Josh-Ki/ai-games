@@ -11,9 +11,10 @@ import FirebaseFirestore
 import FirebaseCore
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 
 class TicTacToeViewController: UIViewController {
-    
+    let user = Auth.auth().currentUser
     @IBOutlet weak var turnLabel: UILabel!
     @IBOutlet weak var r1c1: UIButton!
     @IBOutlet weak var r1c2: UIButton!
@@ -24,13 +25,15 @@ class TicTacToeViewController: UIViewController {
     @IBOutlet weak var r3c1: UIButton!
     @IBOutlet weak var r3c2: UIButton!
     @IBOutlet weak var r3c3: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
     var tictactoe = TicTacToeData()
     var tictactoeEnd = TicTacToeEnd.draw
     let database = Firestore.firestore()
     var selectedDifficulty: String?
     var tttAILevel = 0 // difficulty of AI (easy, medium, invicible)
     
-    private func writeTicTacToeData(wins: Int, losses: Int, draws: Int, moves: [String], userID: String, total: Int) {
+
+    private func writeTicTacToeData(wins: Int, losses: Int, draws: Int, moves: [String], userID: String, total: Int, imageid: String) {
         var tempState = ""
         if tictactoeEnd == TicTacToeEnd.win {
              tempState = "Win"
@@ -52,7 +55,10 @@ class TicTacToeViewController: UIViewController {
                 "draw": draws,
                 "moves": moves,
                 "gameFinished": tempState,
-                "total": total
+                "total": total,
+                "imageID": imageid,
+                "date": Date()
+                
             ] as [String : Any]
             
             newDocRef.setData(data)
@@ -63,91 +69,95 @@ class TicTacToeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initBoard()
+        
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         switch selectedDifficulty {
         case "Easy":
             tttAILevel = 0
-            tttGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.tictactoe.easyWins = highestWins
-                    print("Highest number of wins for easy: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for easy")
+            if user != nil {
+                tttGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.tictactoe.easyWins = highestWins
+                        print("Highest number of wins for easy: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for easy")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.tictactoe.easyDraw = highestDraw
+                        print("Highest number of draw for easy: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for easy")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.tictactoe.easyLoss = highestLoss
+                        print("Highest number of loss for easy: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of wins for easy")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.tictactoe.totalEasy = highestTotal
+                        print("total number of games is \(highestTotal)")
+                    }
                 }
-                if let highestDraw = highestDraw {
-                    self.tictactoe.easyDraw = highestDraw
-                    print("Highest number of draw for easy: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for easy")
-                }
-                if let highestLoss = highestLoss {
-                    self.tictactoe.easyLoss = highestLoss
-                    print("Highest number of loss for easy: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for easy")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.tictactoe.totalEasy = highestTotal
-                    print("total number of games is \(highestTotal)")
-                }
-                
             }
         case "Med":
             tttAILevel = 1
-            tttGetHighestMed(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.tictactoe.medWins = highestWins
-                    print("Highest number of wins for easy: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for med")
+            if user != nil {
+                tttGetHighestMed(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.tictactoe.medWins = highestWins
+                        print("Highest number of wins for easy: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.tictactoe.medDraw = highestDraw
+                        print("Highest number of draws for med: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for med")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.tictactoe.medLoss = highestLoss
+                        print("Highest number of loss for med: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.tictactoe.totalMed = highestTotal
+                        print("total number of games is \(highestTotal)")
+                    }
                 }
-                if let highestDraw = highestDraw {
-                    self.tictactoe.medDraw = highestDraw
-                    print("Highest number of draws for med: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for med")
-                }
-                if let highestLoss = highestLoss {
-                    self.tictactoe.medLoss = highestLoss
-                    print("Highest number of loss for med: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for med")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.tictactoe.totalMed = highestTotal
-                    print("total number of games is \(highestTotal)")
-                }
-                
             }
         case "Hard":
             tttAILevel = 2
-            tttGetHighestMed(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.tictactoe.hardWins = highestWins
-                    print("Highest number of wins for hard: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for hard")
+            if user != nil {
+                tttGetHighestMed(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.tictactoe.hardWins = highestWins
+                        print("Highest number of wins for hard: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for hard")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.tictactoe.hardDraw = highestDraw
+                        print("Highest number of draws for hard: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for hard")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.tictactoe.hardLoss = highestLoss
+                        print("Highest number of loss for hard: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of wins for hard")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.tictactoe.totalHard = highestTotal
+                        print("total number of games is \(highestTotal)")
+                    }
                 }
-                if let highestDraw = highestDraw {
-                    self.tictactoe.hardDraw = highestDraw
-                    print("Highest number of draws for hard: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for hard")
-                }
-                if let highestLoss = highestLoss {
-                    self.tictactoe.hardLoss = highestLoss
-                    print("Highest number of loss for hard: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for hard")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.tictactoe.totalHard = highestTotal
-                    print("total number of games is \(highestTotal)")
-                }
-                
             }
         default:
             print("Defaulted")
@@ -166,51 +176,83 @@ class TicTacToeViewController: UIViewController {
     var xScore = 0
     var userMoves = 0
     
+    func sendPicture(image: UIImage) {
+        let collectionRef = database.collection("/users/\(userID)/tictactoe/difficulty/\(selectedDifficulty!)")
+        let newDocRef = collectionRef.document()
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+
+            // Include the uid in the path
+            tictactoe.imageID = newDocRef.documentID
+            let imageRef = storageRef.child("images/tictactoe/\(uid)/\(tictactoe.imageID).png")
+            
+            if let imageData = image.pngData() {
+                imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+                    if let error = error {
+                        print("Error uploading image: \(error.localizedDescription)")
+                    } else {
+                        print("Image uploaded successfully")
+                    }
+                }
+            }
+        }
+    }
     @IBAction func buttonTapped(_ sender: UIButton) {
         if (addToBoard(sender)) {
             if victory(x) {
+                
+                let image = stackView.snapshot()
+                sendPicture(image: image!)
+                print(toTTTGameState)
                 xScore += 1
                 resultAlert(title: "X WINS")
-                if selectedDifficulty == "Easy"{
-                    tictactoe.easyWins += 1
-                    tictactoe.totalEasy += 1
-                    tictactoeEnd = TicTacToeEnd.win
-                    writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
-                }
-                else if selectedDifficulty == "Med"{
-                    tictactoe.medWins += 1
-                    tictactoe.totalMed += 1
-                    tictactoeEnd = TicTacToeEnd.win
-                    writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed)
-                }
-                else if selectedDifficulty == "Hard"{
-                    tictactoe.hardWins += 1
-                    tictactoe.totalHard += 1
-                    tictactoeEnd = TicTacToeEnd.win
-                    writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
+                if user != nil {
+                    if selectedDifficulty == "Easy"{
+                        tictactoe.easyWins += 1
+                        tictactoe.totalEasy += 1
+                        tictactoeEnd = TicTacToeEnd.win
+                        writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy, imageid: tictactoe.imageID)
+                    }
+                    else if selectedDifficulty == "Med"{
+                        tictactoe.medWins += 1
+                        tictactoe.totalMed += 1
+                        tictactoeEnd = TicTacToeEnd.win
+                        writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed, imageid: tictactoe.imageID)
+                    }
+                    else if selectedDifficulty == "Hard"{
+                        tictactoe.hardWins += 1
+                        tictactoe.totalHard += 1
+                        tictactoeEnd = TicTacToeEnd.win
+                        writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard, imageid: tictactoe.imageID)
+                    }
                 }
                 
             } else if (boardIsFull()) {
+                let image = stackView.snapshot()
+                sendPicture(image: image!)
                 resultAlert(title: "Draw")
-                if selectedDifficulty == "Easy"{
-                    tictactoe.easyDraw += 1
-                    tictactoe.totalEasy += 1
-                    tictactoeEnd = TicTacToeEnd.draw
-                    writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+                if user != nil {
+                    if selectedDifficulty == "Easy"{
+                        tictactoe.easyDraw += 1
+                        tictactoe.totalEasy += 1
+                        tictactoeEnd = TicTacToeEnd.draw
+                        writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy, imageid: tictactoe.imageID)
+                    }
+                    else if selectedDifficulty == "Med"{
+                        tictactoe.medDraw += 1
+                        tictactoe.totalMed += 1
+                        tictactoeEnd = TicTacToeEnd.draw
+                        writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed, imageid: tictactoe.imageID)
+                    }
+                    else if selectedDifficulty == "Hard"{
+                        tictactoe.hardDraw += 1
+                        tictactoe.totalHard += 1
+                        tictactoeEnd = TicTacToeEnd.draw
+                        writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard, imageid: tictactoe.imageID)
+                    }
                 }
-                else if selectedDifficulty == "Med"{
-                    tictactoe.medDraw += 1
-                    tictactoe.totalMed += 1
-                    tictactoeEnd = TicTacToeEnd.draw
-                    writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed)
-                }
-                else if selectedDifficulty == "Hard"{
-                    tictactoe.hardDraw += 1
-                    tictactoe.totalHard += 1
-                    tictactoeEnd = TicTacToeEnd.draw
-                    writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
-                }
-                
 
             } else {
                 AIPlays()
@@ -263,45 +305,52 @@ class TicTacToeViewController: UIViewController {
         if victory(o) {
             oScore += 1
             resultAlert(title: "O Wins")
-            if selectedDifficulty == "Easy"{
-                tictactoe.easyLoss += 1
-                tictactoeEnd = TicTacToeEnd.lose
-                tictactoe.totalEasy += 1
-                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy)
-            }
-            else if selectedDifficulty == "Med"{
-                tictactoe.medLoss += 1
-                tictactoeEnd = TicTacToeEnd.lose
-                tictactoe.totalMed += 1
-                writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID,total: tictactoe.totalMed)
-            }
-            else if selectedDifficulty == "Hard"{
-                tictactoe.hardLoss += 1
-                tictactoeEnd = TicTacToeEnd.lose
-                tictactoe.totalHard += 1
-                writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID,total: tictactoe.totalHard)
+            if user != nil {
+                let image = stackView.snapshot()
+                sendPicture(image: image!)
+                if selectedDifficulty == "Easy"{
+                    tictactoe.easyLoss += 1
+                    tictactoeEnd = TicTacToeEnd.lose
+                    tictactoe.totalEasy += 1
+                    writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID,total: tictactoe.totalEasy, imageid: tictactoe.imageID)
+                }
+                else if selectedDifficulty == "Med"{
+                    tictactoe.medLoss += 1
+                    tictactoeEnd = TicTacToeEnd.lose
+                    tictactoe.totalMed += 1
+                    writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID,total: tictactoe.totalMed, imageid: tictactoe.imageID)
+                }
+                else if selectedDifficulty == "Hard"{
+                    tictactoe.hardLoss += 1
+                    tictactoeEnd = TicTacToeEnd.lose
+                    tictactoe.totalHard += 1
+                    writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID,total: tictactoe.totalHard, imageid: tictactoe.imageID)
+                }
             }
         } else if (boardIsFull()) {
+            let image = stackView.snapshot()
+            sendPicture(image: image!)
             resultAlert(title: "Draw")
-            if selectedDifficulty == "Easy"{
-                tictactoe.easyDraw += 1
-                tictactoe.totalEasy += 1
-                tictactoeEnd = TicTacToeEnd.draw
-                writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy)
+            if user != nil {
+                if selectedDifficulty == "Easy"{
+                    tictactoe.easyDraw += 1
+                    tictactoe.totalEasy += 1
+                    tictactoeEnd = TicTacToeEnd.draw
+                    writeTicTacToeData(wins: tictactoe.easyWins, losses: tictactoe.easyLoss, draws: tictactoe.easyDraw, moves: moves, userID: userID, total: tictactoe.totalEasy, imageid: tictactoe.imageID)
+                }
+                else if selectedDifficulty == "Med"{
+                    tictactoe.medDraw += 1
+                    tictactoe.totalMed += 1
+                    tictactoeEnd = TicTacToeEnd.draw
+                    writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed, imageid: tictactoe.imageID)
+                }
+                else if selectedDifficulty == "Hard"{
+                    tictactoe.hardDraw += 1
+                    tictactoe.totalHard += 1
+                    tictactoeEnd = TicTacToeEnd.draw
+                    writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard, imageid: tictactoe.imageID)
+                }
             }
-            else if selectedDifficulty == "Med"{
-                tictactoe.medDraw += 1
-                tictactoe.totalMed += 1
-                tictactoeEnd = TicTacToeEnd.draw
-                writeTicTacToeData(wins: tictactoe.medWins, losses: tictactoe.medLoss, draws: tictactoe.medDraw, moves: moves, userID: userID, total: tictactoe.totalMed)
-            }
-            else if selectedDifficulty == "Hard"{
-                tictactoe.hardDraw += 1
-                tictactoe.totalHard += 1
-                tictactoeEnd = TicTacToeEnd.draw
-                writeTicTacToeData(wins: tictactoe.hardWins, losses: tictactoe.hardLoss, draws: tictactoe.hardDraw, moves: moves, userID: userID, total: tictactoe.totalHard)
-            }
-//            resultAlert(title: "Draw")
         }
         
         currentTurn = TicTacToeTurn.x
@@ -566,4 +615,15 @@ extension TicTacToeViewController {
         
     }
 
+}
+
+extension UIView {
+    func snapshot() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        layer.render(in: context)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }

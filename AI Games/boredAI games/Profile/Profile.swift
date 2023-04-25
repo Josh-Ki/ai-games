@@ -10,7 +10,6 @@ import UIKit
 
 struct Profile {
     var profileImage: UIImage
-    var medWins: Int = 0
-    var hardWins: Int = 0
+
     
 }

@@ -730,8 +730,18 @@ animateButton(button: tictactoeButton)
             if selectedGame == .c4 {
                 let game = c4EasyGames[indexPath.row]
                 let c4DetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedC4ViewController") as! DetailedC4ViewController
-                print(game.board)
+                c4DetailVC.image = game.image
+                c4DetailVC.date = game.date
+                
                 self.navigationController?.pushViewController(c4DetailVC, animated: true)
+            }
+            if selectedGame == .ttt {
+                let game = tttEasyGames[indexPath.row]
+                let tttDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedTTTViewController") as! DetailedTTTViewController
+                print(game.image)
+                tttDetailVC.image = game.image
+                tttDetailVC.date = game.date
+                self.navigationController?.pushViewController(tttDetailVC, animated: true)
             }
         case medTableView:
             if selectedGame == .sudoku {
@@ -746,6 +756,21 @@ animateButton(button: tictactoeButton)
                 // Present the new view controller
             self.navigationController?.pushViewController(detailVC, animated: true)
             }
+            if selectedGame == .ttt {
+                let game = tttMedGames[indexPath.row]
+                let tttDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedTTTViewController") as! DetailedTTTViewController
+                print(game.image)
+                tttDetailVC.image = game.image
+                self.navigationController?.pushViewController(tttDetailVC, animated: true)
+            }
+            if selectedGame == .c4 {
+                let game = c4MedGames[indexPath.row]
+                let c4DetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedC4ViewController") as! DetailedC4ViewController
+                c4DetailVC.image = game.image
+                c4DetailVC.date = game.date
+                
+                self.navigationController?.pushViewController(c4DetailVC, animated: true)
+            }
         case hardTableView:
             if selectedGame == .sudoku {
                 let game = hardGames[indexPath.row]
@@ -757,6 +782,21 @@ animateButton(button: tictactoeButton)
                 detailVC.date = game.date
                 // Present the new view controller
             self.navigationController?.pushViewController(detailVC, animated: true)
+            }
+            if selectedGame == .ttt {
+                let game = tttHardGames[indexPath.row]
+                let tttDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedTTTViewController") as! DetailedTTTViewController
+                print(game.image)
+                tttDetailVC.image = game.image
+                self.navigationController?.pushViewController(tttDetailVC, animated: true)
+            }
+            if selectedGame == .c4 {
+                let game = c4HardGames[indexPath.row]
+                let c4DetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedC4ViewController") as! DetailedC4ViewController
+                c4DetailVC.image = game.image
+                c4DetailVC.date = game.date
+                
+                self.navigationController?.pushViewController(c4DetailVC, animated: true)
             }
         
         default:

@@ -28,4 +28,5 @@ struct FourInARowData {
     var totalEasy: Int = 0
     var totalMed: Int = 0
     var totalHard: Int = 0
+    var imageID : String = ""
 }

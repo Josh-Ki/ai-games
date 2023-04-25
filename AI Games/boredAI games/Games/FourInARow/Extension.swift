@@ -11,7 +11,7 @@ import UIKit
 
 extension FourInARowViewController {
     
-    func writeFourInARowData(wins: Int, losses: Int, draws: Int, userID: String, total: Int, board: [[BoardItem]]) {
+    func writeFourInARowData(wins: Int, losses: Int, draws: Int, userID: String, total: Int, board: [[BoardItem]], imageid: String) {
         var tempState = ""
         if fourInARowEnd == FourInARowEnd.win {
             tempState = "Win"
@@ -36,7 +36,9 @@ extension FourInARowViewController {
             "draw": draws,
             "gameFinished": tempState,
             "total": total,
-            "board": boardDict
+            "board": boardDict,
+            "date": Date(),
+            "imageID": imageid
         ] as [String : Any]
             
         newDocRef.setData(data)

@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseCore
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 
 class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -38,10 +39,6 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         case "Easy":
             maxDepth = 3
             maxIterations = 50
-            
-                
-                
-
                     if user != nil {
                         c4GetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
                             if let highestWins = highestWins {
@@ -169,6 +166,29 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         return board[section].count
     }
     
+    func sendPicture(image: UIImage) {
+        let collectionRef = database.collection("/users/\(userID)/connect4/difficulty/\(selectedDifficulty!)")
+        let newDocRef = collectionRef.document()
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+
+            // Include the uid in the path
+            fourInARowData.imageID = newDocRef.documentID
+            let imageRef = storageRef.child("images/connect4/\(uid)/\(fourInARowData.imageID).png")
+            
+            if let imageData = image.pngData() {
+                imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+                    if let error = error {
+                        print("Error uploading image: \(error.localizedDescription)")
+                    } else {
+                        print("Image uploaded successfully")
+                    }
+                }
+            }
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
@@ -187,45 +207,48 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
         
         if victory() {
             if yellowTurn {
-                
+                let image = collectionView.snapshot()
+                sendPicture(image: image!)
                 yellowScore += 1
                 if selectedDifficulty == "Easy"{
                     fourInARowData.easyWins += 1
                     fourInARowData.totalEasy += 1
                     fourInARowEnd = FourInARowEnd.win
-                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy, board: board)
+                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy, board: board, imageid: fourInARowData.imageID)
                 }
                 else if selectedDifficulty == "Med"{
                     fourInARowData.medWins += 1
                     fourInARowData.totalMed += 1
                     fourInARowEnd = FourInARowEnd.win
-                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed, board: board)
+                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed, board: board, imageid: fourInARowData.imageID)
                 }
                 else if selectedDifficulty == "Hard"{
                     fourInARowData.hardWins += 1
                     fourInARowData.totalHard += 1
                     fourInARowEnd = FourInARowEnd.win
-                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board)
+                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board, imageid: fourInARowData.imageID)
                 }
             }
             else{
+                let image = collectionView.snapshot()
+                sendPicture(image: image!)
                 if selectedDifficulty == "Easy"{
                     fourInARowData.easyLoss += 1
                     fourInARowEnd = FourInARowEnd.lose
                     fourInARowData.totalEasy += 1
-                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw,userID: userID,total: fourInARowData.totalEasy, board: board)
+                    writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw,userID: userID,total: fourInARowData.totalEasy, board: board, imageid: fourInARowData.imageID)
                 }
                 else if selectedDifficulty == "Med"{
                     fourInARowData.medLoss += 1
                     fourInARowEnd = FourInARowEnd.lose
                     fourInARowData.totalMed += 1
-                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID,total: fourInARowData.totalMed, board: board)
+                    writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID,total: fourInARowData.totalMed, board: board, imageid: fourInARowData.imageID)
                 }
                 else if selectedDifficulty == "Hard"{
                     fourInARowData.hardLoss += 1
                     fourInARowEnd = FourInARowEnd.lose
                     fourInARowData.totalHard += 1
-                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board)
+                    writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board, imageid: fourInARowData.imageID)
                 }
                 redScore += 1
             }
@@ -234,24 +257,26 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
             
         
     else if boardIsFull() {
+        let image = collectionView.snapshot()
+        sendPicture(image: image!)
             resultAlert("Draw")
             if selectedDifficulty == "Easy"{
                 fourInARowData.easyDraw += 1
                 fourInARowData.totalEasy += 1
                 fourInARowEnd = FourInARowEnd.draw
-                writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy, board: board)
+                writeFourInARowData(wins: fourInARowData.easyWins, losses: fourInARowData.easyLoss, draws: fourInARowData.easyDraw, userID: userID, total: fourInARowData.totalEasy, board: board, imageid: fourInARowData.imageID)
             }
             else if selectedDifficulty == "Med"{
                 fourInARowData.medDraw += 1
                 fourInARowData.totalMed += 1
                 fourInARowEnd = FourInARowEnd.draw
-                writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed, board: board)
+                writeFourInARowData(wins: fourInARowData.medWins, losses: fourInARowData.medLoss, draws: fourInARowData.medDraw, userID: userID, total: fourInARowData.totalMed, board: board, imageid: fourInARowData.imageID)
             }
             else if selectedDifficulty == "Hard"{
                 fourInARowData.hardDraw += 1
                 fourInARowData.totalHard += 1
                 fourInARowEnd = FourInARowEnd.draw
-                writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board)
+                writeFourInARowData(wins: fourInARowData.hardWins, losses: fourInARowData.hardLoss, draws: fourInARowData.hardDraw, userID: userID, total: fourInARowData.totalHard, board: board, imageid: fourInARowData.imageID)
             }
         } else {
             toggleTurn(turnImage)
@@ -305,14 +330,19 @@ class FourInARowViewController: UIViewController, UICollectionViewDelegate, UICo
                     updateBoard(boardItem)
                     
                     if victory() {
+                        
                        
                         if yellowTurn {
                             yellowScore += 1
                         } else {
                             redScore += 1
                         }
+                        let image = collectionView.snapshot()
+                        sendPicture(image: image!)
                         resultAlert(currentTurnVictoryMessage())
                     } else if boardIsFull() {
+                        let image = collectionView.snapshot()
+                        sendPicture(image: image!)
                         resultAlert("Draw")
                     } else {
                         toggleTurn(turnImage)

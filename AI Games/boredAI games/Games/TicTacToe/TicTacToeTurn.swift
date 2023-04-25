@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 enum TicTacToeTurn {
     case x
     case o
@@ -29,4 +30,6 @@ struct TicTacToeData {
     var totalEasy: Int = 0
     var totalMed: Int = 0
     var totalHard: Int = 0
+    var image: UIImage?
+    var imageID: String = ""
 }
