@@ -47,7 +47,15 @@ class GameSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imageView.contentMode = .scaleAspectFill
         
+        // Set the image view's corner radius to half of its width
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        
+        // Make sure the image is clipped to the rounded shape
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 2.0
+        imageView.layer.borderColor = UIColor.black.cgColor
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
 
         

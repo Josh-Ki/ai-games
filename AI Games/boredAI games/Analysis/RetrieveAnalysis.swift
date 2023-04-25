@@ -130,7 +130,7 @@ extension AnalysisViewController {
                                             self.boardItem(from: itemDict)
                                         }
                                     }
-                    let date = data["date"] as? Timestamp
+                    
                     let dateFormatter = DateFormatter()
                                 dateFormatter.dateFormat = "MM/dd"
                     var finalDate = ""
