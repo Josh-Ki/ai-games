@@ -29,13 +29,19 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
     }
     
     // https://github.com/malikusha/Gomoku/blob/master/agent.py
+    // https://en.wikipedia.org/wiki/Alpha–beta_pruning#Pseudocode
     if (maxAgent) {
         var v = Int.min
         for i in legalMoves {
             gameState.move(pos: i)
             v = max(v, minimax(gameState: gameState, depth: depth-1, maxAgent: false, a: a, b: b))
-            a = max(a, v)
             gameState.backMove(pos: i)
+            
+            if (v > b) {
+                return v // beta cutoff
+            }
+            
+            a = max(a, v)
             if (a >= b) {
                 return v
             }
@@ -46,8 +52,13 @@ private func minimax(gameState: GomokuGameState, depth: Int, maxAgent: Bool, a: 
         for i in legalMoves {
             gameState.move(pos: i)
             v = min(v, minimax(gameState: gameState, depth: depth-1, maxAgent: true, a: a, b: b))
-            b = min(b, v)
             gameState.backMove(pos: i)
+            
+            if (v < a) {
+                return v // alpha cutoff
+            }
+            
+            b = min(b, v)
             if (a >= b) {
                 return v
             }
