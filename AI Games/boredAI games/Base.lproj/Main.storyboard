@@ -64,6 +64,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XE2-Jg-zhq">
                                 <rect key="frame" x="75" y="700" width="240" height="31"/>
                                 <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.20470085739999999" green="0.47178941969999999" blue="0.96475678679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
@@ -1119,17 +1120,41 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DSA-Cb-MCK">
-                                <rect key="frame" x="75" y="712" width="240" height="35"/>
+                                <rect key="frame" x="75" y="712.66666666666663" width="240" height="34.333333333333371"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Delete Account"/>
+                                <buttonConfiguration key="configuration" style="filled">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Delete Account">
+                                            <attributes>
+                                                <font key="NSFont" size="16" name="Chalkduster"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" red="0.20470085739999999" green="0.47178941969999999" blue="0.96475678679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="baseBackgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="deleteAccountButtonPressed:" destination="YRj-8l-CV8" eventType="touchUpInside" id="IlC-Gs-rxp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ozf-5h-VEl">
-                                <rect key="frame" x="75" y="669" width="240" height="35"/>
+                                <rect key="frame" x="75" y="671" width="240" height="33.666666666666629"/>
+                                <color key="backgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.20470085739999999" green="0.47178941969999999" blue="0.96475678679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Logout"/>
+                                <buttonConfiguration key="configuration" style="filled">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Logout">
+                                            <attributes>
+                                                <font key="NSFont" size="16" name="Chalkduster"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" systemColor="tintColor"/>
+                                    <color key="baseBackgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="logoutPressed:" destination="YRj-8l-CV8" eventType="touchUpInside" id="MQf-41-g1W"/>
                                 </connections>
@@ -1141,7 +1166,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RLe-Dp-qLR">
-                                <rect key="frame" x="75" y="367" width="240" height="294"/>
+                                <rect key="frame" x="75" y="367" width="240" height="296"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -1168,6 +1193,7 @@
                     <navigationItem key="navigationItem" id="aGz-67-344"/>
                     <connections>
                         <outlet property="dataView" destination="RLe-Dp-qLR" id="eu2-UZ-Fia"/>
+                        <outlet property="deleteAccountButton" destination="DSA-Cb-MCK" id="gvH-oW-H53"/>
                         <outlet property="imageView" destination="1Pq-ic-rNv" id="0OZ-KD-4gB"/>
                         <outlet property="logoutButton" destination="Ozf-5h-VEl" id="Nip-Dd-1tx"/>
                         <outlet property="nameTextField" destination="dyv-IV-cZB" id="4po-z1-gPu"/>
@@ -1564,6 +1590,9 @@
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

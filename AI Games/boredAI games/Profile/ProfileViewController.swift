@@ -39,7 +39,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBOutlet weak var logoutButton: UIButton!
     
+    @IBOutlet weak var deleteAccountButton: UIButton!
+    
     @IBOutlet weak var nameTextField: UITextField!
+    
     var profile : Profile?
     private let imageCache = ImageCache()
     @IBOutlet weak var imageView: UIImageView!
