@@ -138,7 +138,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             imageView.image = image
         } else {
             // If the image is not cached, download it from Firebase
-            let storageRef = Storage.storage().reference().child("profileImages/\(userID).jpg")
+            let storageRef = Storage.storage().reference().child("images/profile/\(userID).jpg")
 
             storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
                 if let error = error {
@@ -232,7 +232,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 print("Failed to convert image to Data.")
                 return
             }
-            let storageRef = Storage.storage().reference().child("profileImages/\(userID).jpg")
+            let storageRef = Storage.storage().reference().child("images/profile/\(userID).jpg")
             storageRef.putData(imageData, metadata: nil) { metadata, error in
                 if let error = error {
                     print("Error uploading profile image: \(error.localizedDescription)")

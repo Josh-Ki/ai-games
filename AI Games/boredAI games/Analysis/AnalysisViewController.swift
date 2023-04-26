@@ -812,6 +812,7 @@ animateButton(button: tictactoeButton)
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
         sudokuButtonPressed(sudokuButton ?? 0)
         customizeButton(sudokuButton)
         customizeButton(gomokuButton)
@@ -828,6 +829,8 @@ animateButton(button: tictactoeButton)
         medTableView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
         hardTableView.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
   
+        
+        
         easyTableView.showsVerticalScrollIndicator = false
         medTableView.showsVerticalScrollIndicator = false
         hardTableView.showsVerticalScrollIndicator = false
