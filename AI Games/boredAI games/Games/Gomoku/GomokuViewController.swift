@@ -13,7 +13,7 @@ import Firebase
 
 // https://stackoverflow.com/questions/31662155/how-to-change-uicollectionviewcell-size-programmatically-in-swift
 class GomokuViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
+    let user = Auth.auth().currentUser
     var gameboard: [String] = Array.init(repeating: "", count: 100) // pieces on gameboard
     var backColours: [UIColor] = [] // background colours of gameboard cells
     var foreColours: [UIColor] = Array.init(repeating: UIColor.black, count: 100) // display colours of pieces (only become white when marked in winning sequence)
@@ -73,29 +73,31 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                 let s = toGomokuGameState()
                 whatsNext(gameState: s)
                 if gameOver {
-                    if selectedDifficulty == "Easy"{
-                        gomokuData.easyWins += 1
-                        gomokuData.totalEasy += 1
-                        gomokuEnd = GomokuEnd.win
-                        let image = gomokuView.snapshot()
-                        sendPicture(image: image!)
-                        writeGomokuData(wins: gomokuData.easyWins, losses: gomokuData.easyLoss, draws: gomokuData.easyDraw, userID: userID, total: gomokuData.totalEasy, imageid: gomokuData.imageID)
-                    }
-                    else if selectedDifficulty == "Med"{
-                        gomokuData.medWins += 1
-                        gomokuData.totalMed += 1
-                        gomokuEnd = GomokuEnd.win
-                        let image = gomokuView.snapshot()
-                        sendPicture(image: image!)
-                        writeGomokuData(wins: gomokuData.medWins, losses: gomokuData.medLoss, draws: gomokuData.medDraw, userID: userID, total: gomokuData.totalMed, imageid: gomokuData.imageID)
-                    }
-                    else if selectedDifficulty == "Hard"{
-                        gomokuData.hardWins += 1
-                        gomokuData.totalHard += 1
-                        gomokuEnd = GomokuEnd.win
-                        let image = gomokuView.snapshot()
-                        sendPicture(image: image!)
-                        writeGomokuData(wins: gomokuData.hardWins, losses: gomokuData.hardLoss, draws: gomokuData.hardDraw, userID: userID, total: gomokuData.totalHard, imageid: gomokuData.imageID)
+                    if user != nil {
+                        if selectedDifficulty == "Easy"{
+                            gomokuData.easyWins += 1
+                            gomokuData.totalEasy += 1
+                            gomokuEnd = GomokuEnd.win
+                            let image = gomokuView.snapshot()
+                            sendPicture(image: image!)
+                            writeGomokuData(wins: gomokuData.easyWins, losses: gomokuData.easyLoss, draws: gomokuData.easyDraw, userID: userID, total: gomokuData.totalEasy, imageid: gomokuData.imageID)
+                        }
+                        else if selectedDifficulty == "Med"{
+                            gomokuData.medWins += 1
+                            gomokuData.totalMed += 1
+                            gomokuEnd = GomokuEnd.win
+                            let image = gomokuView.snapshot()
+                            sendPicture(image: image!)
+                            writeGomokuData(wins: gomokuData.medWins, losses: gomokuData.medLoss, draws: gomokuData.medDraw, userID: userID, total: gomokuData.totalMed, imageid: gomokuData.imageID)
+                        }
+                        else if selectedDifficulty == "Hard"{
+                            gomokuData.hardWins += 1
+                            gomokuData.totalHard += 1
+                            gomokuEnd = GomokuEnd.win
+                            let image = gomokuView.snapshot()
+                            sendPicture(image: image!)
+                            writeGomokuData(wins: gomokuData.hardWins, losses: gomokuData.hardLoss, draws: gomokuData.hardDraw, userID: userID, total: gomokuData.totalHard, imageid: gomokuData.imageID)
+                        }
                     }
                     
                 }
@@ -168,29 +170,31 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
                 let s = toGomokuGameState()
                 whatsNext(gameState: s)
                 if gameOver {
-                    if selectedDifficulty == "Easy"{
-                        gomokuData.easyLoss += 1
-                        gomokuData.totalEasy += 1
-                        gomokuEnd = GomokuEnd.lose
-                        let image = gomokuView.snapshot()
-                        sendPicture(image: image!)
-                        writeGomokuData(wins: gomokuData.easyWins, losses: gomokuData.easyLoss, draws: gomokuData.easyDraw, userID: userID, total: gomokuData.totalEasy, imageid: gomokuData.imageID)
-                    }
-                    else if selectedDifficulty == "Med"{
-                        gomokuData.medLoss += 1
-                        gomokuData.totalMed += 1
-                        gomokuEnd = GomokuEnd.lose
-                        let image = gomokuView.snapshot()
-                        sendPicture(image: image!)
-                        writeGomokuData(wins: gomokuData.medWins, losses: gomokuData.medLoss, draws: gomokuData.medDraw, userID: userID, total: gomokuData.totalMed, imageid: gomokuData.imageID)
-                    }
-                    else if selectedDifficulty == "Hard"{
-                        gomokuData.hardLoss += 1
-                        gomokuData.totalHard += 1
-                        gomokuEnd = GomokuEnd.lose
-                        let image = gomokuView.snapshot()
-                        sendPicture(image: image!)
-                        writeGomokuData(wins: gomokuData.hardWins, losses: gomokuData.hardLoss, draws: gomokuData.hardDraw, userID: userID, total: gomokuData.totalHard, imageid: gomokuData.imageID)
+                    if user != nil {
+                        if selectedDifficulty == "Easy"{
+                            gomokuData.easyLoss += 1
+                            gomokuData.totalEasy += 1
+                            gomokuEnd = GomokuEnd.lose
+                            let image = gomokuView.snapshot()
+                            sendPicture(image: image!)
+                            writeGomokuData(wins: gomokuData.easyWins, losses: gomokuData.easyLoss, draws: gomokuData.easyDraw, userID: userID, total: gomokuData.totalEasy, imageid: gomokuData.imageID)
+                        }
+                        else if selectedDifficulty == "Med"{
+                            gomokuData.medLoss += 1
+                            gomokuData.totalMed += 1
+                            gomokuEnd = GomokuEnd.lose
+                            let image = gomokuView.snapshot()
+                            sendPicture(image: image!)
+                            writeGomokuData(wins: gomokuData.medWins, losses: gomokuData.medLoss, draws: gomokuData.medDraw, userID: userID, total: gomokuData.totalMed, imageid: gomokuData.imageID)
+                        }
+                        else if selectedDifficulty == "Hard"{
+                            gomokuData.hardLoss += 1
+                            gomokuData.totalHard += 1
+                            gomokuEnd = GomokuEnd.lose
+                            let image = gomokuView.snapshot()
+                            sendPicture(image: image!)
+                            writeGomokuData(wins: gomokuData.hardWins, losses: gomokuData.hardLoss, draws: gomokuData.hardDraw, userID: userID, total: gomokuData.totalHard, imageid: gomokuData.imageID)
+                        }
                     }
                 }
                 manPlay.text = "Man plays \(bw(abbr: turn))"

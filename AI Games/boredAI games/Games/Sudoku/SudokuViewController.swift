@@ -15,7 +15,7 @@ import Firebase
 class SudokuViewController: UIViewController {
     
     @IBOutlet weak var deleteButton: UIButton!
-    
+    let user = Auth.auth().currentUser
     @IBOutlet weak var sudokuLabel: UILabel!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
@@ -383,17 +383,23 @@ class SudokuViewController: UIViewController {
         if selectedDifficulty! == "Easy" {
             sudoku.easyWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
+            if user != nil {
+                writeUserData(wins: sudoku.easyWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
+            }
         }
         else if selectedDifficulty! == "Med" {
             sudoku.medWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
+            if user != nil {
+                writeUserData(wins: sudoku.medWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
+            }
         }
         else if selectedDifficulty! == "Hard" {
             sudoku.hardWins += 1
             time.invalidate()
-            writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
+            if user != nil {
+                writeUserData(wins: sudoku.hardWins, difficulty: selectedDifficulty!, userID: userID, time: timeStringToSeconds(timer.text!), board: sudoku.startingArray, hints: sudoku.hintsUsed, mistakes: sudoku.mistakesMade, mistakesCoordinates: sudoku.mistakeCoordinates)
+            }
         }
 
         return true

@@ -203,12 +203,13 @@ class TicTacToeViewController: UIViewController {
         if (addToBoard(sender)) {
             if victory(x) {
                 
-                let image = stackView.snapshot()
-                sendPicture(image: image!)
+                
                 print(toTTTGameState)
                 xScore += 1
                 resultAlert(title: "X WINS")
                 if user != nil {
+                    let image = stackView.snapshot()
+                    sendPicture(image: image!)
                     if selectedDifficulty == "Easy"{
                         tictactoe.easyWins += 1
                         tictactoe.totalEasy += 1
@@ -230,10 +231,11 @@ class TicTacToeViewController: UIViewController {
                 }
                 
             } else if (boardIsFull()) {
-                let image = stackView.snapshot()
-                sendPicture(image: image!)
+               
                 resultAlert(title: "Draw")
                 if user != nil {
+                    let image = stackView.snapshot()
+                    sendPicture(image: image!)
                     if selectedDifficulty == "Easy"{
                         tictactoe.easyDraw += 1
                         tictactoe.totalEasy += 1
@@ -328,10 +330,11 @@ class TicTacToeViewController: UIViewController {
                 }
             }
         } else if (boardIsFull()) {
-            let image = stackView.snapshot()
-            sendPicture(image: image!)
+            
             resultAlert(title: "Draw")
             if user != nil {
+                let image = stackView.snapshot()
+                sendPicture(image: image!)
                 if selectedDifficulty == "Easy"{
                     tictactoe.easyDraw += 1
                     tictactoe.totalEasy += 1
