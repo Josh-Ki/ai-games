@@ -205,6 +205,7 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0)
+        transTable.removeAll()
         
         switch selectedDifficulty {
         case "Easy":
@@ -317,18 +318,21 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         gomokuView.delegate = self
         gomokuView.dataSource = self
         
+        var man = ""
         switch selectedDifficulty {
         case "Easy":
             gomokuAILevel = 0
+            man = ["BLACK", "WHITE"].randomElement()!
         case "Med":
             gomokuAILevel = 1
+            man = "BLACK" // gomoku has first-player advantage
         case "Hard":
-            gomokuAILevel = 2
+            gomokuAILevel = 1
+            man = "WHITE"
         default:
             print("Defaulted")
         }
         
-        let man: String = ["BLACK", "WHITE"].randomElement()!
         manTurn = man == "BLACK" ? "B" : "W"
         manPlay.text = "Man plays \(man)"
         if (man == "WHITE") {
