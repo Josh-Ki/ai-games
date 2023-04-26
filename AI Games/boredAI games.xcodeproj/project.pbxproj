@@ -59,6 +59,7 @@
 		80E6B09229F5A4D500772542 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E6B09129F5A4D500772542 /* Launch Screen.storyboard */; };
 		80E7047F29F5959D00AAF07B /* GomokuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E7047E29F5959D00AAF07B /* GomokuExtension.swift */; };
 		80EF285329EC63BB00308024 /* RetrieveAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */; };
+		80FE734F29F8E06000F5D74E /* DetailedGomokuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FE734E29F8E06000F5D74E /* DetailedGomokuViewController.swift */; };
 		E56184B629906C39003E2B05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B529906C39003E2B05 /* AppDelegate.swift */; };
 		E56184B829906C39003E2B05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B729906C39003E2B05 /* SceneDelegate.swift */; };
 		E56184BA29906C39003E2B05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56184B929906C39003E2B05 /* ViewController.swift */; };
@@ -125,6 +126,7 @@
 		80E6B09129F5A4D500772542 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		80E7047E29F5959D00AAF07B /* GomokuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuExtension.swift; sourceTree = "<group>"; };
 		80EF285229EC63BB00308024 /* RetrieveAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAnalysis.swift; sourceTree = "<group>"; };
+		80FE734E29F8E06000F5D74E /* DetailedGomokuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGomokuViewController.swift; sourceTree = "<group>"; };
 		E56184B229906C39003E2B05 /* boredAI games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "boredAI games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E56184B529906C39003E2B05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E56184B729906C39003E2B05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				8043605129F43C820089CABF /* DetailedC4ViewController.swift */,
 				80CB3D3B29EE1C9200D4A54A /* DetailedSudokuViewController.swift */,
 				80419EF429F06BFC00911791 /* DetailedTTTViewController.swift */,
+				80FE734E29F8E06000F5D74E /* DetailedGomokuViewController.swift */,
 			);
 			path = Analysis;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				80076A7129EC3D360045ADD9 /* Sudoku.swift in Sources */,
 				801CD9D829ED9D0000DD081F /* ProfileViewController.swift in Sources */,
 				80C3BB4929C7CEB300A38C02 /* AI.swift in Sources */,
+				80FE734F29F8E06000F5D74E /* DetailedGomokuViewController.swift in Sources */,
 				E59F7E9C29C8B325002F4C1E /* GomokuViewController.swift in Sources */,
 				80B4596229AC304400CD0EBE /* AnalysisViewController.swift in Sources */,
 				80E7047F29F5959D00AAF07B /* GomokuExtension.swift in Sources */,

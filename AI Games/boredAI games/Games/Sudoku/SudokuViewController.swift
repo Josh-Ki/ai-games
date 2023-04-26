@@ -429,6 +429,18 @@ class SudokuViewController: UIViewController {
                 }
             }
         }
+        if verify() {
+            let alert = UIAlertController(title: "Solved", message: "You have solved the Sudoku!", preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in
+                self?.restart()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(restartAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+        } 
 
         // Select a random empty cell and fill in the correct number
         if let randomEmptyCell = emptyCells.randomElement() {
@@ -532,6 +544,19 @@ class SudokuViewController: UIViewController {
         print("WHen")
         _ = textField.tag / 9
         _ = textField.tag % 9
+        if verify() {
+            let alert = UIAlertController(title: "Solved", message: "You have solved the Sudoku!", preferredStyle: .alert)
+            let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in
+                self?.restart()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(restartAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+        }
+        
 //        if let text = textField.text, let value = Int(text), value >= 1, value <= 9 {
 //            sudoku.partialArray[row][col] = value
 //            if sudoku.partialArray[row][col] != sudoku.sudokuArray[row][col]{

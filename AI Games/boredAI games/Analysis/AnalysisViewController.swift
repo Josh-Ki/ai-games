@@ -743,6 +743,14 @@ animateButton(button: tictactoeButton)
                 tttDetailVC.date = game.date
                 self.navigationController?.pushViewController(tttDetailVC, animated: true)
             }
+            if selectedGame == .gomoku {
+                let game = gomokuEasyGames[indexPath.row]
+                let gomokuDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedGomokuViewController") as! DetailedGomokuViewController
+                print(game.image)
+                gomokuDetailVC.image = game.image
+                gomokuDetailVC.date = game.date
+                self.navigationController?.pushViewController(gomokuDetailVC, animated: true)
+            }
         case medTableView:
             if selectedGame == .sudoku {
                 
@@ -771,6 +779,14 @@ animateButton(button: tictactoeButton)
                 
                 self.navigationController?.pushViewController(c4DetailVC, animated: true)
             }
+            if selectedGame == .gomoku {
+                let game = gomokuMedGames[indexPath.row]
+                let gomokuDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedGomokuViewController") as! DetailedGomokuViewController
+                print(game.image)
+                gomokuDetailVC.image = game.image
+                gomokuDetailVC.date = game.date
+                self.navigationController?.pushViewController(gomokuDetailVC, animated: true)
+            }
         case hardTableView:
             if selectedGame == .sudoku {
                 let game = hardGames[indexPath.row]
@@ -798,7 +814,14 @@ animateButton(button: tictactoeButton)
                 
                 self.navigationController?.pushViewController(c4DetailVC, animated: true)
             }
-        
+            if selectedGame == .gomoku {
+                let game = gomokuHardGames[indexPath.row]
+                let gomokuDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailedGomokuViewController") as! DetailedGomokuViewController
+                print(game.image)
+                gomokuDetailVC.image = game.image
+                gomokuDetailVC.date = game.date
+                self.navigationController?.pushViewController(gomokuDetailVC, animated: true)
+            }
         default:
             break
         }

@@ -55,6 +55,8 @@ struct GomokuGame {
     let draw: Int
     let total: Int
     let gameFinished: String
+    let image: UIImage
+    let date: String
 }
 
 
@@ -62,7 +64,7 @@ extension AnalysisViewController {
     
     func fetchGomokuGamesForWins(userID: String, difficulty: String, completionHandler: @escaping ([GomokuGame]) -> Void) {
         let collectionRef = database.collection("/users/\(userID)/gomoku/difficulty/\(difficulty)")
-        collectionRef.order(by: "total", descending: false).getDocuments { snapshot, error in
+        collectionRef.order(by: "total", descending: true).getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching gomoku games for wins: \(error)")
                 completionHandler([])
@@ -70,8 +72,9 @@ extension AnalysisViewController {
             }
             
             var games: [GomokuGame] = []
-            
-            for doc in snapshot!.documents {
+            var imagesDownloaded = 0
+            let documents = snapshot!.documents
+            for doc in documents {
                 let data = doc.data()
                 let id = data["id"] as! String
                 
@@ -80,11 +83,50 @@ extension AnalysisViewController {
                 let draw = data["draw"] as! Int
                 let total = data["total"] as! Int
                 let gameFinished = data["gameFinished"] as! String
-                let game = GomokuGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished)
-                games.append(game)
+                let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "MM/dd"
+                var finalDate = ""
+                if let timestamp = data["date"] as? Timestamp {
+                    let date = timestamp.dateValue()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM/dd"
+                    let dateInMonthDayFormat = dateFormatter.string(from: date)
+                    finalDate = dateInMonthDayFormat
+                    // Use the formatted date here
+                }
+                let imageId = data["imageID"]
+                if let user = Auth.auth().currentUser {
+                    let uid = user.uid
+
+                    let storage = Storage.storage()
+                    let storageRef = storage.reference()
+                    let imageRef = storageRef.child("images/gomoku/\(uid)/\(imageId ?? "").png")
+
+                    imageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+                        if let error = error {
+                            print("Error downloading image: \(error.localizedDescription)")
+                        } else if let data = data {
+                            let image = UIImage(data: data)
+
+                            // Create a FourInARowGame object with the downloaded image
+                            let game = GomokuGame(id: id, wins: wins, lose: lose, draw: draw, total: total, gameFinished: gameFinished, image: image!, date: finalDate)
+                            games.append(game)
+                        }
+
+                        // Increment the number of images downloaded
+                        imagesDownloaded += 1
+
+                        // Check if all images have been downloaded
+                        if imagesDownloaded == documents.count {
+                            // All images have been downloaded, call the completion handler with the final array of games
+                            completionHandler(games)
+                        }
+                    }
+                }
+                
             }
             
-            completionHandler(games)
+            
         }
     }
     

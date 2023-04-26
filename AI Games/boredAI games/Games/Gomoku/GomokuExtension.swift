@@ -6,7 +6,9 @@
 //
 
 import Foundation
-
+import UIKit
+import FirebaseStorage
+import FirebaseAuth
 
 enum GomokuEnd {
     case win
@@ -26,12 +28,38 @@ struct GomokuData {
     var totalEasy: Int = 0
     var totalMed: Int = 0
     var totalHard: Int = 0
+    var imageID : String = ""
 }
 
 
 extension GomokuViewController {
     
-    func writeGomokuData(wins: Int, losses: Int, draws: Int, userID: String, total: Int) {
+    func sendPicture(image: UIImage) {
+        let collectionRef = database.collection("/users/\(userID)/gomoku/difficulty/\(selectedDifficulty!)")
+        let newDocRef = collectionRef.document()
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+
+            // Include the uid in the path
+            gomokuData.imageID = newDocRef.documentID
+            let imageRef = storageRef.child("images/gomoku/\(uid)/\(gomokuData.imageID).png")
+            
+            if let imageData = image.pngData() {
+                imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+                    if let error = error {
+                        print("Error uploading image: \(error.localizedDescription)")
+                    } else {
+                        print("Image uploaded successfully")
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func writeGomokuData(wins: Int, losses: Int, draws: Int, userID: String, total: Int, imageid: String) {
         var tempState = ""
         if gomokuEnd == GomokuEnd.win {
             tempState = "Win"
@@ -53,7 +81,9 @@ extension GomokuViewController {
             "losses": losses,
             "draw": draws,
             "gameFinished": tempState,
-            "total": total
+            "total": total,
+            "date": Date(),
+            "imageID": imageid
         ] as [String : Any]
             
         newDocRef.setData(data)

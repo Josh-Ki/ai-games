@@ -682,38 +682,49 @@
                                 <color key="textColor" systemColor="systemCyanColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VQ-qn-GNX">
-                                <rect key="frame" x="158" y="693" width="74" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Replay"/>
-                                <connections>
-                                    <action selector="replayButtonPressed:" destination="I2u-w0-oBr" eventType="touchUpInside" id="tdm-mD-uls"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecB-UI-tUu" userLabel="Date Played">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecB-UI-tUu" userLabel="Date Played">
                                 <rect key="frame" x="0.0" y="118.99999999999999" width="390" height="25.333333333333329"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
                                 <color key="textColor" systemColor="systemCyanColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VQ-qn-GNX">
+                                <rect key="frame" x="153" y="720" width="84.666666666666686" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Replay">
+                                            <attributes>
+                                                <font key="NSFont" size="16" name="Chalkduster"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" red="0.20470085739999999" green="0.47178941969999999" blue="0.96475678679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="baseBackgroundColor" red="0.99997490639999997" green="0.75876122710000005" blue="0.35135996339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="replayButtonPressed:" destination="I2u-w0-oBr" eventType="touchUpInside" id="tdm-mD-uls"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vhI-FY-569"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ecB-UI-tUu" firstAttribute="top" secondItem="11l-82-oJr" secondAttribute="bottom" constant="8" symbolic="YES" id="APB-Y5-C7a"/>
+                            <constraint firstItem="5VQ-qn-GNX" firstAttribute="top" secondItem="yQH-o8-uss" secondAttribute="bottom" constant="188" id="Cux-hd-Org"/>
                             <constraint firstItem="kec-qg-KbG" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" id="DFW-0A-i5z"/>
+                            <constraint firstItem="vhI-FY-569" firstAttribute="bottom" secondItem="5VQ-qn-GNX" secondAttribute="bottom" constant="55.670000000000002" id="KCB-hX-y6M"/>
                             <constraint firstItem="vhI-FY-569" firstAttribute="trailing" secondItem="11l-82-oJr" secondAttribute="trailing" id="OKL-yd-FdO"/>
-                            <constraint firstItem="5VQ-qn-GNX" firstAttribute="centerX" secondItem="yQH-o8-uss" secondAttribute="centerX" id="Rj3-WY-wQ1"/>
+                            <constraint firstItem="vhI-FY-569" firstAttribute="trailing" secondItem="5VQ-qn-GNX" secondAttribute="trailing" constant="152.33000000000001" id="PNv-cL-Qyu"/>
+                            <constraint firstItem="5VQ-qn-GNX" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" constant="153" id="Qo8-ZO-px3"/>
                             <constraint firstItem="yQH-o8-uss" firstAttribute="top" secondItem="kec-qg-KbG" secondAttribute="bottom" constant="8" id="T9Y-IB-DWg"/>
                             <constraint firstItem="kec-qg-KbG" firstAttribute="top" secondItem="8lm-aF-1a7" secondAttribute="bottom" constant="31" id="Vcd-c5-9KN"/>
-                            <constraint firstItem="kec-qg-KbG" firstAttribute="trailing" secondItem="vhI-FY-569" secondAttribute="trailing" id="aTX-Ve-LQj"/>
                             <constraint firstItem="8lm-aF-1a7" firstAttribute="centerX" secondItem="kec-qg-KbG" secondAttribute="centerX" id="dy9-3i-AEo"/>
-                            <constraint firstItem="vhI-FY-569" firstAttribute="bottom" secondItem="5VQ-qn-GNX" secondAttribute="bottom" constant="82" id="hvZ-0U-AEz"/>
                             <constraint firstItem="11l-82-oJr" firstAttribute="top" secondItem="vhI-FY-569" secondAttribute="top" constant="26" id="kRu-nS-E7C"/>
                             <constraint firstItem="8lm-aF-1a7" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" constant="75" id="kwH-IO-WGk"/>
                             <constraint firstItem="ecB-UI-tUu" firstAttribute="trailing" secondItem="vhI-FY-569" secondAttribute="trailing" id="mct-1q-KDy"/>
                             <constraint firstItem="8lm-aF-1a7" firstAttribute="top" secondItem="ecB-UI-tUu" secondAttribute="bottom" constant="56.666666666666686" id="o09-Mo-UAW"/>
-                            <constraint firstItem="5VQ-qn-GNX" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" constant="158" id="rhn-IZ-EVA"/>
                             <constraint firstItem="yQH-o8-uss" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" id="tpb-dG-20t"/>
                             <constraint firstItem="ecB-UI-tUu" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" id="uru-rt-XeK"/>
                             <constraint firstItem="11l-82-oJr" firstAttribute="leading" secondItem="vhI-FY-569" secondAttribute="leading" id="vcK-b5-MWl"/>
@@ -1568,6 +1579,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A9P-aO-m7r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3108" y="-151"/>
+        </scene>
+        <!--Detailed Gomoku View Controller-->
+        <scene sceneID="h0z-lj-hKX">
+            <objects>
+                <viewController storyboardIdentifier="DetailedGomokuViewController" id="MPk-yR-U2n" customClass="DetailedGomokuViewController" customModule="boredAI_games" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mfG-Qe-SF8">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="XFG-1N-QkQ">
+                                <rect key="frame" x="75" y="167" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="bDC-hk-LdT"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gomoku" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Byf-a8-2Jy">
+                                <rect key="frame" x="0.0" y="73" width="390" height="38"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wYB-TX-PZJ" userLabel="Date Played">
+                                <rect key="frame" x="0.0" y="118.99999999999999" width="390" height="25.333333333333329"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
+                                <color key="textColor" systemColor="systemCyanColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zR3-Ph-B0m"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Byf-a8-2Jy" firstAttribute="top" secondItem="zR3-Ph-B0m" secondAttribute="top" constant="26" id="0mF-DC-evL"/>
+                            <constraint firstItem="wYB-TX-PZJ" firstAttribute="centerX" secondItem="mfG-Qe-SF8" secondAttribute="centerX" id="5mP-nO-0xR"/>
+                            <constraint firstItem="wYB-TX-PZJ" firstAttribute="leading" secondItem="Byf-a8-2Jy" secondAttribute="leading" id="8pa-1C-Jkt"/>
+                            <constraint firstItem="wYB-TX-PZJ" firstAttribute="top" secondItem="Byf-a8-2Jy" secondAttribute="bottom" constant="8" symbolic="YES" id="bgP-3I-aGM"/>
+                            <constraint firstItem="XFG-1N-QkQ" firstAttribute="top" secondItem="wYB-TX-PZJ" secondAttribute="bottom" constant="22.666666666666686" id="kPu-vd-1sU"/>
+                            <constraint firstItem="XFG-1N-QkQ" firstAttribute="leading" secondItem="zR3-Ph-B0m" secondAttribute="leading" constant="75" id="pbL-xb-bmM"/>
+                            <constraint firstItem="XFG-1N-QkQ" firstAttribute="centerX" secondItem="wYB-TX-PZJ" secondAttribute="centerX" id="rgf-5A-9kp"/>
+                            <constraint firstItem="wYB-TX-PZJ" firstAttribute="trailing" secondItem="Byf-a8-2Jy" secondAttribute="trailing" id="sxU-OP-4o3"/>
+                            <constraint firstItem="wYB-TX-PZJ" firstAttribute="leading" secondItem="zR3-Ph-B0m" secondAttribute="leading" id="tDJ-3J-g8R"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="datePlayedLabel" destination="wYB-TX-PZJ" id="UKF-DN-ReF"/>
+                        <outlet property="imageView" destination="XFG-1N-QkQ" id="T7O-OQ-Mlj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lz0-kW-FGV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4414" y="-137"/>
         </scene>
     </scenes>
     <resources>
