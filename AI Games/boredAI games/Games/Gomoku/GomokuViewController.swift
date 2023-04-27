@@ -225,88 +225,91 @@ class GomokuViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         switch selectedDifficulty {
         case "Easy":
-            
-            gomokuGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.gomokuData.easyWins = highestWins
-                    print("Highest number of wins for easy for gomoku: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for easy for gomoku")
+            if user != nil {
+                gomokuGetHighestEasy(difficulty: "Easy", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.gomokuData.easyWins = highestWins
+                        print("Highest number of wins for easy for gomoku: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for easy for gomoku")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.gomokuData.easyDraw = highestDraw
+                        print("Highest number of draw for easy: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for easy")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.gomokuData.easyLoss = highestLoss
+                        print("Highest number of loss for easy for gomoku: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of loss for easy for gomoku")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.gomokuData.totalEasy = highestTotal
+                        print("total number of games is for gomoku \(highestTotal)")
+                    }
+                    
                 }
-                if let highestDraw = highestDraw {
-                    self.gomokuData.easyDraw = highestDraw
-                    print("Highest number of draw for easy: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for easy")
-                }
-                if let highestLoss = highestLoss {
-                    self.gomokuData.easyLoss = highestLoss
-                    print("Highest number of loss for easy for gomoku: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of loss for easy for gomoku")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.gomokuData.totalEasy = highestTotal
-                    print("total number of games is for gomoku \(highestTotal)")
-                }
-                
             }
         case "Med":
-            
-            gomokuGetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.gomokuData.medWins = highestWins
-                    print("Highest number of wins for easy for gomoku: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for med for gomoku")
+            if user != nil {
+                gomokuGetHighestEasy(difficulty: "Med", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.gomokuData.medWins = highestWins
+                        print("Highest number of wins for easy for gomoku: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for med for gomoku")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.gomokuData.medDraw = highestDraw
+                        print("Highest number of draws for med for gomoku: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for med for gomoku")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.gomokuData.medLoss = highestLoss
+                        print("Highest number of loss for med for gomoku: \(highestLoss)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.gomokuData.totalMed = highestTotal
+                        print("total number of games is \(highestTotal) for gomoku")
+                    }
+                    
                 }
-                if let highestDraw = highestDraw {
-                    self.gomokuData.medDraw = highestDraw
-                    print("Highest number of draws for med for gomoku: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for med for gomoku")
-                }
-                if let highestLoss = highestLoss {
-                    self.gomokuData.medLoss = highestLoss
-                    print("Highest number of loss for med for gomoku: \(highestLoss)")
-                } else {
-                    print("Failed to get highest number of wins for med")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.gomokuData.totalMed = highestTotal
-                    print("total number of games is \(highestTotal) for gomoku")
-                }
-                
             }
         case "Hard":
-            
-            gomokuGetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
-                if let highestWins = highestWins {
-                    self.gomokuData.hardWins = highestWins
-                    print("Highest number of wins for hard for gomoku: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for hard")
+            if user != nil {
+                gomokuGetHighestEasy(difficulty: "Hard", userID: userID) { (highestWins, highestTotal, highestLoss, highestDraw) in
+                    if let highestWins = highestWins {
+                        self.gomokuData.hardWins = highestWins
+                        print("Highest number of wins for hard for gomoku: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for hard")
+                    }
+                    if let highestDraw = highestDraw {
+                        self.gomokuData.hardDraw = highestDraw
+                        print("Highest number of draws for hard for gomoku: \(highestDraw)")
+                    } else {
+                        print("Failed to get highest number of draw for hard")
+                    }
+                    if let highestLoss = highestLoss {
+                        self.gomokuData.hardLoss = highestLoss
+                        print("Highest number of loss for hard: \(highestLoss) for gomoku")
+                    } else {
+                        print("Failed to get highest number of loss for hard for gomoku")
+                    }
+                    
+                    if let highestTotal = highestTotal {
+                        self.gomokuData.totalHard = highestTotal
+                        print("total number of games is \(highestTotal) for gomoku")
+                    }
+                    
                 }
-                if let highestDraw = highestDraw {
-                    self.gomokuData.hardDraw = highestDraw
-                    print("Highest number of draws for hard for gomoku: \(highestDraw)")
-                } else {
-                    print("Failed to get highest number of draw for hard")
-                }
-                if let highestLoss = highestLoss {
-                    self.gomokuData.hardLoss = highestLoss
-                    print("Highest number of loss for hard: \(highestLoss) for gomoku")
-                } else {
-                    print("Failed to get highest number of loss for hard for gomoku")
-                }
-                
-                if let highestTotal = highestTotal {
-                    self.gomokuData.totalHard = highestTotal
-                    print("total number of games is \(highestTotal) for gomoku")
-                }
-                
             }
         default:
             print("Defaulted")

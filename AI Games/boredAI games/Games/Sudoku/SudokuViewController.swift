@@ -173,33 +173,39 @@ class SudokuViewController: UIViewController {
         switch selectedDifficulty {
         case "Easy":
             sudoku.maxCellsToFill = 51
-            getHighestWinsForDifficulty(difficulty: "Easy", userID: userID) { (highestWins) in
-                if let highestWins = highestWins {
-                    self.sudoku.easyWins = highestWins
-                    print("Highest number of wins for easy: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for easy")
+            if user != nil {
+                getHighestWinsForDifficulty(difficulty: "Easy", userID: userID) { (highestWins) in
+                    if let highestWins = highestWins {
+                        self.sudoku.easyWins = highestWins
+                        print("Highest number of wins for easy: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for easy")
+                    }
                 }
             }
 //            maxCellsToFill = 30
         case "Med":
             sudoku.maxCellsToFill = 31
-            getHighestWinsForDifficulty(difficulty: "Med", userID: userID) { (highestWins) in
-                if let highestWins = highestWins {
-                    self.sudoku.medWins = highestWins
-                    print("Highest number of wins for med: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for med")
+            if user != nil {
+                getHighestWinsForDifficulty(difficulty: "Med", userID: userID) { (highestWins) in
+                    if let highestWins = highestWins {
+                        self.sudoku.medWins = highestWins
+                        print("Highest number of wins for med: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
                 }
             }
         case "Hard":
             sudoku.maxCellsToFill = 17
-            getHighestWinsForDifficulty(difficulty: "Hard", userID: userID) { (highestWins) in
-                if let highestWins = highestWins {
-                    self.sudoku.hardWins = highestWins
-                    print("Highest number of wins for hard: \(highestWins)")
-                } else {
-                    print("Failed to get highest number of wins for med")
+            if user != nil {
+                getHighestWinsForDifficulty(difficulty: "Hard", userID: userID) { (highestWins) in
+                    if let highestWins = highestWins {
+                        self.sudoku.hardWins = highestWins
+                        print("Highest number of wins for hard: \(highestWins)")
+                    } else {
+                        print("Failed to get highest number of wins for med")
+                    }
                 }
             }
         default:
